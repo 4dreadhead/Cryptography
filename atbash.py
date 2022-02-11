@@ -25,7 +25,7 @@ class Ui_Atbash(object):
         font.setPointSize(9)
         self.label_2.setFont(font)
         self.label_2.setStyleSheet("background-color: rgb(48, 42, 61);\n"
-                                       "color: rgb(238, 238, 236);")
+                                   "color: rgb(238, 238, 236);")
         self.label_2.setAlignment(QtCore.Qt.AlignCenter)
         self.label_2.setObjectName("label_2")
         self.plainTextEdit = QtWidgets.QPlainTextEdit(self.centralwidget)
@@ -34,8 +34,7 @@ class Ui_Atbash(object):
         font.setPointSize(10)
         self.plainTextEdit.setFont(font)
         self.plainTextEdit.setStyleSheet("background-color: rgb(48, 42, 61);\n"
-                                             "color: rgb(238, 238, 236);\n"
-                                             "")
+                                         "color: rgb(238, 238, 236);")
         self.plainTextEdit.setPlainText("")
         self.plainTextEdit.setObjectName("plainTextEdit")
         self.pushButton_2 = QtWidgets.QPushButton(self.centralwidget)
@@ -44,10 +43,14 @@ class Ui_Atbash(object):
         font.setFamily("Uroob")
         font.setPointSize(10)
         font.setBold(True)
-        font.setItalic(True)
         font.setWeight(75)
         self.pushButton_2.setFont(font)
-        self.pushButton_2.setStyleSheet("color: rgb(14,149,226);")
+        self.pushButton_2.setStyleSheet("""QPushButton:hover { background-color: rgb(64, 56, 84);
+                                                               color: rgb(14,149,226); }
+                                           QPushButton:!hover { background-color: rgb(48, 42, 61);
+                                                                color: rgb(14,149,226); }
+                                           QPushButton:pressed { background-color: rgb(24, 21, 30);
+                                                                 color: rgb(14,149,226); }""")
         self.pushButton_2.setObjectName("pushButton_2")
         self.pushButton = QtWidgets.QPushButton(self.centralwidget)
         self.pushButton.setGeometry(QtCore.QRect(470, 380, 301, 31))
@@ -55,10 +58,14 @@ class Ui_Atbash(object):
         font.setFamily("Uroob")
         font.setPointSize(10)
         font.setBold(True)
-        font.setItalic(True)
         font.setWeight(75)
         self.pushButton.setFont(font)
-        self.pushButton.setStyleSheet("color: rgb(14,149,226);")
+        self.pushButton.setStyleSheet("""QPushButton:hover { background-color: rgb(64, 56, 84);
+                                                               color: rgb(14,149,226); }
+                                           QPushButton:!hover { background-color: rgb(48, 42, 61);
+                                                                color: rgb(14,149,226); }
+                                           QPushButton:pressed { background-color: rgb(24, 21, 30);
+                                                                 color: rgb(14,149,226); }""")
         self.pushButton.setObjectName("pushButton")
         self.textBrowser = QtWidgets.QTextBrowser(self.centralwidget)
         self.textBrowser.setGeometry(QtCore.QRect(30, 420, 739, 101))
@@ -74,10 +81,14 @@ class Ui_Atbash(object):
         font.setFamily("Uroob")
         font.setPointSize(10)
         font.setBold(True)
-        font.setItalic(True)
         font.setWeight(75)
         self.pushButton_3.setFont(font)
-        self.pushButton_3.setStyleSheet("color: rgb(14,149,226);")
+        self.pushButton_3.setStyleSheet("""QPushButton:hover { background-color: rgb(64, 56, 84);
+                                                               color: rgb(14,149,226); }
+                                           QPushButton:!hover { background-color: rgb(48, 42, 61);
+                                                                color: rgb(14,149,226); }
+                                           QPushButton:pressed { background-color: rgb(24, 21, 30);
+                                                                 color: rgb(14,149,226); }""")
         self.pushButton_3.setObjectName("pushButton_3")
         self.pushButton_4 = QtWidgets.QPushButton(self.centralwidget)
         self.pushButton_4.setGeometry(QtCore.QRect(470, 530, 301, 31))
@@ -85,10 +96,14 @@ class Ui_Atbash(object):
         font.setFamily("Uroob")
         font.setPointSize(10)
         font.setBold(True)
-        font.setItalic(True)
         font.setWeight(75)
         self.pushButton_4.setFont(font)
-        self.pushButton_4.setStyleSheet("color: rgb(14,149,226);")
+        self.pushButton_4.setStyleSheet("""QPushButton:hover { background-color: rgb(64, 56, 84);
+                                                               color: rgb(14,149,226); }
+                                           QPushButton:!hover { background-color: rgb(48, 42, 61);
+                                                                color: rgb(14,149,226); }
+                                           QPushButton:pressed { background-color: rgb(24, 21, 30);
+                                                                 color: rgb(14,149,226); }""")
         self.pushButton_4.setObjectName("pushButton_4")
         self.pushButton_5 = QtWidgets.QPushButton(self.centralwidget)
         self.pushButton_5.setGeometry(QtCore.QRect(340, 380, 121, 31))
@@ -96,10 +111,14 @@ class Ui_Atbash(object):
         font.setFamily("Uroob")
         font.setPointSize(10)
         font.setBold(True)
-        font.setItalic(True)
         font.setWeight(75)
         self.pushButton_5.setFont(font)
-        self.pushButton_5.setStyleSheet("color: rgb(14,149,226);")
+        self.pushButton_5.setStyleSheet("""QPushButton:hover { background-color: rgb(64, 56, 84);
+                                                               color: rgb(14,149,226); }
+                                           QPushButton:!hover { background-color: rgb(48, 42, 61);
+                                                                color: rgb(14,149,226); }
+                                           QPushButton:pressed { background-color: rgb(24, 21, 30);
+                                                                 color: rgb(14,149,226); }""")
         self.pushButton_5.setObjectName("pushButton_5")
         self.pushButton_6 = QtWidgets.QPushButton(self.centralwidget)
         self.pushButton_6.setGeometry(QtCore.QRect(340, 530, 121, 31))
@@ -107,16 +126,30 @@ class Ui_Atbash(object):
         font.setFamily("Uroob")
         font.setPointSize(10)
         font.setBold(True)
-        font.setItalic(True)
         font.setWeight(75)
         self.pushButton_6.setFont(font)
-        self.pushButton_6.setStyleSheet("color: rgb(14,149,226);")
+        self.pushButton_6.setStyleSheet("""QPushButton:hover { background-color: rgb(64, 56, 84);
+                                                               color: rgb(14,149,226); }
+                                           QPushButton:!hover { background-color: rgb(48, 42, 61);
+                                                                color: rgb(14,149,226); }
+                                           QPushButton:pressed { background-color: rgb(24, 21, 30);
+                                                                 color: rgb(14,149,226); }""")
         self.pushButton_6.setObjectName("pushButton_6")
         Atbash.setCentralWidget(self.centralwidget)
         self.statusbar = QtWidgets.QStatusBar(Atbash)
         self.statusbar.setObjectName("statusbar")
         self.statusbar.setStyleSheet("color: rgb(238, 238, 236);")
         Atbash.setStatusBar(self.statusbar)
+
+        self.pushButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+        self.pushButton_2.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+        self.pushButton_3.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+        self.pushButton_4.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+        self.pushButton_5.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+        self.pushButton_6.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+        self.textBrowser.viewport().setProperty("cursor", QtGui.QCursor(QtCore.Qt.IBeamCursor))
+        self.plainTextEdit.viewport().setProperty("cursor", QtGui.QCursor(QtCore.Qt.IBeamCursor))
+
 
         self.retranslateUi(Atbash)
         QtCore.QMetaObject.connectSlotsByName(Atbash)

@@ -7,10 +7,9 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.setEnabled(True)
-        MainWindow.resize(810, 551)
-        MainWindow.setMinimumSize(QtCore.QSize(810, 551))
-        MainWindow.setMaximumSize(QtCore.QSize(810, 551))
-        MainWindow.setBaseSize(QtCore.QSize(810, 551))
+        MainWindow.setMinimumSize(QtCore.QSize(810, 600))
+        MainWindow.setMaximumSize(QtCore.QSize(810, 600))
+        MainWindow.setBaseSize(QtCore.QSize(810, 600))
         MainWindow.setStyleSheet("background-color: rgb(32, 28, 42);")
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
@@ -207,8 +206,8 @@ class Ui_MainWindow(object):
                                            QPushButton:pressed { background-color: rgb(24, 21, 30);
                                                                  color: rgb(201,44,123); }""")
         self.pushButton_12.setObjectName("pushButton_12")
-        self.pushButton_13 = QtWidgets.QPushButton(self.centralwidget)
-        self.pushButton_13.setGeometry(QtCore.QRect(0, 500, 810, 30))
+        self.button_exit = QtWidgets.QPushButton(self.centralwidget)
+        self.button_exit.setGeometry(QtCore.QRect(0, 510, 810, 50))
         font = QtGui.QFont()
         font.setFamily("Uroob")
         font.setPointSize(11)
@@ -218,21 +217,23 @@ class Ui_MainWindow(object):
         font.setStrikeOut(False)
         font.setKerning(True)
         font.setStyleStrategy(QtGui.QFont.PreferDefault)
-        self.pushButton_13.setFont(font)
-        self.pushButton_13.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-        self.pushButton_13.setStyleSheet("""QPushButton:hover { background-color: rgb(64, 56, 84);
+        self.button_exit.setFont(font)
+        self.button_exit.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+        self.button_exit.setStyleSheet("""QPushButton:hover { background-color: rgb(64, 56, 84);
                                                                color: rgb(14,149,226); }
                                            QPushButton:!hover { background-color: rgb(48, 42, 61);
                                                                 color: rgb(14,149,226); }
                                            QPushButton:pressed { background-color: rgb(24, 21, 30);
                                                                  color: rgb(14,149,226); }""")
-        self.pushButton_13.setObjectName("pushButton_13")
+        self.button_exit.setObjectName("button_exit")
         self.label = QtWidgets.QLabel(self.centralwidget)
         self.label.setGeometry(QtCore.QRect(-10, 10, 831, 181))
         self.label.setBaseSize(QtCore.QSize(0, 0))
-        self.label.setStyleSheet("background-image: url(./main_menu.gif)")
         self.label.setText("")
         self.label.setObjectName("label")
+        gif = QtGui.QMovie("main_menu.gif")
+        self.label.setMovie(gif)
+        gif.start()
         MainWindow.setCentralWidget(self.centralwidget)
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
         self.statusbar.setObjectName("statusbar")
@@ -256,16 +257,17 @@ class Ui_MainWindow(object):
         self.pushButton_10.setText(_translate("MainWindow", "# Шифр Плейфера"))
         self.pushButton_11.setText(_translate("MainWindow", "# Криптосхема Хилла"))
         self.pushButton_12.setText(_translate("MainWindow", "# Шифр Вернама"))
-        self.pushButton_13.setText(_translate("MainWindow", "Выход из программы"))
+        self.button_exit.setText(_translate("MainWindow", "Выход из программы"))
 
 
 class MainMenu(QtWidgets.QMainWindow, Ui_MainWindow):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
+        self.setWindowIcon(QtGui.QIcon('icon.png'))
 
         self.pushButton.clicked.connect(self.run_atbash)
-        self.pushButton_13.clicked.connect(self.close_program)
+        self.button_exit.clicked.connect(self.close_program)
 
     def run_atbash(self):
         self.mySecond = atbash.UiMethod()

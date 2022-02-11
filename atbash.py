@@ -15,9 +15,11 @@ class Ui_Atbash(object):
         self.centralwidget.setObjectName("centralwidget")
         self.label = QtWidgets.QLabel(self.centralwidget)
         self.label.setGeometry(QtCore.QRect(30, 30, 431, 221))
-        self.label.setStyleSheet("background-image: url(./atbash.gif)")
         self.label.setText("")
         self.label.setObjectName("label")
+        gif = QtGui.QMovie("atbash.gif")
+        self.label.setMovie(gif)
+        gif.start()
         self.label_2 = QtWidgets.QLabel(self.centralwidget)
         self.label_2.setGeometry(QtCore.QRect(480, 30, 291, 221))
         font = QtGui.QFont()
@@ -200,6 +202,7 @@ class UiMethod(QtWidgets.QMainWindow, Ui_Atbash):
         self.latin_high = ascii_symbols.printable[36:62]
 
         self.setupUi(self)
+        self.setWindowIcon(QtGui.QIcon('icon.png'))
         self.result = ""
 
         self.pushButton.clicked.connect(self.encrypt)

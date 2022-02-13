@@ -1,0 +1,7 @@
+# Project exclude paths
+/venv/
+/dist/
+/build/
+/.idea/
+/Pyqt Ui Files/
+*.spec

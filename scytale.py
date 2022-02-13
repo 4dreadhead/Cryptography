@@ -3,21 +3,21 @@ import pyperclip
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 
-class Ui_Atbash(object):
-    def setupUi(self, Atbash):
-        Atbash.setObjectName("Atbash")
-        Atbash.resize(800, 600)
-        Atbash.setMinimumSize(QtCore.QSize(800, 600))
-        Atbash.setMaximumSize(QtCore.QSize(800, 600))
-        Atbash.setStyleSheet("background-color: rgb(32, 28, 42);")
+class Ui_Scytale(object):
+    def setupUi(self, Scytale):
+        Scytale.setObjectName("Scytale")
+        Scytale.resize(800, 600)
+        Scytale.setMinimumSize(QtCore.QSize(800, 600))
+        Scytale.setMaximumSize(QtCore.QSize(800, 600))
+        Scytale.setStyleSheet("background-color: rgb(32, 28, 42);")
 
-        self.centralwidget = QtWidgets.QWidget(Atbash)
+        self.centralwidget = QtWidgets.QWidget(Scytale)
         self.centralwidget.setObjectName("centralwidget")
 
         self.label_Atbash_gif = QtWidgets.QLabel(self.centralwidget)
         self.label_Atbash_gif.setGeometry(QtCore.QRect(30, 30, 431, 221))
-        self.label_Atbash_gif.setObjectName("label_Atbash_gif")
-        gif = QtGui.QMovie("atbash.gif")
+        self.label_Atbash_gif.setObjectName("label_Scytale_gif")
+        gif = QtGui.QMovie("scytale.gif")
         self.label_Atbash_gif.setMovie(gif)
         gif.start()
 
@@ -52,6 +52,12 @@ class Ui_Atbash(object):
         self.pushButton_encrypt.setObjectName("pushButton_encrypt")
         self.pushButton_encrypt.setStyleSheet(self.encrypt_style())
 
+        self.pushButton_decrypt = QtWidgets.QPushButton(self.centralwidget)
+        self.pushButton_decrypt.setGeometry(QtCore.QRect(240, 380, 201, 31))
+        self.pushButton_decrypt.setFont(font)
+        self.pushButton_decrypt.setObjectName("pushButton_decrypt")
+        self.pushButton_decrypt.setStyleSheet(self.encrypt_style())
+
         self.pushButton_paste = QtWidgets.QPushButton(self.centralwidget)
         self.pushButton_paste.setGeometry(QtCore.QRect(460, 380, 151, 31))
         self.pushButton_paste.setFont(font)
@@ -82,13 +88,14 @@ class Ui_Atbash(object):
         self.pushButton_exit.setObjectName("pushButton_exit")
         self.pushButton_exit.setStyleSheet(self.exit_style())
 
-        Atbash.setCentralWidget(self.centralwidget)
-        self.statusbar = QtWidgets.QStatusBar(Atbash)
+        Scytale.setCentralWidget(self.centralwidget)
+        self.statusbar = QtWidgets.QStatusBar(Scytale)
         self.statusbar.setObjectName("statusbar")
         self.statusbar.setStyleSheet("color: rgb(238, 238, 236);")
-        Atbash.setStatusBar(self.statusbar)
+        Scytale.setStatusBar(self.statusbar)
 
         self.pushButton_encrypt.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+        self.pushButton_decrypt.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.pushButton_paste.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.pushButton_clearInput.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.pushButton_copy.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
@@ -98,25 +105,27 @@ class Ui_Atbash(object):
         self.textBrowser.viewport().setProperty("cursor", QtGui.QCursor(QtCore.Qt.IBeamCursor))
         self.plainTextEdit.viewport().setProperty("cursor", QtGui.QCursor(QtCore.Qt.IBeamCursor))
 
-        self.retranslateUi(Atbash)
-        QtCore.QMetaObject.connectSlotsByName(Atbash)
+        self.retranslateUi(Scytale)
+        QtCore.QMetaObject.connectSlotsByName(Scytale)
 
-    def retranslateUi(self, Atbash):
+    def retranslateUi(self, Scytale):
         _translate = QtCore.QCoreApplication.translate
-        Atbash.setWindowTitle(_translate("Atbash", "ATBASH"))
+        Scytale.setWindowTitle(_translate("Scytale", "SCYTALE"))
 
-        self.pushButton_encrypt.setText(_translate("Atbash", "Шифровать"))
-        self.pushButton_paste.setText(_translate("Atbash", "Вставить"))
-        self.pushButton_clearInput.setText(_translate("Atbash", "Копировать"))
-        self.pushButton_copy.setText(_translate("Atbash", "Очистить"))
-        self.pushButton_clearOutput.setText(_translate("Atbash", "Очистить"))
-        self.pushButton_exit.setText(_translate("Atbash", "Закрыть окно"))
+        self.pushButton_encrypt.setText(_translate("Scytale", "Зашифровать"))
+        self.pushButton_decrypt.setText(_translate("Scytale", "Расшифровать"))
+        self.pushButton_paste.setText(_translate("Scytale", "Вставить"))
+        self.pushButton_clearInput.setText(_translate("Scytale", "Копировать"))
+        self.pushButton_copy.setText(_translate("Scytale", "Очистить"))
+        self.pushButton_clearOutput.setText(_translate("Scytale", "Очистить"))
+        self.pushButton_exit.setText(_translate("Scytale", "Закрыть окно"))
 
-        self.label_info.setText(_translate("Atbash", "Поддерживаемые алфавиты:\n⚫ Латинский\n⚫ Кириллица\n\n"
-                                                  "⚠ Все символы,\nне входящие в них,\nостанутся неизменными.\n\n"
-                                                  "Ввод текста: верхнее поле\nРезультат: нижнее поле"))
+        self.label_info.setText(_translate("Scytale", "Размер таблицы:\nОпределяется автоматически.\n\n"
+                                                      "Символ дополнения:\n"
+                                                      "'⋆' (U-22C6).\n\n"
+                                                      "Ввод текста: верхнее поле.\nРезультат: нижнее поле"))
 
-        self.textBrowser.setHtml(_translate("Atbash",
+        self.textBrowser.setHtml(_translate("Scytale",
                                             "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \""
                                             "http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
                                             "<html><head><meta name=\"qrichtext\" content=\"1\" />"
@@ -176,7 +185,7 @@ class Ui_Atbash(object):
         return style
 
 
-class UiMethod(QtWidgets.QMainWindow, Ui_Atbash):
+class UiMethod(QtWidgets.QMainWindow, Ui_Scytale):
     def __init__(self):
         super().__init__()
 
@@ -191,6 +200,7 @@ class UiMethod(QtWidgets.QMainWindow, Ui_Atbash):
         self.result = ""
 
         self.pushButton_encrypt.clicked.connect(self.encrypt)
+        self.pushButton_decrypt.clicked.connect(self.decrypt)
         self.pushButton_paste.clicked.connect(self.paste_from_buffer)
         self.pushButton_clearInput.clicked.connect(self.copy_to_buffer)
         self.pushButton_copy.clicked.connect(self.clear_input)
@@ -217,31 +227,71 @@ class UiMethod(QtWidgets.QMainWindow, Ui_Atbash):
         self.plainTextEdit.setPlainText(pyperclip.paste())
         self.statusbar.showMessage("Текст вставлен из буффера обмена.")
 
-    def encrypt_and_decrypt(self, encrypted_or_decrypted_string):
-        decrypted_or_encrypted_string = ""
-        for symbol in encrypted_or_decrypted_string:
-            if symbol in self.cyrillic_low:
-                symbol = self.transform(symbol, self.cyrillic_low)
-
-            elif symbol in self.cyrillic_high:
-                symbol = self.transform(symbol, self.cyrillic_high)
-
-            elif symbol in self.latin_low:
-                symbol = self.transform(symbol, self.latin_low)
-
-            elif symbol in self.latin_high:
-                symbol = self.transform(symbol, self.latin_high)
-
-            decrypted_or_encrypted_string += symbol
-        return decrypted_or_encrypted_string
-
-    @staticmethod
-    def transform(symbol, container):
-        index = container.index(symbol)
-        return container[len(container) - (index + 1)]
-
     def encrypt(self):
         string = self.plainTextEdit.toPlainText()
-        self.result = self.encrypt_and_decrypt(string)
-        self.textBrowser.setText(self.result)
-        self.statusbar.showMessage("Текст зашифрован/расшифрован.")
+        self.textBrowser.setText("")
+
+        try:
+            row_size = len(string) ** (1/2)
+            if row_size % 1 == 0:
+                table_size = {"row_size": int(row_size), "row_count": int(row_size)}
+            else:
+                row_size = int(row_size) + 1
+                row_count = row_size if len(string) > row_size * (row_size-1) else row_size-1
+                table_size = {"row_size": row_size, "row_count": row_count}
+
+            table = []
+            string = string.ljust(table_size["row_count"] * table_size["row_size"], "⋆")
+
+            for i in range(table_size["row_count"]):
+                table.append(string[:table_size["row_size"]])
+                string = string[table_size["row_size"]:]
+
+            result_table = [["" for _ in range(table_size["row_count"])] for _ in range(table_size["row_size"])]
+            for i in range(table_size["row_count"]):
+                for j in range(table_size["row_size"]):
+                    result_table[j][i] = table[i][j]
+
+            self.result = ""
+            for row in result_table:
+                self.result += "".join(row)
+
+            self.textBrowser.setText(self.result)
+            self.statusbar.showMessage("Текст зашифрован.")
+        except Exception as ex:
+            self.textBrowser.setText(f"Ошибка: {str(ex)}.")
+            self.statusbar.showMessage("Текст зашифрован.")
+
+    def decrypt(self):
+        string = self.plainTextEdit.toPlainText()
+        self.textBrowser.setText("")
+        self.statusbar.showMessage("Текст расшифрован.")
+
+        try:
+            row_size = len(string) ** (1 / 2)
+            if row_size % 1 == 0:
+                table_size = {"row_size": int(row_size), "row_count": int(row_size)}
+            else:
+                row_size = int(row_size) + 1
+                row_count = row_size if len(string) > row_size * (row_size - 1) else row_size - 1
+                table_size = {"row_size": row_count, "row_count": row_size}
+
+            table = []
+            for i in range(table_size["row_count"]):
+                table.append(string[:table_size["row_size"]])
+                string = string[table_size["row_size"]:]
+
+            result_table = [["" for _ in range(table_size["row_count"])] for _ in range(table_size["row_size"])]
+            for i in range(table_size["row_count"]):
+                for j in range(table_size["row_size"]):
+                    result_table[j][i] = table[i][j]
+
+            self.result = ""
+            for row in result_table:
+                self.result += "".join(row)
+
+            self.textBrowser.setText(self.result)
+            self.statusbar.showMessage("Текст расшифрован.")
+        except IndexError as ex:
+            self.textBrowser.setText(f"Ошибка: {str(ex)}.")
+            self.statusbar.showMessage("Неверные входные данные. Возможно, текст не был зашифрован.")

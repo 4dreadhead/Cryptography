@@ -1,5 +1,6 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 import atbash
+import scytale
 import sys
 
 
@@ -23,6 +24,13 @@ class Ui_MainWindow(object):
         self.pushButton_Atbash.setObjectName("Atbash")
         self.pushButton_Atbash.setStyleSheet(self.default_style())
 
+        self.pushButton_Scytale = QtWidgets.QPushButton(self.centralwidget)
+        self.pushButton_Scytale.setGeometry(QtCore.QRect(0, 270, 270, 70))
+        self.pushButton_Scytale.setFont(font)
+        self.pushButton_Scytale.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+        self.pushButton_Scytale.setObjectName("pushButton_Scytale")
+        self.pushButton_Scytale.setStyleSheet(self.default_style())
+
         self.pushButton_exit = QtWidgets.QPushButton(self.centralwidget)
         self.pushButton_exit.setGeometry(QtCore.QRect(140, 520, 530, 45))
         self.pushButton_exit.setFont(font)
@@ -32,13 +40,6 @@ class Ui_MainWindow(object):
 
         # In development buttons area
         font = self.set_font("Uroob", size=11, italic=True)
-
-        self.pushButton_2 = QtWidgets.QPushButton(self.centralwidget)
-        self.pushButton_2.setGeometry(QtCore.QRect(0, 270, 270, 70))
-        self.pushButton_2.setFont(font)
-        self.pushButton_2.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-        self.pushButton_2.setObjectName("pushButton_2")
-        self.pushButton_2.setStyleSheet(self.in_development_style())
 
         self.pushButton_3 = QtWidgets.QPushButton(self.centralwidget)
         self.pushButton_3.setGeometry(QtCore.QRect(0, 340, 270, 70))
@@ -134,7 +135,7 @@ class Ui_MainWindow(object):
         _translate = QtCore.QCoreApplication.translate
         window.setWindowTitle(_translate("MainWindow", "CRYPTOGRAPHY"))
         self.pushButton_Atbash.setText(_translate("MainWindow", "Шифр Атбаш"))
-        self.pushButton_2.setText(_translate("MainWindow", "# Шифр Сцитала"))
+        self.pushButton_Scytale.setText(_translate("MainWindow", "Шифр Сцитала"))
         self.pushButton_3.setText(_translate("MainWindow", "# Шифр Квадрат Полибия"))
         self.pushButton_4.setText(_translate("MainWindow", "# Шифр Цезаря"))
         self.pushButton_5.setText(_translate("MainWindow", "# Шифр Гронсфельда"))
@@ -197,7 +198,7 @@ class MainMenu(QtWidgets.QMainWindow, Ui_MainWindow):
         self.mySecond = None
 
         self.pushButton_Atbash.clicked.connect(self.run_atbash)
-        self.pushButton_2.clicked.connect(self.in_development)
+        self.pushButton_Scytale.clicked.connect(self.run_scytale)
         self.pushButton_3.clicked.connect(self.in_development)
         self.pushButton_4.clicked.connect(self.in_development)
         self.pushButton_5.clicked.connect(self.in_development)
@@ -211,8 +212,13 @@ class MainMenu(QtWidgets.QMainWindow, Ui_MainWindow):
         self.pushButton_exit.clicked.connect(self.close_program)
 
     def run_atbash(self):
-        self.statusbar.showMessage("Запущено: Атбаш.")
+        self.statusbar.showMessage("Запущено: Шифр Атбаш.")
         self.mySecond = atbash.UiMethod()
+        self.mySecond.show()
+
+    def run_scytale(self):
+        self.statusbar.showMessage("Запущено: Шифр Сцитала.")
+        self.mySecond = scytale.UiMethod()
         self.mySecond.show()
 
     def in_development(self):

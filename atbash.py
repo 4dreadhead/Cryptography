@@ -128,7 +128,6 @@ class Ui_Atbash(object):
                                             "margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"
                                             "\"><br /></p></body></html>"))
 
-
     @staticmethod
     def set_font(family=None, size=12, weight=None, bold=False, italic=False):
         font = QtGui.QFont()

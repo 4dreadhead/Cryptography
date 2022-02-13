@@ -1,6 +1,5 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
-import atbash
-import scytale
+from methods import atbash, scytale
 import sys
 
 
@@ -118,7 +117,7 @@ class Ui_MainWindow(object):
         self.label_MainMenu_gif.setBaseSize(QtCore.QSize(0, 0))
         self.label_MainMenu_gif.setText("")
         self.label_MainMenu_gif.setObjectName("label")
-        gif = QtGui.QMovie("main_menu.gif")
+        gif = QtGui.QMovie("media/main_menu.gif")
         self.label_MainMenu_gif.setMovie(gif)
         gif.start()
 
@@ -194,7 +193,7 @@ class MainMenu(QtWidgets.QMainWindow, Ui_MainWindow):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
-        self.setWindowIcon(QtGui.QIcon('icon.png'))
+        self.setWindowIcon(QtGui.QIcon('media/icon.png'))
         self.mySecond = None
 
         self.pushButton_Atbash.clicked.connect(self.run_atbash)

@@ -17,7 +17,7 @@ class Ui_Scytale(object):
         self.label_Atbash_gif = QtWidgets.QLabel(self.centralwidget)
         self.label_Atbash_gif.setGeometry(QtCore.QRect(30, 30, 431, 221))
         self.label_Atbash_gif.setObjectName("label_Scytale_gif")
-        gif = QtGui.QMovie("scytale.gif")
+        gif = QtGui.QMovie("media/scytale.gif")
         self.label_Atbash_gif.setMovie(gif)
         gif.start()
 
@@ -196,7 +196,7 @@ class UiMethod(QtWidgets.QMainWindow, Ui_Scytale):
         self.latin_high = ascii_symbols.printable[36:62]
 
         self.setupUi(self)
-        self.setWindowIcon(QtGui.QIcon('icon.png'))
+        self.setWindowIcon(QtGui.QIcon('media/icon.png'))
         self.result = ""
 
         self.pushButton_encrypt.clicked.connect(self.encrypt)

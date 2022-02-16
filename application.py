@@ -38,7 +38,7 @@ class Ui_MainWindow(object):
         self.pushButton_exit.setObjectName("Exit")
 
         # In development buttons area
-        font = self.set_font("Uroob", size=11, italic=True)
+        font = self.set_font("Uroob", size=11, bold=True)
 
         self.pushButton_3 = QtWidgets.QPushButton(self.centralwidget)
         self.pushButton_3.setGeometry(QtCore.QRect(0, 340, 270, 70))
@@ -46,7 +46,6 @@ class Ui_MainWindow(object):
         self.pushButton_3.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.pushButton_3.setObjectName("pushButton_3")
         self.pushButton_3.setStyleSheet(self.in_development_style())
-        self.pushButton_3.setObjectName("pushButton_3")
 
         self.pushButton_4 = QtWidgets.QPushButton(self.centralwidget)
         self.pushButton_4.setGeometry(QtCore.QRect(0, 410, 270, 70))
@@ -135,16 +134,16 @@ class Ui_MainWindow(object):
         window.setWindowTitle(_translate("MainWindow", "CRYPTOGRAPHY"))
         self.pushButton_Atbash.setText(_translate("MainWindow", "Шифр Атбаш"))
         self.pushButton_Scytale.setText(_translate("MainWindow", "Шифр Сцитала"))
-        self.pushButton_3.setText(_translate("MainWindow", "# Шифр Квадрат Полибия"))
-        self.pushButton_4.setText(_translate("MainWindow", "# Шифр Цезаря"))
-        self.pushButton_5.setText(_translate("MainWindow", "# Шифр Гронсфельда"))
-        self.pushButton_6.setText(_translate("MainWindow", "# Шифр Диск Альберти"))
-        self.pushButton_7.setText(_translate("MainWindow", "# Шифр Вижинера"))
-        self.pushButton_8.setText(_translate("MainWindow", "# Шифр Кардано"))
-        self.pushButton_9.setText(_translate("MainWindow", "# Шифр Ришелье"))
-        self.pushButton_10.setText(_translate("MainWindow", "# Шифр Плейфера"))
-        self.pushButton_11.setText(_translate("MainWindow", "# Криптосхема Хилла"))
-        self.pushButton_12.setText(_translate("MainWindow", "# Шифр Вернама"))
+        self.pushButton_3.setText(_translate("MainWindow", "Шифр Квадрат Полибия"))
+        self.pushButton_4.setText(_translate("MainWindow", "Шифр Цезаря"))
+        self.pushButton_5.setText(_translate("MainWindow", "Шифр Гронсфельда"))
+        self.pushButton_6.setText(_translate("MainWindow", "Шифр Диск Альберти"))
+        self.pushButton_7.setText(_translate("MainWindow", "Шифр Вижинера"))
+        self.pushButton_8.setText(_translate("MainWindow", "Шифр Кардано"))
+        self.pushButton_9.setText(_translate("MainWindow", "Шифр Ришелье"))
+        self.pushButton_10.setText(_translate("MainWindow", "Шифр Плейфера"))
+        self.pushButton_11.setText(_translate("MainWindow", "Криптосхема Хилла"))
+        self.pushButton_12.setText(_translate("MainWindow", "Шифр Вернама"))
         self.pushButton_exit.setText(_translate("MainWindow", "Выход из программы"))
 
     @staticmethod

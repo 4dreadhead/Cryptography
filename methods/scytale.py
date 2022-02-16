@@ -230,68 +230,59 @@ class UiMethod(QtWidgets.QMainWindow, Ui_Scytale):
     def encrypt(self):
         string = self.plainTextEdit.toPlainText()
         self.textBrowser.setText("")
-
         try:
-            row_size = len(string) ** (1/2)
-            if row_size % 1 == 0:
-                table_size = {"row_size": int(row_size), "row_count": int(row_size)}
-            else:
-                row_size = int(row_size) + 1
-                row_count = row_size if len(string) > row_size * (row_size-1) else row_size-1
-                table_size = {"row_size": row_size, "row_count": row_count}
-
-            table = []
+            table_size = self.set_table_size(string, encrypt=True)
             string = string.ljust(table_size["row_count"] * table_size["row_size"], "⋆")
-
-            for i in range(table_size["row_count"]):
-                table.append(string[:table_size["row_size"]])
-                string = string[table_size["row_size"]:]
-
-            result_table = [["" for _ in range(table_size["row_count"])] for _ in range(table_size["row_size"])]
-            for i in range(table_size["row_count"]):
-                for j in range(table_size["row_size"]):
-                    result_table[j][i] = table[i][j]
-
-            self.result = ""
-            for row in result_table:
-                self.result += "".join(row)
+            self.result = self.transform(string, table_size)
 
             self.textBrowser.setText(self.result)
             self.statusbar.showMessage("Текст зашифрован.")
         except Exception as ex:
             self.textBrowser.setText(f"Ошибка: {str(ex)}.")
-            self.statusbar.showMessage("Текст зашифрован.")
+            self.statusbar.showMessage("Что-то пошло не так... Попробуйте снова..")
 
     def decrypt(self):
         string = self.plainTextEdit.toPlainText()
         self.textBrowser.setText("")
         self.statusbar.showMessage("Текст расшифрован.")
-
         try:
-            row_size = len(string) ** (1 / 2)
-            if row_size % 1 == 0:
-                table_size = {"row_size": int(row_size), "row_count": int(row_size)}
-            else:
-                row_size = int(row_size) + 1
-                row_count = row_size if len(string) > row_size * (row_size - 1) else row_size - 1
-                table_size = {"row_size": row_count, "row_count": row_size}
-
-            table = []
-            for i in range(table_size["row_count"]):
-                table.append(string[:table_size["row_size"]])
-                string = string[table_size["row_size"]:]
-
-            result_table = [["" for _ in range(table_size["row_count"])] for _ in range(table_size["row_size"])]
-            for i in range(table_size["row_count"]):
-                for j in range(table_size["row_size"]):
-                    result_table[j][i] = table[i][j]
-
-            self.result = ""
-            for row in result_table:
-                self.result += "".join(row)
+            table_size = self.set_table_size(string, decrypt=True)
+            self.result = self.transform(string, table_size)
 
             self.textBrowser.setText(self.result)
             self.statusbar.showMessage("Текст расшифрован.")
         except IndexError as ex:
             self.textBrowser.setText(f"Ошибка: {str(ex)}.")
             self.statusbar.showMessage("Неверные входные данные. Возможно, текст не был зашифрован.")
+
+    @staticmethod
+    def set_table_size(incoming_string, encrypt=False, decrypt=False):
+        table_size = {}
+        row_size = len(incoming_string) ** (1 / 2)
+        if row_size % 1 == 0:
+            table_size = {"row_size": int(row_size), "row_count": int(row_size)}
+        else:
+            row_size = int(row_size) + 1
+            row_count = row_size if len(incoming_string) > row_size * (row_size - 1) else row_size - 1
+            if encrypt:
+                table_size = {"row_size": row_size, "row_count": row_count}
+            if decrypt:
+                table_size = {"row_size": row_count, "row_count": row_size}
+        return table_size
+
+    @staticmethod
+    def transform(incoming_string, table_size):
+        table = []
+        for i in range(table_size["row_count"]):
+            table.append(incoming_string[:table_size["row_size"]])
+            incoming_string = incoming_string[table_size["row_size"]:]
+
+        result_table = [["" for _ in range(table_size["row_count"])] for _ in range(table_size["row_size"])]
+        for i in range(table_size["row_count"]):
+            for j in range(table_size["row_size"]):
+                result_table[j][i] = table[i][j]
+
+        result = ""
+        for row in result_table:
+            result += "".join(row)
+        return result

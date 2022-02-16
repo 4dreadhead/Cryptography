@@ -1,7 +1,19 @@
-# Project exclude paths
+# Virtual Enviroment
 /venv/
+/env/
+.venv
+.env
+
+# Pyinstaller folders and data
 /dist/
 /build/
-/.idea/
-/Pyqt Ui Files/
 *.spec
+
+# PyCharm data
+/.idea/
+
+# Qt designer folder
+/Pyqt Ui Files/
+
+# gitignore
+.gitignore

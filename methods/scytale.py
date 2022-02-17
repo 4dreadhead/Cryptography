@@ -244,7 +244,6 @@ class UiMethod(QtWidgets.QMainWindow, Ui_Scytale):
     def decrypt(self):
         string = self.plainTextEdit.toPlainText()
         self.textBrowser.setText("")
-        self.statusbar.showMessage("Текст расшифрован.")
         try:
             table_size = self.set_table_size(string, decrypt=True)
             self.result = self.transform(string, table_size)

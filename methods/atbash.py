@@ -113,8 +113,8 @@ class Ui_Atbash(object):
         self.pushButton_exit.setText(_translate("Atbash", "Закрыть окно"))
 
         self.label_info.setText(_translate("Atbash", "Поддерживаемые алфавиты:\n⚫ Латинский\n⚫ Кириллица\n\n"
-                                                  "⚠ Все символы,\nне входящие в них,\nостанутся неизменными.\n\n"
-                                                  "Ввод текста: верхнее поле\nРезультат: нижнее поле"))
+                                                     "⚠ Все символы,\nне входящие в них,\nостанутся неизменными.\n\n"
+                                                     "Ввод текста: верхнее поле\nРезультат: нижнее поле"))
 
         self.textBrowser.setHtml(_translate("Atbash",
                                             "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \""

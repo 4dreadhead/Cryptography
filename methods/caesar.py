@@ -133,12 +133,9 @@ class Ui_Caesar(object):
         self.pushButton_clearOutput.setText(_translate("Caesar", "Очистить"))
         self.pushButton_exit.setText(_translate("Caesar", "Закрыть окно"))
 
-        self.label_info.setText(_translate("Caesar", "⚠ Алфавит для шифрования и\nрасшифрования "
-                                                             "определяется по\nпервой встреченной букве.\n\n"
-                                                             "⚠ J отождествляется с I.\n\n"
-                                                             "⚠ Символы, не попавшие в\nалфавит,"
-                                                             " останутся неизменными.\n\n"
-                                                             "Ввод текста: верхнее поле.\nРезультат: нижнее поле"))
+        self.label_info.setText(_translate("Caesar", "Поддерживаемые алфавиты:\n⚫ Латинский\n⚫ Кириллица\n\n"
+                                                     "⚠ Все символы,\nне входящие в них,\nостанутся неизменными.\n\n"
+                                                     "Ввод текста: верхнее поле\nРезультат: нижнее поле"))
 
         self.label_info_key.setText(_translate("Caesar", "⟵ Введите ключ (целое число)."))
 

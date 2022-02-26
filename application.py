@@ -44,14 +44,14 @@ class Ui_MainWindow(object):
         self.pushButton_PolybiusSquare.setObjectName("pushButton_3")
         self.pushButton_PolybiusSquare.setStyleSheet(self.default_style())
 
-        # In development buttons area
+        self.pushButton_Caesar = QtWidgets.QPushButton(self.centralwidget)
+        self.pushButton_Caesar.setGeometry(QtCore.QRect(0, 410, 270, 70))
+        self.pushButton_Caesar.setFont(font)
+        self.pushButton_Caesar.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+        self.pushButton_Caesar.setStyleSheet(self.default_style())
+        self.pushButton_Caesar.setObjectName("pushButton_4")
 
-        self.pushButton_4 = QtWidgets.QPushButton(self.centralwidget)
-        self.pushButton_4.setGeometry(QtCore.QRect(0, 410, 270, 70))
-        self.pushButton_4.setFont(font)
-        self.pushButton_4.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-        self.pushButton_4.setStyleSheet(self.in_development_style())
-        self.pushButton_4.setObjectName("pushButton_4")
+        # In development buttons area
 
         self.pushButton_5 = QtWidgets.QPushButton(self.centralwidget)
         self.pushButton_5.setGeometry(QtCore.QRect(270, 410, 270, 70))
@@ -134,7 +134,7 @@ class Ui_MainWindow(object):
         self.pushButton_Atbash.setText(_translate("MainWindow", "Шифр Атбаш"))
         self.pushButton_Scytale.setText(_translate("MainWindow", "Шифр Сцитала"))
         self.pushButton_PolybiusSquare.setText(_translate("MainWindow", "Шифр Квадрат Полибия"))
-        self.pushButton_4.setText(_translate("MainWindow", "Шифр Цезаря"))
+        self.pushButton_Caesar.setText(_translate("MainWindow", "Шифр Цезаря"))
         self.pushButton_5.setText(_translate("MainWindow", "Шифр Гронсфельда"))
         self.pushButton_6.setText(_translate("MainWindow", "Шифр Диск Альберти"))
         self.pushButton_7.setText(_translate("MainWindow", "Шифр Вижинера"))
@@ -197,7 +197,7 @@ class MainMenu(QtWidgets.QMainWindow, Ui_MainWindow):
         self.pushButton_Atbash.clicked.connect(self.run_atbash)
         self.pushButton_Scytale.clicked.connect(self.run_scytale)
         self.pushButton_PolybiusSquare.clicked.connect(self.run_polybius_square)
-        self.pushButton_4.clicked.connect(self.run_caesar)
+        self.pushButton_Caesar.clicked.connect(self.run_caesar)
         self.pushButton_5.clicked.connect(self.in_development)
         self.pushButton_6.clicked.connect(self.in_development)
         self.pushButton_7.clicked.connect(self.in_development)

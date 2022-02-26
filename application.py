@@ -1,5 +1,5 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
-from methods import atbash, scytale
+from methods import atbash, scytale, polybius_square
 import sys
 
 
@@ -16,6 +16,13 @@ class Ui_MainWindow(object):
 
         font = self.set_font("Uroob", size=11, bold=True)
 
+        self.pushButton_exit = QtWidgets.QPushButton(self.centralwidget)
+        self.pushButton_exit.setGeometry(QtCore.QRect(140, 520, 530, 45))
+        self.pushButton_exit.setFont(font)
+        self.pushButton_exit.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+        self.pushButton_exit.setStyleSheet(self.exit_style())
+        self.pushButton_exit.setObjectName("Exit")
+
         self.pushButton_Atbash = QtWidgets.QPushButton(self.centralwidget)
         self.pushButton_Atbash.setGeometry(QtCore.QRect(0, 200, 270, 70))
         self.pushButton_Atbash.setFont(font)
@@ -30,22 +37,14 @@ class Ui_MainWindow(object):
         self.pushButton_Scytale.setObjectName("pushButton_Scytale")
         self.pushButton_Scytale.setStyleSheet(self.default_style())
 
-        self.pushButton_exit = QtWidgets.QPushButton(self.centralwidget)
-        self.pushButton_exit.setGeometry(QtCore.QRect(140, 520, 530, 45))
-        self.pushButton_exit.setFont(font)
-        self.pushButton_exit.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-        self.pushButton_exit.setStyleSheet(self.exit_style())
-        self.pushButton_exit.setObjectName("Exit")
+        self.pushButton_PolybiusSquare = QtWidgets.QPushButton(self.centralwidget)
+        self.pushButton_PolybiusSquare.setGeometry(QtCore.QRect(0, 340, 270, 70))
+        self.pushButton_PolybiusSquare.setFont(font)
+        self.pushButton_PolybiusSquare.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+        self.pushButton_PolybiusSquare.setObjectName("pushButton_3")
+        self.pushButton_PolybiusSquare.setStyleSheet(self.default_style())
 
         # In development buttons area
-        font = self.set_font("Uroob", size=11, bold=True)
-
-        self.pushButton_3 = QtWidgets.QPushButton(self.centralwidget)
-        self.pushButton_3.setGeometry(QtCore.QRect(0, 340, 270, 70))
-        self.pushButton_3.setFont(font)
-        self.pushButton_3.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-        self.pushButton_3.setObjectName("pushButton_3")
-        self.pushButton_3.setStyleSheet(self.in_development_style())
 
         self.pushButton_4 = QtWidgets.QPushButton(self.centralwidget)
         self.pushButton_4.setGeometry(QtCore.QRect(0, 410, 270, 70))
@@ -134,7 +133,7 @@ class Ui_MainWindow(object):
         window.setWindowTitle(_translate("MainWindow", "CRYPTOGRAPHY"))
         self.pushButton_Atbash.setText(_translate("MainWindow", "Шифр Атбаш"))
         self.pushButton_Scytale.setText(_translate("MainWindow", "Шифр Сцитала"))
-        self.pushButton_3.setText(_translate("MainWindow", "Шифр Квадрат Полибия"))
+        self.pushButton_PolybiusSquare.setText(_translate("MainWindow", "Шифр Квадрат Полибия"))
         self.pushButton_4.setText(_translate("MainWindow", "Шифр Цезаря"))
         self.pushButton_5.setText(_translate("MainWindow", "Шифр Гронсфельда"))
         self.pushButton_6.setText(_translate("MainWindow", "Шифр Диск Альберти"))
@@ -197,7 +196,7 @@ class MainMenu(QtWidgets.QMainWindow, Ui_MainWindow):
 
         self.pushButton_Atbash.clicked.connect(self.run_atbash)
         self.pushButton_Scytale.clicked.connect(self.run_scytale)
-        self.pushButton_3.clicked.connect(self.in_development)
+        self.pushButton_PolybiusSquare.clicked.connect(self.run_polybius_square)
         self.pushButton_4.clicked.connect(self.in_development)
         self.pushButton_5.clicked.connect(self.in_development)
         self.pushButton_6.clicked.connect(self.in_development)
@@ -217,6 +216,11 @@ class MainMenu(QtWidgets.QMainWindow, Ui_MainWindow):
     def run_scytale(self):
         self.statusbar.showMessage("Запущено: Шифр Сцитала.")
         self.mySecond = scytale.UiMethod()
+        self.mySecond.show()
+
+    def run_polybius_square(self):
+        self.statusbar.showMessage("Запущено: Шифр Квадрат Полибия.")
+        self.mySecond = polybius_square.UiMethod()
         self.mySecond.show()
 
     def in_development(self):

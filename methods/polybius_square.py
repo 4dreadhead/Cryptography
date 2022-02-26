@@ -1,23 +1,24 @@
+import string as ascii_symbols
 import pyperclip
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 
-class Ui_Scytale(object):
-    def setupUi(self, Scytale):
-        Scytale.setObjectName("Scytale")
-        Scytale.resize(800, 600)
-        Scytale.setMinimumSize(QtCore.QSize(800, 600))
-        Scytale.setMaximumSize(QtCore.QSize(800, 600))
-        Scytale.setStyleSheet("background-color: rgb(32, 28, 42);")
+class Ui_PolybiusSquare(object):
+    def setupUi(self, PolybiusSquare):
+        PolybiusSquare.setObjectName("Scytale")
+        PolybiusSquare.resize(800, 600)
+        PolybiusSquare.setMinimumSize(QtCore.QSize(800, 600))
+        PolybiusSquare.setMaximumSize(QtCore.QSize(800, 600))
+        PolybiusSquare.setStyleSheet("background-color: rgb(32, 28, 42);")
 
-        self.centralwidget = QtWidgets.QWidget(Scytale)
+        self.centralwidget = QtWidgets.QWidget(PolybiusSquare)
         self.centralwidget.setObjectName("centralwidget")
 
-        self.label_Scytale_gif = QtWidgets.QLabel(self.centralwidget)
-        self.label_Scytale_gif.setGeometry(QtCore.QRect(30, 30, 431, 221))
-        self.label_Scytale_gif.setObjectName("label_Scytale_gif")
-        gif = QtGui.QMovie("media/scytale.gif")
-        self.label_Scytale_gif.setMovie(gif)
+        self.label_PolybiusSquare_gif = QtWidgets.QLabel(self.centralwidget)
+        self.label_PolybiusSquare_gif.setGeometry(QtCore.QRect(30, 30, 431, 221))
+        self.label_PolybiusSquare_gif.setObjectName("label_PolybiusSquare_gif")
+        gif = QtGui.QMovie("media/polybius_square.gif")
+        self.label_PolybiusSquare_gif.setMovie(gif)
         gif.start()
 
         font = self.set_font(size=9)
@@ -87,11 +88,11 @@ class Ui_Scytale(object):
         self.pushButton_exit.setObjectName("pushButton_exit")
         self.pushButton_exit.setStyleSheet(self.exit_style())
 
-        Scytale.setCentralWidget(self.centralwidget)
-        self.statusbar = QtWidgets.QStatusBar(Scytale)
+        PolybiusSquare.setCentralWidget(self.centralwidget)
+        self.statusbar = QtWidgets.QStatusBar(PolybiusSquare)
         self.statusbar.setObjectName("statusbar")
         self.statusbar.setStyleSheet("color: rgb(238, 238, 236);")
-        Scytale.setStatusBar(self.statusbar)
+        PolybiusSquare.setStatusBar(self.statusbar)
 
         self.pushButton_encrypt.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.pushButton_decrypt.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
@@ -104,25 +105,27 @@ class Ui_Scytale(object):
         self.textBrowser.viewport().setProperty("cursor", QtGui.QCursor(QtCore.Qt.IBeamCursor))
         self.plainTextEdit.viewport().setProperty("cursor", QtGui.QCursor(QtCore.Qt.IBeamCursor))
 
-        self.retranslateUi(Scytale)
-        QtCore.QMetaObject.connectSlotsByName(Scytale)
+        self.retranslateUi(PolybiusSquare)
+        QtCore.QMetaObject.connectSlotsByName(PolybiusSquare)
 
-    def retranslateUi(self, Scytale):
+    def retranslateUi(self, PolybiusSquare):
         _translate = QtCore.QCoreApplication.translate
-        Scytale.setWindowTitle(_translate("Scytale", "SCYTALE"))
+        PolybiusSquare.setWindowTitle(_translate("PolybiusSquare", "POLYBIUS SQUARE"))
 
-        self.pushButton_encrypt.setText(_translate("Scytale", "Зашифровать"))
-        self.pushButton_decrypt.setText(_translate("Scytale", "Расшифровать"))
-        self.pushButton_paste.setText(_translate("Scytale", "Вставить"))
-        self.pushButton_clearInput.setText(_translate("Scytale", "Копировать"))
-        self.pushButton_copy.setText(_translate("Scytale", "Очистить"))
-        self.pushButton_clearOutput.setText(_translate("Scytale", "Очистить"))
-        self.pushButton_exit.setText(_translate("Scytale", "Закрыть окно"))
+        self.pushButton_encrypt.setText(_translate("PolybiusSquare", "Зашифровать"))
+        self.pushButton_decrypt.setText(_translate("PolybiusSquare", "Расшифровать"))
+        self.pushButton_paste.setText(_translate("PolybiusSquare", "Вставить"))
+        self.pushButton_clearInput.setText(_translate("PolybiusSquare", "Копировать"))
+        self.pushButton_copy.setText(_translate("PolybiusSquare", "Очистить"))
+        self.pushButton_clearOutput.setText(_translate("PolybiusSquare", "Очистить"))
+        self.pushButton_exit.setText(_translate("PolybiusSquare", "Закрыть окно"))
 
-        self.label_info.setText(_translate("Scytale", "Размер таблицы:\nОпределяется автоматически.\n\n"
-                                                      "Символ дополнения:\n"
-                                                      "'⋆' (U-22C6).\n\n"
-                                                      "Ввод текста: верхнее поле.\nРезультат: нижнее поле"))
+        self.label_info.setText(_translate("PolybiusSquare", "⚠ Алфавит для шифрования и\nрасшифрования "
+                                                             "определяется по\nпервой встреченной букве.\n\n"
+                                                             "⚠ J отождествляется с I.\n\n"
+                                                             "⚠ Символы, не попавшие в\nалфавит,"
+                                                             " останутся неизменными.\n\n"
+                                                             "Ввод текста: верхнее поле.\nРезультат: нижнее поле"))
 
         self.textBrowser.setHtml(_translate("Scytale",
                                             "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \""
@@ -184,9 +187,18 @@ class Ui_Scytale(object):
         return style
 
 
-class UiMethod(QtWidgets.QMainWindow, Ui_Scytale):
+class UiMethod(QtWidgets.QMainWindow, Ui_PolybiusSquare):
     def __init__(self):
         super().__init__()
+
+        self.rus_table = self.set_rus_table()
+        self.eng_table = self.set_eng_table()
+
+        a = ord('а')
+        self.eng = ascii_symbols.printable[36:62]
+        self.rus = [chr(i).upper() for i in range(a, a + 6)] + \
+                   [chr(a + 33).upper()] + ["`", "~", "^"] + \
+                   [chr(i).upper() for i in range(a + 6, a + 32)]
 
         self.setupUi(self)
         self.setWindowIcon(QtGui.QIcon('media/icon.png'))
@@ -220,56 +232,119 @@ class UiMethod(QtWidgets.QMainWindow, Ui_Scytale):
         self.plainTextEdit.setPlainText(pyperclip.paste())
         self.statusbar.showMessage("Текст вставлен из буффера обмена.")
 
+    def scan_string(self, string):
+        for letter in string:
+            if letter in self.rus:
+                return self.rus_table, self.rus
+            elif letter in self.eng:
+                return self.eng_table, self.eng
+            else:
+                continue
+        return "empty", None
+
     def encrypt(self):
-        string = self.plainTextEdit.toPlainText()
+        string = self.plainTextEdit.toPlainText().upper()
+        string = string.replace("J", "I")
         self.textBrowser.setText("")
 
-        table_size = self.set_table_size(string, encrypt=True)
-        string = string.ljust(table_size["row_count"] * table_size["row_size"], "⋆")
-        self.result = self.transform(string, table_size)
+        table, locale = self.scan_string(string)
+        if table == "empty":
+            self.textBrowser.setText(string)
+            self.statusbar.showMessage("Текст зашифрован.")
+            return
+
+        self.result = ""
+        coordinates = ["", ""]
+        converted_coordinates = ""
+
+        for letter in string:
+            if letter not in locale:
+                continue
+
+            for i in range(len(table)):
+                for j in range(len(table)):
+                    if letter == table[i][j]:
+                        coordinates[0] += str(j)
+                        coordinates[1] += str(i)
+                        break
+
+        for i in range(2):
+            for coordinate in coordinates[i]:
+                converted_coordinates += coordinate
+
+        for letter in string:
+            if letter not in locale:
+                self.result += letter
+                continue
+
+            y = int(converted_coordinates[1])
+            x = int(converted_coordinates[0])
+            converted_coordinates = converted_coordinates[2:]
+
+            self.result += table[y][x]
 
         self.textBrowser.setText(self.result)
-        self.statusbar.showMessage("Текст зашифрован.")
+        self.statusbar.showMessage("Текст зашифрован")
 
     def decrypt(self):
-        string = self.plainTextEdit.toPlainText()
+        string = self.plainTextEdit.toPlainText().upper()
         self.textBrowser.setText("")
 
-        table_size = self.set_table_size(string, decrypt=True)
-        string = string.ljust(table_size["row_count"] * table_size["row_size"], "⋆")
-        self.result = self.transform(string, table_size)
+        table, locale = self.scan_string(string)
+        if table == "empty":
+            self.textBrowser.setText(string)
+            self.statusbar.showMessage("Текст зашифрован.")
+            return
 
-        self.textBrowser.setText(self.result.replace("⋆", ""))
-        self.statusbar.showMessage("Текст расшифрован.")
+        self.result = ""
+        coordinates = ["", ""]
+        converted_coordinates = ""
+
+        for letter in string:
+            if letter not in locale:
+                continue
+
+            for i in range(len(table)):
+                for j in range(len(table)):
+                    if letter == table[i][j]:
+                        converted_coordinates += str(j) + str(i)
+                        break
+
+        coordinates[0] = converted_coordinates[:len(converted_coordinates)//2]
+        coordinates[1] = converted_coordinates[len(converted_coordinates)//2:]
+
+        for letter in string:
+            if letter not in locale:
+                self.result += letter
+                continue
+
+            y = int(coordinates[1][0])
+            x = int(coordinates[0][0])
+            coordinates[0] = coordinates[0][1:]
+            coordinates[1] = coordinates[1][1:]
+
+            self.result += table[y][x]
+
+        self.textBrowser.setText(self.result)
+        self.statusbar.showMessage("Текст расшифрован")
 
     @staticmethod
-    def set_table_size(incoming_string, encrypt=False, decrypt=False):
-        table_size = {}
-        row_size = len(incoming_string) ** (1 / 2)
-        if row_size % 1 == 0:
-            table_size = {"row_size": int(row_size), "row_count": int(row_size)}
-        else:
-            row_size = int(row_size) + 1
-            row_count = row_size if len(incoming_string) > row_size * (row_size - 1) else row_size - 1
-            if encrypt:
-                table_size = {"row_size": row_size, "row_count": row_count}
-            if decrypt:
-                table_size = {"row_size": row_count, "row_count": row_size}
-        return table_size
+    def set_rus_table():
+        return [
+            ["А", "Б", "В", "Г", "Д", "Е"],
+            ["Ё", "Ж", "З", "И", "Й", "К"],
+            ["Л", "М", "Н", "О", "П", "Р"],
+            ["С", "Т", "У", "Ф", "Х", "Ц"],
+            ["Ч", "Ш", "Щ", "Ъ", "Ы", "Ь"],
+            ["Э", "Ю", "Я", "~", "`", "^"]
+        ]
 
     @staticmethod
-    def transform(incoming_string, table_size):
-        table = []
-        for i in range(table_size["row_count"]):
-            table.append(incoming_string[:table_size["row_size"]])
-            incoming_string = incoming_string[table_size["row_size"]:]
-
-        result_table = [["" for _ in range(table_size["row_count"])] for _ in range(table_size["row_size"])]
-        for i in range(table_size["row_count"]):
-            for j in range(table_size["row_size"]):
-                result_table[j][i] = table[i][j]
-
-        result = ""
-        for row in result_table:
-            result += "".join(row)
-        return result
+    def set_eng_table():
+        return [
+            ["A", "B", "C", "D", "E"],
+            ["F", "G", "H", "I", "K"],
+            ["L", "M", "N", "O", "P"],
+            ["Q", "R", "S", "T", "U"],
+            ["V", "W", "X", "Y", "Z"],
+        ]

@@ -1,5 +1,5 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
-from methods import atbash, scytale, polybius_square
+from methods import atbash, scytale, polybius_square, caesar
 import sys
 
 
@@ -197,7 +197,7 @@ class MainMenu(QtWidgets.QMainWindow, Ui_MainWindow):
         self.pushButton_Atbash.clicked.connect(self.run_atbash)
         self.pushButton_Scytale.clicked.connect(self.run_scytale)
         self.pushButton_PolybiusSquare.clicked.connect(self.run_polybius_square)
-        self.pushButton_4.clicked.connect(self.in_development)
+        self.pushButton_4.clicked.connect(self.run_caesar)
         self.pushButton_5.clicked.connect(self.in_development)
         self.pushButton_6.clicked.connect(self.in_development)
         self.pushButton_7.clicked.connect(self.in_development)
@@ -221,6 +221,11 @@ class MainMenu(QtWidgets.QMainWindow, Ui_MainWindow):
     def run_polybius_square(self):
         self.statusbar.showMessage("Запущено: Шифр Квадрат Полибия.")
         self.mySecond = polybius_square.UiMethod()
+        self.mySecond.show()
+
+    def run_caesar(self):
+        self.statusbar.showMessage("Запущено: Шифр Цезаря.")
+        self.mySecond = caesar.UiMethod()
         self.mySecond.show()
 
     def in_development(self):

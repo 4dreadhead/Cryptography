@@ -3,43 +3,56 @@ import pyperclip
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 
-class Ui_PolybiusSquare(object):
-    def setupUi(self, PolybiusSquare):
-        PolybiusSquare.setObjectName("PolybiusSquare")
-        PolybiusSquare.resize(800, 600)
-        PolybiusSquare.setMinimumSize(QtCore.QSize(800, 600))
-        PolybiusSquare.setMaximumSize(QtCore.QSize(800, 600))
-        PolybiusSquare.setStyleSheet("background-color: rgb(32, 28, 42);")
+class Ui_Caesar(object):
+    def setupUi(self, Caesar):
+        Caesar.setObjectName("Caesar")
+        Caesar.resize(800, 650)
+        Caesar.setMinimumSize(QtCore.QSize(800, 650))
+        Caesar.setMaximumSize(QtCore.QSize(800, 650))
+        Caesar.setStyleSheet("background-color: rgb(32, 28, 42);")
 
-        self.centralwidget = QtWidgets.QWidget(PolybiusSquare)
+        self.centralwidget = QtWidgets.QWidget(Caesar)
         self.centralwidget.setObjectName("centralwidget")
 
-        self.label_PolybiusSquare_gif = QtWidgets.QLabel(self.centralwidget)
-        self.label_PolybiusSquare_gif.setGeometry(QtCore.QRect(30, 30, 431, 221))
-        self.label_PolybiusSquare_gif.setObjectName("label_PolybiusSquare_gif")
-        gif = QtGui.QMovie("media/polybius_square.gif")
-        self.label_PolybiusSquare_gif.setMovie(gif)
+        self.label_Caesar_gif = QtWidgets.QLabel(self.centralwidget)
+        self.label_Caesar_gif.setGeometry(QtCore.QRect(30, 30, 431, 221))
+        self.label_Caesar_gif.setObjectName("label_caesar_gif")
+        gif = QtGui.QMovie("media/caesar.gif")
+        self.label_Caesar_gif.setMovie(gif)
         gif.start()
 
         font = self.set_font(size=9)
 
         self.label_info = QtWidgets.QLabel(self.centralwidget)
-        self.label_info.setGeometry(QtCore.QRect(480, 30, 291, 221))
+        self.label_info.setGeometry(QtCore.QRect(480, 30, 289, 279))
         self.label_info.setFont(font)
         self.label_info.setStyleSheet(self.text_area_style())
         self.label_info.setAlignment(QtCore.Qt.AlignCenter)
         self.label_info.setObjectName("label_info")
 
+        self.label_info_key = QtWidgets.QLabel(self.centralwidget)
+        self.label_info_key.setGeometry(QtCore.QRect(201, 278, 260, 31))
+        self.label_info_key.setFont(font)
+        self.label_info_key.setStyleSheet(self.text_area_style())
+        self.label_info_key.setAlignment(QtCore.Qt.AlignCenter)
+        self.label_info_key.setObjectName("label_info")
+
         font = self.set_font(size=10)
 
         self.plainTextEdit = QtWidgets.QPlainTextEdit(self.centralwidget)
-        self.plainTextEdit.setGeometry(QtCore.QRect(30, 270, 739, 101))
+        self.plainTextEdit.setGeometry(QtCore.QRect(30, 320, 739, 101))
         self.plainTextEdit.setFont(font)
         self.plainTextEdit.setStyleSheet(self.text_area_style())
         self.plainTextEdit.setObjectName("plainTextEdit")
 
+        self.plainTextEdit_key = QtWidgets.QPlainTextEdit(self.centralwidget)
+        self.plainTextEdit_key.setGeometry(QtCore.QRect(30, 278, 150, 31))
+        self.plainTextEdit_key.setFont(font)
+        self.plainTextEdit_key.setStyleSheet(self.text_area_style())
+        self.plainTextEdit_key.setObjectName("plainTextEdit")
+
         self.textBrowser = QtWidgets.QTextBrowser(self.centralwidget)
-        self.textBrowser.setGeometry(QtCore.QRect(30, 420, 739, 101))
+        self.textBrowser.setGeometry(QtCore.QRect(30, 470, 739, 101))
         self.textBrowser.setFont(font)
         self.textBrowser.setStyleSheet(self.text_area_style())
         self.textBrowser.setObjectName("textBrowser")
@@ -47,52 +60,52 @@ class Ui_PolybiusSquare(object):
         font = self.set_font("Uroob", size=10, weight=75, bold=True)
 
         self.pushButton_encrypt = QtWidgets.QPushButton(self.centralwidget)
-        self.pushButton_encrypt.setGeometry(QtCore.QRect(30, 380, 201, 31))
+        self.pushButton_encrypt.setGeometry(QtCore.QRect(30, 430, 201, 31))
         self.pushButton_encrypt.setFont(font)
         self.pushButton_encrypt.setObjectName("pushButton_encrypt")
         self.pushButton_encrypt.setStyleSheet(self.encrypt_style())
 
         self.pushButton_decrypt = QtWidgets.QPushButton(self.centralwidget)
-        self.pushButton_decrypt.setGeometry(QtCore.QRect(240, 380, 201, 31))
+        self.pushButton_decrypt.setGeometry(QtCore.QRect(240, 430, 201, 31))
         self.pushButton_decrypt.setFont(font)
         self.pushButton_decrypt.setObjectName("pushButton_decrypt")
         self.pushButton_decrypt.setStyleSheet(self.encrypt_style())
 
         self.pushButton_paste = QtWidgets.QPushButton(self.centralwidget)
-        self.pushButton_paste.setGeometry(QtCore.QRect(460, 380, 151, 31))
+        self.pushButton_paste.setGeometry(QtCore.QRect(460, 430, 151, 31))
         self.pushButton_paste.setFont(font)
         self.pushButton_paste.setObjectName("pushButton_paste")
         self.pushButton_paste.setStyleSheet(self.default_style())
 
         self.pushButton_clearInput = QtWidgets.QPushButton(self.centralwidget)
-        self.pushButton_clearInput.setGeometry(QtCore.QRect(460, 530, 151, 31))
+        self.pushButton_clearInput.setGeometry(QtCore.QRect(460, 580, 151, 31))
         self.pushButton_clearInput.setFont(font)
         self.pushButton_clearInput.setObjectName("pushButton_clearInput")
         self.pushButton_clearInput.setStyleSheet(self.default_style())
 
         self.pushButton_copy = QtWidgets.QPushButton(self.centralwidget)
-        self.pushButton_copy.setGeometry(QtCore.QRect(620, 380, 151, 31))
+        self.pushButton_copy.setGeometry(QtCore.QRect(620, 430, 151, 31))
         self.pushButton_copy.setFont(font)
         self.pushButton_copy.setObjectName("pushButton_copy")
         self.pushButton_copy.setStyleSheet(self.default_style())
 
         self.pushButton_clearOutput = QtWidgets.QPushButton(self.centralwidget)
-        self.pushButton_clearOutput.setGeometry(QtCore.QRect(620, 530, 151, 31))
+        self.pushButton_clearOutput.setGeometry(QtCore.QRect(620, 580, 151, 31))
         self.pushButton_clearOutput.setFont(font)
         self.pushButton_clearOutput.setObjectName("pushButton_clearOutput")
         self.pushButton_clearOutput.setStyleSheet(self.default_style())
 
         self.pushButton_exit = QtWidgets.QPushButton(self.centralwidget)
-        self.pushButton_exit.setGeometry(QtCore.QRect(30, 530, 201, 31))
+        self.pushButton_exit.setGeometry(QtCore.QRect(30, 580, 201, 31))
         self.pushButton_exit.setFont(font)
         self.pushButton_exit.setObjectName("pushButton_exit")
         self.pushButton_exit.setStyleSheet(self.exit_style())
 
-        PolybiusSquare.setCentralWidget(self.centralwidget)
-        self.statusbar = QtWidgets.QStatusBar(PolybiusSquare)
+        Caesar.setCentralWidget(self.centralwidget)
+        self.statusbar = QtWidgets.QStatusBar(Caesar)
         self.statusbar.setObjectName("statusbar")
         self.statusbar.setStyleSheet("color: rgb(238, 238, 236);")
-        PolybiusSquare.setStatusBar(self.statusbar)
+        Caesar.setStatusBar(self.statusbar)
 
         self.pushButton_encrypt.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.pushButton_decrypt.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
@@ -105,27 +118,29 @@ class Ui_PolybiusSquare(object):
         self.textBrowser.viewport().setProperty("cursor", QtGui.QCursor(QtCore.Qt.IBeamCursor))
         self.plainTextEdit.viewport().setProperty("cursor", QtGui.QCursor(QtCore.Qt.IBeamCursor))
 
-        self.retranslateUi(PolybiusSquare)
-        QtCore.QMetaObject.connectSlotsByName(PolybiusSquare)
+        self.retranslateUi(Caesar)
+        QtCore.QMetaObject.connectSlotsByName(Caesar)
 
-    def retranslateUi(self, PolybiusSquare):
+    def retranslateUi(self, Caesar):
         _translate = QtCore.QCoreApplication.translate
-        PolybiusSquare.setWindowTitle(_translate("PolybiusSquare", "POLYBIUS SQUARE"))
+        Caesar.setWindowTitle(_translate("Caesar", "CAESAR"))
 
-        self.pushButton_encrypt.setText(_translate("PolybiusSquare", "Зашифровать"))
-        self.pushButton_decrypt.setText(_translate("PolybiusSquare", "Расшифровать"))
-        self.pushButton_paste.setText(_translate("PolybiusSquare", "Вставить"))
-        self.pushButton_clearInput.setText(_translate("PolybiusSquare", "Копировать"))
-        self.pushButton_copy.setText(_translate("PolybiusSquare", "Очистить"))
-        self.pushButton_clearOutput.setText(_translate("PolybiusSquare", "Очистить"))
-        self.pushButton_exit.setText(_translate("PolybiusSquare", "Закрыть окно"))
+        self.pushButton_encrypt.setText(_translate("Caesar", "Зашифровать"))
+        self.pushButton_decrypt.setText(_translate("Caesar", "Расшифровать"))
+        self.pushButton_paste.setText(_translate("Caesar", "Вставить"))
+        self.pushButton_clearInput.setText(_translate("Caesar", "Копировать"))
+        self.pushButton_copy.setText(_translate("Caesar", "Очистить"))
+        self.pushButton_clearOutput.setText(_translate("Caesar", "Очистить"))
+        self.pushButton_exit.setText(_translate("Caesar", "Закрыть окно"))
 
-        self.label_info.setText(_translate("PolybiusSquare", "⚠ Алфавит для шифрования и\nрасшифрования "
+        self.label_info.setText(_translate("Caesar", "⚠ Алфавит для шифрования и\nрасшифрования "
                                                              "определяется по\nпервой встреченной букве.\n\n"
                                                              "⚠ J отождествляется с I.\n\n"
                                                              "⚠ Символы, не попавшие в\nалфавит,"
                                                              " останутся неизменными.\n\n"
                                                              "Ввод текста: верхнее поле.\nРезультат: нижнее поле"))
+
+        self.label_info_key.setText(_translate("Caesar", "⟵ Введите ключ (целое число)."))
 
         self.textBrowser.setHtml(_translate("Scytale",
                                             "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \""
@@ -187,18 +202,15 @@ class Ui_PolybiusSquare(object):
         return style
 
 
-class UiMethod(QtWidgets.QMainWindow, Ui_PolybiusSquare):
+class UiMethod(QtWidgets.QMainWindow, Ui_Caesar):
     def __init__(self):
         super().__init__()
 
-        self.rus_table = self.set_rus_table()
-        self.eng_table = self.set_eng_table()
-
         a = ord('а')
-        self.eng = ascii_symbols.printable[36:62]
-        self.rus = [chr(i).upper() for i in range(a, a + 6)] + \
-                   [chr(a + 33).upper()] + ["`", "~", "^"] + \
-                   [chr(i).upper() for i in range(a + 6, a + 32)]
+        self.cyrillic_low = [chr(i) for i in range(a, a + 6)] + [chr(a + 33)] + [chr(i) for i in range(a + 6, a + 32)]
+        self.cyrillic_high = [i.swapcase() for i in self.cyrillic_low]
+        self.latin_low = ascii_symbols.printable[10:36]
+        self.latin_high = ascii_symbols.printable[36:62]
 
         self.setupUi(self)
         self.setWindowIcon(QtGui.QIcon('media/icon.png'))
@@ -243,108 +255,75 @@ class UiMethod(QtWidgets.QMainWindow, Ui_PolybiusSquare):
         return "empty", None
 
     def encrypt(self):
-        string = self.plainTextEdit.toPlainText().upper()
-        string = string.replace("J", "I")
-        self.textBrowser.setText("")
-
-        table, locale = self.scan_string(string)
-        if table == "empty":
-            self.textBrowser.setText(string)
-            self.statusbar.showMessage("Текст зашифрован.")
+        key = self.extract_key()
+        if not key:
+            self.statusbar.showMessage("Некорректное значение ключа")
             return
 
-        self.result = ""
-        coordinates = ["", ""]
-        converted_coordinates = ""
+        string = self.plainTextEdit.toPlainText()
+        self.result = string
+        self.textBrowser.setText("")
 
-        for letter in string:
-            if letter not in locale:
-                continue
+        mixed_alphabets = self.mix_alphabets(key)
+        for i in range(4):
+            origin = mixed_alphabets[0]
+            destination = mixed_alphabets[1]
+            mixed_alphabets = mixed_alphabets[2:]
 
-            for i in range(len(table)):
-                for j in range(len(table)):
-                    if letter == table[i][j]:
-                        coordinates[0] += str(j)
-                        coordinates[1] += str(i)
-                        break
-
-        for i in range(2):
-            for coordinate in coordinates[i]:
-                converted_coordinates += coordinate
-
-        for letter in string:
-            if letter not in locale:
-                self.result += letter
-                continue
-
-            y = int(converted_coordinates[1])
-            x = int(converted_coordinates[0])
-            converted_coordinates = converted_coordinates[2:]
-
-            self.result += table[y][x]
+            self.result = self.replace_symbols(self.result, origin, destination)
 
         self.textBrowser.setText(self.result)
         self.statusbar.showMessage("Текст зашифрован")
 
     def decrypt(self):
-        string = self.plainTextEdit.toPlainText().upper()
-        self.textBrowser.setText("")
-
-        table, locale = self.scan_string(string)
-        if table == "empty":
-            self.textBrowser.setText(string)
-            self.statusbar.showMessage("Текст зашифрован.")
+        key = self.extract_key()
+        if not key:
+            self.statusbar.showMessage("Некорректное значение ключа")
             return
 
-        self.result = ""
-        coordinates = ["", ""]
-        converted_coordinates = ""
+        string = self.plainTextEdit.toPlainText()
+        self.result = string
+        self.textBrowser.setText("")
 
-        for letter in string:
-            if letter not in locale:
-                continue
+        mixed_alphabets = self.mix_alphabets(key)
+        for i in range(4):
+            origin = mixed_alphabets[1]
+            destination = mixed_alphabets[0]
+            mixed_alphabets = mixed_alphabets[2:]
 
-            for i in range(len(table)):
-                for j in range(len(table)):
-                    if letter == table[i][j]:
-                        converted_coordinates += str(j) + str(i)
-                        break
-
-        coordinates[0] = converted_coordinates[:len(converted_coordinates)//2]
-        coordinates[1] = converted_coordinates[len(converted_coordinates)//2:]
-
-        for letter in string:
-            if letter not in locale:
-                self.result += letter
-                continue
-
-            y = int(coordinates[1][0])
-            x = int(coordinates[0][0])
-            coordinates[0] = coordinates[0][1:]
-            coordinates[1] = coordinates[1][1:]
-
-            self.result += table[y][x]
+            self.result = self.replace_symbols(self.result, origin, destination)
 
         self.textBrowser.setText(self.result)
-        self.statusbar.showMessage("Текст расшифрован")
+        self.statusbar.showMessage("Текст зашифрован")
 
-    @staticmethod
-    def set_rus_table():
+    def extract_key(self):
+        try:
+            return int(self.plainTextEdit_key.toPlainText())
+        except Exception:
+            return None
+
+    def mix_alphabets(self, key):
         return [
-            ["А", "Б", "В", "Г", "Д", "Е"],
-            ["Ё", "Ж", "З", "И", "Й", "К"],
-            ["Л", "М", "Н", "О", "П", "Р"],
-            ["С", "Т", "У", "Ф", "Х", "Ц"],
-            ["Ч", "Ш", "Щ", "Ъ", "Ы", "Ь"],
-            ["Э", "Ю", "Я", "~", "`", "^"]
+            "".join(self.cyrillic_low), "".join(self.transform(self.cyrillic_low, key)),
+            "".join(self.cyrillic_high), "".join(self.transform(self.cyrillic_high, key)),
+            "".join(self.latin_low), "".join(self.transform(self.latin_low, key)),
+            "".join(self.latin_high), "".join(self.transform(self.latin_high, key))
         ]
 
     @staticmethod
-    def set_eng_table():
-        return [
-            ["A", "B", "C", "D", "E"],
-            ["F", "G", "H", "I", "K"],
-            ["L", "M", "N", "O", "P"],
-            ["Q", "R", "S", "T", "U"],
-            ["V", "W", "X", "Y", "Z"],
-        ]
+    def transform(alphabet, key):
+        mixed_alphabet = []
+        for i in range(len(alphabet)):
+            mixed_alphabet.append(alphabet[(i + key) % len(alphabet)])
+        return mixed_alphabet
+
+    @staticmethod
+    def replace_symbols(string, origin, destination):
+        result_string = ""
+        for letter in string:
+            try:
+                index = origin.index(letter)
+                result_string += destination[index]
+            except ValueError:
+                result_string += letter
+        return result_string

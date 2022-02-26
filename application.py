@@ -41,7 +41,7 @@ class Ui_MainWindow(object):
         self.pushButton_PolybiusSquare.setGeometry(QtCore.QRect(0, 340, 270, 70))
         self.pushButton_PolybiusSquare.setFont(font)
         self.pushButton_PolybiusSquare.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-        self.pushButton_PolybiusSquare.setObjectName("pushButton_3")
+        self.pushButton_PolybiusSquare.setObjectName("pushButton_PolybiusSquare")
         self.pushButton_PolybiusSquare.setStyleSheet(self.default_style())
 
         self.pushButton_Caesar = QtWidgets.QPushButton(self.centralwidget)
@@ -49,7 +49,7 @@ class Ui_MainWindow(object):
         self.pushButton_Caesar.setFont(font)
         self.pushButton_Caesar.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.pushButton_Caesar.setStyleSheet(self.default_style())
-        self.pushButton_Caesar.setObjectName("pushButton_4")
+        self.pushButton_Caesar.setObjectName("pushButton_Caesar")
 
         # In development buttons area
 

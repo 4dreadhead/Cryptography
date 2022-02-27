@@ -20,6 +20,10 @@
   pip3 install -r requirements.txt
 
 - Запустить application.py
+
+- При возникновении ошибки линуксовых системах нужно установить пакет libxcb-xinerama0
+
+  В Ubuntu: sudo apt-get install libxcb-xinerama0
 --------------------------------------------------------------------
 Так же приложена версия .exe для запуска в windows.
 

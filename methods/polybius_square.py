@@ -120,10 +120,12 @@ class Ui_PolybiusSquare(object):
         self.pushButton_clearOutput.setText(_translate("PolybiusSquare", "Очистить"))
         self.pushButton_exit.setText(_translate("PolybiusSquare", "Закрыть окно"))
 
-        self.label_info.setText(_translate("PolybiusSquare", "⚠ Алфавит для шифрования и\nрасшифрования "
-                                                             "определяется по\nпервой встреченной букве.\n\n"
+        self.label_info.setText(_translate("PolybiusSquare", "⚠ Дополнительные символы\nв русском алфавите:\n"
+                                                             "' ` ', ' ~ ', ' ^ '.\n"
+                                                             "Необходимы для получения\n"
+                                                             "таблицы из 36 символов.\n\n"
                                                              "⚠ J отождествляется с I.\n\n"
-                                                             "⚠ Символы, не попавшие в\nалфавит,"
+                                                             "⚠ Символы, не попавшие ни в один\nалфавит,"
                                                              " останутся неизменными.\n\n"
                                                              "Ввод текста: верхнее поле.\nРезультат: нижнее поле"))
 
@@ -232,98 +234,86 @@ class UiMethod(QtWidgets.QMainWindow, Ui_PolybiusSquare):
         self.plainTextEdit.setPlainText(pyperclip.paste())
         self.statusbar.showMessage("Текст вставлен из буффера обмена.")
 
-    def scan_string(self, string):
-        for letter in string:
-            if letter in self.rus:
-                return self.rus_table, self.rus
-            elif letter in self.eng:
-                return self.eng_table, self.eng
-            else:
-                continue
-        return "empty", None
-
     def encrypt(self):
         string = self.plainTextEdit.toPlainText().upper()
         string = string.replace("J", "I")
         self.textBrowser.setText("")
 
-        table, locale = self.scan_string(string)
-        if table == "empty":
-            self.textBrowser.setText(string)
-            self.statusbar.showMessage("Текст зашифрован.")
-            return
+        for key in range(2):
+            table, locale = (self.eng_table, self.eng) if key == 0 else (self.rus_table, self.rus)
 
-        self.result = ""
-        coordinates = ["", ""]
-        converted_coordinates = ""
+            result = ""
+            coordinates = ["", ""]
+            converted_coordinates = ""
 
-        for letter in string:
-            if letter not in locale:
-                continue
+            for letter in string:
+                if letter not in locale:
+                    continue
 
-            for i in range(len(table)):
-                for j in range(len(table)):
-                    if letter == table[i][j]:
-                        coordinates[0] += str(j)
-                        coordinates[1] += str(i)
-                        break
+                for i in range(len(table)):
+                    for j in range(len(table)):
+                        if letter == table[i][j]:
+                            coordinates[0] += str(j)
+                            coordinates[1] += str(i)
+                            break
 
-        for i in range(2):
-            for coordinate in coordinates[i]:
-                converted_coordinates += coordinate
+            for i in range(2):
+                for coordinate in coordinates[i]:
+                    converted_coordinates += coordinate
 
-        for letter in string:
-            if letter not in locale:
-                self.result += letter
-                continue
+            for letter in string:
+                if letter not in locale:
+                    result += letter
+                    continue
 
-            y = int(converted_coordinates[1])
-            x = int(converted_coordinates[0])
-            converted_coordinates = converted_coordinates[2:]
+                y = int(converted_coordinates[1])
+                x = int(converted_coordinates[0])
+                converted_coordinates = converted_coordinates[2:]
 
-            self.result += table[y][x]
+                result += table[y][x]
 
-        self.textBrowser.setText(self.result)
+            string = result
+        self.result = string
+        self.textBrowser.setText(string)
         self.statusbar.showMessage("Текст зашифрован")
 
     def decrypt(self):
         string = self.plainTextEdit.toPlainText().upper()
+        string = string.replace("J", "I")
         self.textBrowser.setText("")
+        for key in range(2):
+            table, locale = (self.eng_table, self.eng) if key == 0 else (self.rus_table, self.rus)
 
-        table, locale = self.scan_string(string)
-        if table == "empty":
-            self.textBrowser.setText(string)
-            self.statusbar.showMessage("Текст зашифрован.")
-            return
+            result = ""
+            coordinates = ["", ""]
+            converted_coordinates = ""
 
-        self.result = ""
-        coordinates = ["", ""]
-        converted_coordinates = ""
+            for letter in string:
+                if letter not in locale:
+                    continue
 
-        for letter in string:
-            if letter not in locale:
-                continue
+                for i in range(len(table)):
+                    for j in range(len(table)):
+                        if letter == table[i][j]:
+                            converted_coordinates += str(j) + str(i)
+                            break
 
-            for i in range(len(table)):
-                for j in range(len(table)):
-                    if letter == table[i][j]:
-                        converted_coordinates += str(j) + str(i)
-                        break
+            coordinates[0] = converted_coordinates[:len(converted_coordinates)//2]
+            coordinates[1] = converted_coordinates[len(converted_coordinates)//2:]
 
-        coordinates[0] = converted_coordinates[:len(converted_coordinates)//2]
-        coordinates[1] = converted_coordinates[len(converted_coordinates)//2:]
+            for letter in string:
+                if letter not in locale:
+                    result += letter
+                    continue
 
-        for letter in string:
-            if letter not in locale:
-                self.result += letter
-                continue
+                y = int(coordinates[1][0])
+                x = int(coordinates[0][0])
+                coordinates[0] = coordinates[0][1:]
+                coordinates[1] = coordinates[1][1:]
 
-            y = int(coordinates[1][0])
-            x = int(coordinates[0][0])
-            coordinates[0] = coordinates[0][1:]
-            coordinates[1] = coordinates[1][1:]
-
-            self.result += table[y][x]
+                result += table[y][x]
+            string = result
+        self.result = string
 
         self.textBrowser.setText(self.result)
         self.statusbar.showMessage("Текст расшифрован")

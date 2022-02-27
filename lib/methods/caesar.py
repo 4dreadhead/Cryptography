@@ -17,7 +17,7 @@ class Ui_Caesar(object):
         self.label_Caesar_gif = QtWidgets.QLabel(self.centralwidget)
         self.label_Caesar_gif.setGeometry(QtCore.QRect(30, 30, 431, 221))
         self.label_Caesar_gif.setObjectName("label_caesar_gif")
-        gif = QtGui.QMovie("media/caesar.gif")
+        gif = QtGui.QMovie("lib/media/caesar.gif")
         self.label_Caesar_gif.setMovie(gif)
         gif.start()
 
@@ -210,7 +210,7 @@ class UiMethod(QtWidgets.QMainWindow, Ui_Caesar):
         self.latin_high = ascii_symbols.printable[36:62]
 
         self.setupUi(self)
-        self.setWindowIcon(QtGui.QIcon('media/icon.png'))
+        self.setWindowIcon(QtGui.QIcon('lib/media/icon.png'))
         self.result = ""
 
         self.pushButton_encrypt.clicked.connect(self.encrypt)

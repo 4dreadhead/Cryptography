@@ -3,7 +3,7 @@ import pyperclip
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 
-class Ui_Atbash(object):
+class UiAtbash(object):
     def setupUi(self, Atbash):
         Atbash.setObjectName("Atbash")
         Atbash.resize(800, 600)
@@ -176,7 +176,7 @@ class Ui_Atbash(object):
         return style
 
 
-class UiMethod(QtWidgets.QMainWindow, Ui_Atbash):
+class AtbashWindow(QtWidgets.QMainWindow, UiAtbash):
     def __init__(self):
         super().__init__()
 
@@ -235,13 +235,13 @@ class UiMethod(QtWidgets.QMainWindow, Ui_Atbash):
             decrypted_or_encrypted_string += symbol
         return decrypted_or_encrypted_string
 
-    @staticmethod
-    def transform(symbol, container):
-        index = container.index(symbol)
-        return container[len(container) - (index + 1)]
-
     def encrypt(self):
         string = self.plainTextEdit.toPlainText()
         self.result = self.encrypt_and_decrypt(string)
         self.textBrowser.setText(self.result)
         self.statusbar.showMessage("Текст зашифрован/расшифрован.")
+
+    @staticmethod
+    def transform(symbol, container):
+        index = container.index(symbol)
+        return container[len(container) - (index + 1)]

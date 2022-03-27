@@ -3,7 +3,7 @@ import pyperclip
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 
-class Ui_PolybiusSquare(object):
+class UiPolybiusSquare(object):
     def setupUi(self, PolybiusSquare):
         PolybiusSquare.setObjectName("PolybiusSquare")
         PolybiusSquare.resize(800, 600)
@@ -189,7 +189,7 @@ class Ui_PolybiusSquare(object):
         return style
 
 
-class UiMethod(QtWidgets.QMainWindow, Ui_PolybiusSquare):
+class PolybiusSquareWindow(QtWidgets.QMainWindow, UiPolybiusSquare):
     def __init__(self):
         super().__init__()
 

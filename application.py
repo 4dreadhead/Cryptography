@@ -1,9 +1,9 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
-from lib.methods import scytale, polybius_square, atbash, caesar
+from lib.methods import scytale, polybius_square, atbash, caesar, richelieu, cardano
 import sys
 
 
-class Ui_MainWindow(object):
+class UiMainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.setEnabled(True)
@@ -51,6 +51,20 @@ class Ui_MainWindow(object):
         self.pushButton_Caesar.setStyleSheet(self.default_style())
         self.pushButton_Caesar.setObjectName("pushButton_Caesar")
 
+        self.pushButton_Cardano = QtWidgets.QPushButton(self.centralwidget)
+        self.pushButton_Cardano.setGeometry(QtCore.QRect(270, 200, 270, 70))
+        self.pushButton_Cardano.setFont(font)
+        self.pushButton_Cardano.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+        self.pushButton_Cardano.setStyleSheet(self.default_style())
+        self.pushButton_Cardano.setObjectName("pushButton_Cardano")
+
+        self.pushButton_Richelieu = QtWidgets.QPushButton(self.centralwidget)
+        self.pushButton_Richelieu.setGeometry(QtCore.QRect(270, 270, 270, 70))
+        self.pushButton_Richelieu.setFont(font)
+        self.pushButton_Richelieu.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+        self.pushButton_Richelieu.setStyleSheet(self.default_style())
+        self.pushButton_Richelieu.setObjectName("pushButton_Richelieu")
+
         # In development buttons area
 
         self.pushButton_5 = QtWidgets.QPushButton(self.centralwidget)
@@ -73,20 +87,6 @@ class Ui_MainWindow(object):
         self.pushButton_7.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.pushButton_7.setStyleSheet(self.in_development_style())
         self.pushButton_7.setObjectName("pushButton_7")
-
-        self.pushButton_8 = QtWidgets.QPushButton(self.centralwidget)
-        self.pushButton_8.setGeometry(QtCore.QRect(270, 200, 270, 70))
-        self.pushButton_8.setFont(font)
-        self.pushButton_8.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-        self.pushButton_8.setStyleSheet(self.in_development_style())
-        self.pushButton_8.setObjectName("pushButton_8")
-
-        self.pushButton_9 = QtWidgets.QPushButton(self.centralwidget)
-        self.pushButton_9.setGeometry(QtCore.QRect(270, 270, 270, 70))
-        self.pushButton_9.setFont(font)
-        self.pushButton_9.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-        self.pushButton_9.setStyleSheet(self.in_development_style())
-        self.pushButton_9.setObjectName("pushButton_9")
 
         self.pushButton_10 = QtWidgets.QPushButton(self.centralwidget)
         self.pushButton_10.setGeometry(QtCore.QRect(540, 270, 270, 70))
@@ -138,8 +138,8 @@ class Ui_MainWindow(object):
         self.pushButton_5.setText(_translate("MainWindow", "Шифр Гронсфельда"))
         self.pushButton_6.setText(_translate("MainWindow", "Шифр Диск Альберти"))
         self.pushButton_7.setText(_translate("MainWindow", "Шифр Вижинера"))
-        self.pushButton_8.setText(_translate("MainWindow", "Шифр Кардано"))
-        self.pushButton_9.setText(_translate("MainWindow", "Шифр Ришелье"))
+        self.pushButton_Cardano.setText(_translate("MainWindow", "Шифр Кардано"))
+        self.pushButton_Richelieu.setText(_translate("MainWindow", "Шифр Ришелье"))
         self.pushButton_10.setText(_translate("MainWindow", "Шифр Плейфера"))
         self.pushButton_11.setText(_translate("MainWindow", "Криптосхема Хилла"))
         self.pushButton_12.setText(_translate("MainWindow", "Шифр Вернама"))
@@ -187,7 +187,7 @@ class Ui_MainWindow(object):
         return style
 
 
-class MainMenu(QtWidgets.QMainWindow, Ui_MainWindow):
+class MainMenu(QtWidgets.QMainWindow, UiMainWindow):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
@@ -198,11 +198,11 @@ class MainMenu(QtWidgets.QMainWindow, Ui_MainWindow):
         self.pushButton_Scytale.clicked.connect(self.run_scytale)
         self.pushButton_PolybiusSquare.clicked.connect(self.run_polybius_square)
         self.pushButton_Caesar.clicked.connect(self.run_caesar)
+        self.pushButton_Cardano.clicked.connect(self.run_cardano)
+        self.pushButton_Richelieu.clicked.connect(self.run_richelieu)
         self.pushButton_5.clicked.connect(self.in_development)
         self.pushButton_6.clicked.connect(self.in_development)
         self.pushButton_7.clicked.connect(self.in_development)
-        self.pushButton_8.clicked.connect(self.in_development)
-        self.pushButton_9.clicked.connect(self.in_development)
         self.pushButton_10.clicked.connect(self.in_development)
         self.pushButton_11.clicked.connect(self.in_development)
         self.pushButton_12.clicked.connect(self.in_development)
@@ -210,22 +210,32 @@ class MainMenu(QtWidgets.QMainWindow, Ui_MainWindow):
 
     def run_atbash(self):
         self.statusbar.showMessage("Запущено: Шифр Атбаш.")
-        self.mySecond = atbash.UiMethod()
+        self.mySecond = atbash.AtbashWindow()
         self.mySecond.show()
 
     def run_scytale(self):
         self.statusbar.showMessage("Запущено: Шифр Сцитала.")
-        self.mySecond = scytale.UiMethod()
+        self.mySecond = scytale.ScytaleWindow()
         self.mySecond.show()
 
     def run_polybius_square(self):
         self.statusbar.showMessage("Запущено: Шифр Квадрат Полибия.")
-        self.mySecond = polybius_square.UiMethod()
+        self.mySecond = polybius_square.PolybiusSquareWindow()
         self.mySecond.show()
 
     def run_caesar(self):
         self.statusbar.showMessage("Запущено: Шифр Цезаря.")
-        self.mySecond = caesar.UiMethod()
+        self.mySecond = caesar.CaesarWindow()
+        self.mySecond.show()
+
+    def run_richelieu(self):
+        self.statusbar.showMessage("Запущено: Шифр Ришелье.")
+        self.mySecond = richelieu.RichelieuWindow()
+        self.mySecond.show()
+
+    def run_cardano(self):
+        self.statusbar.showMessage("Запущено: Решетка Кардано.")
+        self.mySecond = cardano.CardanoWindow()
         self.mySecond.show()
 
     def in_development(self):

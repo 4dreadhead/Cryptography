@@ -126,8 +126,7 @@ class UiPolybiusSquare(object):
                                                              "таблицы из 36 символов.\n\n"
                                                              "⚠ J отождествляется с I.\n\n"
                                                              "⚠ Символы, не попавшие ни в один\nалфавит,"
-                                                             " останутся неизменными.\n\n"
-                                                             "Ввод текста: верхнее поле.\nРезультат: нижнее поле"))
+                                                             " останутся неизменными."))
 
         self.textBrowser.setHtml(_translate("Scytale",
                                             "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \""
@@ -235,8 +234,8 @@ class PolybiusSquareWindow(QtWidgets.QMainWindow, UiPolybiusSquare):
         self.statusbar.showMessage("Текст вставлен из буффера обмена.")
 
     def encrypt(self):
-        string = self.plainTextEdit.toPlainText().upper()
-        string = string.replace("J", "I")
+        string = self.plainTextEdit.toPlainText()
+        string = string.replace("J", "I").replace("j", "i")
         self.textBrowser.setText("")
 
         for key in range(2):
@@ -247,12 +246,12 @@ class PolybiusSquareWindow(QtWidgets.QMainWindow, UiPolybiusSquare):
             converted_coordinates = ""
 
             for letter in string:
-                if letter not in locale:
+                if letter.upper() not in locale:
                     continue
 
                 for i in range(len(table)):
                     for j in range(len(table)):
-                        if letter == table[i][j]:
+                        if letter.upper() == table[i][j]:
                             coordinates[0] += str(j)
                             coordinates[1] += str(i)
                             break
@@ -262,7 +261,7 @@ class PolybiusSquareWindow(QtWidgets.QMainWindow, UiPolybiusSquare):
                     converted_coordinates += coordinate
 
             for letter in string:
-                if letter not in locale:
+                if letter.upper() not in locale:
                     result += letter
                     continue
 
@@ -270,7 +269,7 @@ class PolybiusSquareWindow(QtWidgets.QMainWindow, UiPolybiusSquare):
                 x = int(converted_coordinates[0])
                 converted_coordinates = converted_coordinates[2:]
 
-                result += table[y][x]
+                result += table[y][x] if letter.isupper() else table[y][x].lower()
 
             string = result
         self.result = string
@@ -278,8 +277,8 @@ class PolybiusSquareWindow(QtWidgets.QMainWindow, UiPolybiusSquare):
         self.statusbar.showMessage("Текст зашифрован")
 
     def decrypt(self):
-        string = self.plainTextEdit.toPlainText().upper()
-        string = string.replace("J", "I")
+        string = self.plainTextEdit.toPlainText()
+        string = string.replace("J", "I").replace("j", "i")
         self.textBrowser.setText("")
         for key in range(2):
             table, locale = (self.eng_table, self.eng) if key == 0 else (self.rus_table, self.rus)
@@ -289,12 +288,12 @@ class PolybiusSquareWindow(QtWidgets.QMainWindow, UiPolybiusSquare):
             converted_coordinates = ""
 
             for letter in string:
-                if letter not in locale:
+                if letter.upper() not in locale:
                     continue
 
                 for i in range(len(table)):
                     for j in range(len(table)):
-                        if letter == table[i][j]:
+                        if letter.upper() == table[i][j]:
                             converted_coordinates += str(j) + str(i)
                             break
 
@@ -302,7 +301,7 @@ class PolybiusSquareWindow(QtWidgets.QMainWindow, UiPolybiusSquare):
             coordinates[1] = converted_coordinates[len(converted_coordinates)//2:]
 
             for letter in string:
-                if letter not in locale:
+                if letter.upper() not in locale:
                     result += letter
                     continue
 
@@ -311,7 +310,7 @@ class PolybiusSquareWindow(QtWidgets.QMainWindow, UiPolybiusSquare):
                 coordinates[0] = coordinates[0][1:]
                 coordinates[1] = coordinates[1][1:]
 
-                result += table[y][x]
+                result += table[y][x] if letter.isupper() else table[y][x].lower()
             string = result
         self.result = string
 

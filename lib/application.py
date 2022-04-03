@@ -1,5 +1,5 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
-from lib.methods import scytale, polybius_square, atbash, caesar, richelieu, cardano
+from lib.methods import scytale, polybius_square, atbash, caesar, richelieu, cardano, alberti
 import sys
 
 
@@ -74,12 +74,12 @@ class UiMainWindow(object):
         self.pushButton_5.setStyleSheet(self.in_development_style())
         self.pushButton_5.setObjectName("pushButton_5")
 
-        self.pushButton_6 = QtWidgets.QPushButton(self.centralwidget)
-        self.pushButton_6.setGeometry(QtCore.QRect(270, 340, 270, 70))
-        self.pushButton_6.setFont(font)
-        self.pushButton_6.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-        self.pushButton_6.setStyleSheet(self.in_development_style())
-        self.pushButton_6.setObjectName("pushButton_6")
+        self.pushButton_Alberti = QtWidgets.QPushButton(self.centralwidget)
+        self.pushButton_Alberti.setGeometry(QtCore.QRect(270, 340, 270, 70))
+        self.pushButton_Alberti.setFont(font)
+        self.pushButton_Alberti.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+        self.pushButton_Alberti.setStyleSheet(self.default_style())
+        self.pushButton_Alberti.setObjectName("pushButton_Alberti")
 
         self.pushButton_7 = QtWidgets.QPushButton(self.centralwidget)
         self.pushButton_7.setGeometry(QtCore.QRect(540, 200, 270, 70))
@@ -136,7 +136,7 @@ class UiMainWindow(object):
         self.pushButton_PolybiusSquare.setText(_translate("MainWindow", "Шифр Квадрат Полибия"))
         self.pushButton_Caesar.setText(_translate("MainWindow", "Шифр Цезаря"))
         self.pushButton_5.setText(_translate("MainWindow", "Шифр Гронсфельда"))
-        self.pushButton_6.setText(_translate("MainWindow", "Шифр Диск Альберти"))
+        self.pushButton_Alberti.setText(_translate("MainWindow", "Шифр Диск Альберти"))
         self.pushButton_7.setText(_translate("MainWindow", "Шифр Вижинера"))
         self.pushButton_Cardano.setText(_translate("MainWindow", "Шифр Кардано"))
         self.pushButton_Richelieu.setText(_translate("MainWindow", "Шифр Ришелье"))
@@ -201,7 +201,7 @@ class MainMenu(QtWidgets.QMainWindow, UiMainWindow):
         self.pushButton_Cardano.clicked.connect(self.run_cardano)
         self.pushButton_Richelieu.clicked.connect(self.run_richelieu)
         self.pushButton_5.clicked.connect(self.in_development)
-        self.pushButton_6.clicked.connect(self.in_development)
+        self.pushButton_Alberti.clicked.connect(self.run_alberti)
         self.pushButton_7.clicked.connect(self.in_development)
         self.pushButton_10.clicked.connect(self.in_development)
         self.pushButton_11.clicked.connect(self.in_development)
@@ -236,6 +236,11 @@ class MainMenu(QtWidgets.QMainWindow, UiMainWindow):
     def run_cardano(self):
         self.statusbar.showMessage("Запущено: Решетка Кардано.")
         self.mySecond = cardano.CardanoWindow()
+        self.mySecond.show()
+
+    def run_alberti(self):
+        self.statusbar.showMessage("Запущено: Диск Альберти.")
+        self.mySecond = alberti.AlbertiWindow()
         self.mySecond.show()
 
     def in_development(self):

@@ -10,7 +10,7 @@
 ---
 ## Description
 This application includes crypto-ciphers
-###Symmetric:
+### Symmetric:
 - Atbash cipher
 - Alberti's disk cipher
 - Scytale cipher

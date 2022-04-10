@@ -1,45 +1,18 @@
 # Cryptography
 
-Программа шифрования и разшифрования текста различными методами.
+### Cryptho-ciphers and methods, ISIT 2022
 
---------------------------------------------------------------------
-На данный момент реализованы:
-
-- Шифр Атбаш
-
-- Шифр Сцитала
-
-- Шифр Квадрат Полибия
-
-- Шифр Цезаря
-
-- Шифр Кардано
-
-- Шифр Ришелье
---------------------------------------------------------------------
-Для запуска:
-
-- Иметь python3
-
-- установить requirements.txt с помощью одной из команд:
-
-  pip install -r requirements.txt
+---
+## To start application
+- Install python3
+- Install requirements.txt with command:
   
   pip3 install -r requirements.txt
 
-- Запустить lib/application.py
+- Run application.py
 
-- При возникновении ошибки линуксовых системах нужно установить пакет libxcb-xinerama0
+- If you have issues on linux, install packet libxcb-xinerama0
 
-  В Ubuntu: sudo apt-get install libxcb-xinerama0
---------------------------------------------------------------------
-Так же приложена версия .exe для запуска в windows.
-
-Находится в архиве cryptography.zip
-
---------------------------------------------------------------------
-vk: https://vk.com/4dreadhead
-
-Вячеслав Жданов
-
-2022
+  Ubuntu: sudo apt-get install libxcb-xinerama0
+---
+## Vyacheslav Zhdanov, vk: https://vk.com/4dreadhead

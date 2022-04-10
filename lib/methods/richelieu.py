@@ -254,7 +254,7 @@ class RichelieuWindow(QtWidgets.QMainWindow, UiRichelieu):
         self.statusbar.showMessage("Текст вставлен из буффера обмена.")
 
     def parse_keys(self):
-        keys_pattern = r"\(\d+[,\d+]*\)"
+        keys_pattern = r"\(\d+(?:,\d+)*\)"
         parsed_keys = []
 
         user_input_key = self.plainTextEdit_key.toPlainText()
@@ -308,6 +308,8 @@ class RichelieuWindow(QtWidgets.QMainWindow, UiRichelieu):
         except InvalidKey as error:
             self.textBrowser.setText(str(error))
             self.statusbar.showMessage("Неверные входные данные, попробуйте снова.")
+        finally:
+            pass
 
     def decrypt(self):
         try:
@@ -337,3 +339,5 @@ class RichelieuWindow(QtWidgets.QMainWindow, UiRichelieu):
         except InvalidKey as error:
             self.textBrowser.setText(str(error))
             self.statusbar.showMessage("Неверные входные данные, попробуйте снова.")
+        finally:
+            pass

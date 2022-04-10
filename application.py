@@ -6,6 +6,9 @@ from lib.methods import *
 
 
 class MainMenuWindow(QMainWindow, UiMainMenu):
+    """
+    Class of the main menu of the application
+    """
     def __init__(self):
         super().__init__()
         self.setupUi(self)

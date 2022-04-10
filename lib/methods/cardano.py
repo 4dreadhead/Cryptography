@@ -3,6 +3,7 @@ import random
 import string as ascii_symbols
 import pyperclip
 from PyQt5 import QtCore, QtGui, QtWidgets
+from random import randint
 
 
 class InvalidKey(Exception):
@@ -32,20 +33,26 @@ class UiCardano(object):
         gif.start()
 
         font = self.set_font(size=9)
-
-        self.label_info_key = QtWidgets.QLabel(self.centralwidget)
-        self.label_info_key.setGeometry(QtCore.QRect(201, 278, 260, 30))
-        self.label_info_key.setFont(font)
-        self.label_info_key.setStyleSheet(self.text_area_style())
-        self.label_info_key.setAlignment(QtCore.Qt.AlignCenter)
-        self.label_info_key.setObjectName("label_info")
+        self.label_info = QtWidgets.QLabel(self.centralwidget)
+        self.label_info.setGeometry(QtCore.QRect(480, 279, 209, 30))
+        self.label_info.setFont(font)
+        self.label_info.setStyleSheet(self.text_area_style())
+        self.label_info.setAlignment(QtCore.Qt.AlignCenter)
+        self.label_info.setObjectName("label_info")
 
         self.trash_box = QtWidgets.QCheckBox(self.centralwidget)
-        self.trash_box.setGeometry(QtCore.QRect(30, 278, 150, 30))
+        self.trash_box.setGeometry(QtCore.QRect(30, 278, 30, 30))
         self.trash_box.setFont(font)
-        self.trash_box.setStyleSheet("color: rgb(238, 238, 236);")
+        self.trash_box.setStyleSheet(self.trash_box_style())
         self.trash_box.setObjectName("trash_box")
         self.trash_box.setChecked(True)
+
+        self.label_info_trash = QtWidgets.QLabel(self.centralwidget)
+        self.label_info_trash.setGeometry(QtCore.QRect(60, 279, 120, 30))
+        self.label_info_trash.setFont(font)
+        self.label_info_trash.setStyleSheet(self.text_area_style())
+        self.label_info_trash.setAlignment(QtCore.Qt.AlignCenter)
+        self.label_info_trash.setObjectName("label_info_trash")
 
         font = self.set_font(size=10)
 
@@ -56,10 +63,16 @@ class UiCardano(object):
         self.plainTextEdit.setObjectName("plainTextEdit")
 
         self.plainTextEdit_key = QtWidgets.QPlainTextEdit(self.centralwidget)
-        self.plainTextEdit_key.setGeometry(QtCore.QRect(480, 40, 289, 269))
+        self.plainTextEdit_key.setGeometry(QtCore.QRect(480, 40, 289, 229))
         self.plainTextEdit_key.setFont(font)
         self.plainTextEdit_key.setStyleSheet(self.text_area_style())
         self.plainTextEdit_key.setObjectName("plainTextEdit")
+
+        self.plainTextEdit_key_size = QtWidgets.QPlainTextEdit(self.centralwidget)
+        self.plainTextEdit_key_size.setGeometry(QtCore.QRect(700, 278, 69, 30))
+        self.plainTextEdit_key_size.setFont(font)
+        self.plainTextEdit_key_size.setStyleSheet(self.text_area_style())
+        self.plainTextEdit_key_size.setObjectName("plainTextEdit")
 
         self.textBrowser = QtWidgets.QTextBrowser(self.centralwidget)
         self.textBrowser.setGeometry(QtCore.QRect(30, 470, 739, 101))
@@ -68,6 +81,12 @@ class UiCardano(object):
         self.textBrowser.setObjectName("textBrowser")
 
         font = self.set_font("Uroob", size=10, weight=75, bold=True)
+
+        self.pushButton_generate_key = QtWidgets.QPushButton(self.centralwidget)
+        self.pushButton_generate_key.setGeometry(QtCore.QRect(201, 278, 260, 30))
+        self.pushButton_generate_key.setFont(font)
+        self.pushButton_generate_key.setStyleSheet(self.default_style())
+        self.pushButton_generate_key.setObjectName("pushButton_generate_key")
 
         self.pushButton_encrypt = QtWidgets.QPushButton(self.centralwidget)
         self.pushButton_encrypt.setGeometry(QtCore.QRect(30, 430, 201, 31))
@@ -142,10 +161,10 @@ class UiCardano(object):
         self.pushButton_copy.setText(_translate("Cardano", "Очистить"))
         self.pushButton_clearOutput.setText(_translate("Cardano", "Очистить"))
         self.pushButton_exit.setText(_translate("Cardano", "Закрыть окно"))
-        self.trash_box.setText(_translate("Cardano", "<<< Добавить мусор"))
+        self.pushButton_generate_key.setText(_translate("Cardano", "Сгенерировать решетку"))
 
-        self.label_info_key.setText(_translate("Cardano", "Ключ >>>"))
-        self.plainTextEdit_key.setPlainText(self.default_key())
+        self.label_info.setText("Размерность >>>")
+        self.label_info_trash.setText("<<< Мусор")
 
         self.textBrowser.setHtml(_translate("Cardano",
                                             "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \""
@@ -158,20 +177,6 @@ class UiCardano(object):
                                             "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; "
                                             "margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"
                                             "\"><br /></p></body></html>"))
-
-    @staticmethod
-    def default_key():
-        key = "(0,1,0,0,0,0,1,0,0,1)\n" + \
-              "(1,0,0,0,1,0,0,0,0,0)\n" + \
-              "(0,1,0,0,0,1,0,0,1,0)\n" + \
-              "(0,0,1,0,0,0,0,1,0,0)\n" + \
-              "(1,0,0,1,0,1,1,0,0,1)\n" + \
-              "(0,0,1,0,0,0,0,0,0,0)\n" + \
-              "(1,1,0,0,0,0,1,0,1,0)\n" + \
-              "(0,0,1,0,0,0,0,0,0,0)\n" + \
-              "(0,0,0,0,1,0,0,0,1,0)\n" + \
-              "(0,0,1,0,0,0,0,1,0,0)"
-        return key
 
     @staticmethod
     def set_font(family=None, size=12, weight=None, bold=False, italic=False):
@@ -220,6 +225,22 @@ class UiCardano(object):
                                          color: rgb(255,65,100); }"""
         return style
 
+    @staticmethod
+    def trash_box_style():
+        style = """ 
+            QCheckBox {
+                color: white;
+                spacing: 9px;
+                width: 19px;
+                height: 19px;
+            }
+            QCheckBox::indicator {
+                width: 19px;
+                height: 19px;
+            }
+        """
+        return style
+
 
 class CardanoWindow(QtWidgets.QMainWindow, UiCardano):
     def __init__(self):
@@ -246,6 +267,7 @@ class CardanoWindow(QtWidgets.QMainWindow, UiCardano):
         self.pushButton_copy.clicked.connect(self.clear_input)
         self.pushButton_clearOutput.clicked.connect(self.clear_output)
         self.pushButton_exit.clicked.connect(self.close_window)
+        self.pushButton_generate_key.clicked.connect(self.generate_grill)
 
     def clear_input(self):
         self.plainTextEdit.clear()
@@ -318,6 +340,53 @@ class CardanoWindow(QtWidgets.QMainWindow, UiCardano):
                     raise InvalidKey(f"Wrong Cardano Grill: check cell value at {i, size//2}.")
 
         return parsed_keys, size
+
+    def parse_size(self):
+        size = int(self.plainTextEdit_key_size.toPlainText())
+        if size <= 1 or size > 4096:
+            raise ValueError
+        return size
+
+    def generate_grill(self):
+        try:
+            size = self.parse_size()
+        except ValueError:
+            self.statusbar.showMessage("Некорректная размерность решетки.")
+            return
+
+        grill = [[0 for _ in range(size)] for _ in range(size)]
+
+        for i in range(size//2):
+            for j in range(size//2):
+                box = [0 for _ in range(4)]
+                box[randint(0, 3)] = 1
+                if box[0] == 1:
+                    grill[i][j] = 1
+                elif box[1] == 1:
+                    grill[j][size-1 - i] = 1
+                elif box[2] == 1:
+                    grill[size-1 - i][size-1 - j] = 1
+                elif box[3] == 1:
+                    grill[size-1 - j][i] = 1
+
+            if size % 2 == 1:
+                column = [0 for _ in range(size//2)]
+                column[randint(0, size//2 - 1)] = 1
+                if column[0] == 1:
+                    grill[i][size//2] = 1
+                elif column[1] == 1:
+                    grill[size//2][size-1 - i] = 1
+                elif column[2] == 1:
+                    grill[size-1 - i][size//2] = 1
+                elif column[3] == 1:
+                    grill[size//2][i] = 1
+
+        grill_output = ""
+        for row in grill:
+            grill_output += "(" + ",".join(list(map(str, row))) + ")\n"
+
+        self.plainTextEdit_key.setPlainText(grill_output[:-1])
+        self.statusbar.showMessage("Решетка сгенерирована.")
 
     def get_random_letter(self):
         return random.choice(self.cyrillic_low + self.cyrillic_high + self.latin_low + self.latin_high)

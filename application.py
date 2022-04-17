@@ -21,10 +21,10 @@ class MainMenuWindow(QMainWindow, UiMainMenu):
         self.pushButton_Caesar.clicked.connect(self.run_caesar)
         self.pushButton_Cardano.clicked.connect(self.run_cardano)
         self.pushButton_Richelieu.clicked.connect(self.run_richelieu)
-        self.pushButton_5.clicked.connect(self.in_development)
+        self.pushButton_Gronsfeld.clicked.connect(self.run_gronsfeld)
         self.pushButton_Alberti.clicked.connect(self.run_alberti)
-        self.pushButton_7.clicked.connect(self.in_development)
-        self.pushButton_10.clicked.connect(self.in_development)
+        self.pushButton_Vigenere.clicked.connect(self.run_vigenere)
+        self.pushButton_Playfair.clicked.connect(self.run_playfair)
         self.pushButton_11.clicked.connect(self.in_development)
         self.pushButton_12.clicked.connect(self.in_development)
         self.pushButton_exit.clicked.connect(self.close_program)
@@ -62,6 +62,21 @@ class MainMenuWindow(QMainWindow, UiMainMenu):
     def run_alberti(self):
         self.statusbar.showMessage("Запущено: Диск Альберти.")
         self.mySecond = AlbertiWindow()
+        self.mySecond.show()
+
+    def run_gronsfeld(self):
+        self.statusbar.showMessage("Запущено: Шифр Гросфельда.")
+        self.mySecond = GronsfeldWindow()
+        self.mySecond.show()
+
+    def run_vigenere(self):
+        self.statusbar.showMessage("Запущено: Шифр Виженера.")
+        self.mySecond = VigenereWindow()
+        self.mySecond.show()
+
+    def run_playfair(self):
+        self.statusbar.showMessage("Запущено: Шифр Плейфера.")
+        self.mySecond = PlayfairWindow()
         self.mySecond.show()
 
     def in_development(self):

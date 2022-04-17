@@ -5,3 +5,6 @@ from lib.methods.symmetric_methods.cardano import CardanoWindow
 from lib.methods.symmetric_methods.polybius_square import PolybiusSquareWindow
 from lib.methods.symmetric_methods.richelieu import RichelieuWindow
 from lib.methods.symmetric_methods.scytale import ScytaleWindow
+from lib.methods.symmetric_methods.gronsfeld import GronsfeldWindow
+from lib.methods.symmetric_methods.vigenere import VigenereWindow
+from lib.methods.symmetric_methods.playfair import PlayfairWindow

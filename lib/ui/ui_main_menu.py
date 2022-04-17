@@ -14,6 +14,9 @@ class UiMainMenu(object):
     pushButton_PolybiusSquare: QtWidgets.QPushButton
     pushButton_Scytale: QtWidgets.QPushButton
     pushButton_Atbash: QtWidgets.QPushButton
+    pushButton_Gronsfeld: QtWidgets.QPushButton
+    pushButton_Vigenere: QtWidgets.QPushButton
+    pushButton_Playfair: QtWidgets.QPushButton
     pushButton_exit: QtWidgets.QPushButton
     label_MainMenu_gif: QtWidgets.QLabel
     centralwidget: QtWidgets.QWidget
@@ -87,28 +90,28 @@ class UiMainMenu(object):
         self.pushButton_Alberti.setStyleSheet(UiHelper.default_style())
         self.pushButton_Alberti.setObjectName("pushButton_Alberti")
 
+        self.pushButton_Gronsfeld = QtWidgets.QPushButton(self.centralwidget)
+        self.pushButton_Gronsfeld.setGeometry(QtCore.QRect(270, 410, 270, 70))
+        self.pushButton_Gronsfeld.setFont(font)
+        self.pushButton_Gronsfeld.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+        self.pushButton_Gronsfeld.setStyleSheet(UiHelper.default_style())
+        self.pushButton_Gronsfeld.setObjectName("pushButton_Gronsfeld")
+
+        self.pushButton_Vigenere = QtWidgets.QPushButton(self.centralwidget)
+        self.pushButton_Vigenere.setGeometry(QtCore.QRect(540, 200, 270, 70))
+        self.pushButton_Vigenere.setFont(font)
+        self.pushButton_Vigenere.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+        self.pushButton_Vigenere.setStyleSheet(UiHelper.default_style())
+        self.pushButton_Vigenere.setObjectName("pushButton_Vigenere")
+
+        self.pushButton_Playfair = QtWidgets.QPushButton(self.centralwidget)
+        self.pushButton_Playfair.setGeometry(QtCore.QRect(540, 270, 270, 70))
+        self.pushButton_Playfair.setFont(font)
+        self.pushButton_Playfair.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+        self.pushButton_Playfair.setStyleSheet(UiHelper.default_style())
+        self.pushButton_Playfair.setObjectName("pushButton_Playfair")
+
         # In development buttons area
-
-        self.pushButton_5 = QtWidgets.QPushButton(self.centralwidget)
-        self.pushButton_5.setGeometry(QtCore.QRect(270, 410, 270, 70))
-        self.pushButton_5.setFont(font)
-        self.pushButton_5.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-        self.pushButton_5.setStyleSheet(UiHelper.in_development_style())
-        self.pushButton_5.setObjectName("pushButton_5")
-
-        self.pushButton_7 = QtWidgets.QPushButton(self.centralwidget)
-        self.pushButton_7.setGeometry(QtCore.QRect(540, 200, 270, 70))
-        self.pushButton_7.setFont(font)
-        self.pushButton_7.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-        self.pushButton_7.setStyleSheet(UiHelper.in_development_style())
-        self.pushButton_7.setObjectName("pushButton_7")
-
-        self.pushButton_10 = QtWidgets.QPushButton(self.centralwidget)
-        self.pushButton_10.setGeometry(QtCore.QRect(540, 270, 270, 70))
-        self.pushButton_10.setFont(font)
-        self.pushButton_10.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-        self.pushButton_10.setStyleSheet(UiHelper.in_development_style())
-        self.pushButton_10.setObjectName("pushButton_10")
 
         self.pushButton_11 = QtWidgets.QPushButton(self.centralwidget)
         self.pushButton_11.setGeometry(QtCore.QRect(540, 340, 270, 70))
@@ -150,12 +153,12 @@ class UiMainMenu(object):
         self.pushButton_Scytale.setText(_translate("MainWindow", "Шифр Сцитала"))
         self.pushButton_PolybiusSquare.setText(_translate("MainWindow", "Шифр Квадрат Полибия"))
         self.pushButton_Caesar.setText(_translate("MainWindow", "Шифр Цезаря"))
-        self.pushButton_5.setText(_translate("MainWindow", "Шифр Гронсфельда"))
+        self.pushButton_Gronsfeld.setText(_translate("MainWindow", "Шифр Гронсфельда"))
         self.pushButton_Alberti.setText(_translate("MainWindow", "Шифр Диск Альберти"))
-        self.pushButton_7.setText(_translate("MainWindow", "Шифр Вижинера"))
+        self.pushButton_Vigenere.setText(_translate("MainWindow", "Шифр Вижинера"))
         self.pushButton_Cardano.setText(_translate("MainWindow", "Шифр Кардано"))
         self.pushButton_Richelieu.setText(_translate("MainWindow", "Шифр Ришелье"))
-        self.pushButton_10.setText(_translate("MainWindow", "Шифр Плейфера"))
+        self.pushButton_Playfair.setText(_translate("MainWindow", "Шифр Плейфера"))
         self.pushButton_11.setText(_translate("MainWindow", "Криптосхема Хилла"))
         self.pushButton_12.setText(_translate("MainWindow", "Шифр Вернама"))
         self.pushButton_exit.setText(_translate("MainWindow", "Выход из программы"))

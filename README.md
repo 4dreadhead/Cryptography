@@ -1,18 +1,28 @@
-# Cryptography
-
-### Cryptho-ciphers and methods, ISIT 2022
+# Course "Crypto-methods of the information protection", ISIT, Krasnoyarsk
+## by Vyacheslav Zhdanov, 2022
 
 ---
-## To start application
+### To run application
 - Install python3
-- Install requirements.txt with command:
-  
-  pip3 install -r requirements.txt
+- Install 'requirements.txt' ( pip3 install -r "your_path_to_folder/requirements.txt" )
+- Run file 'application.py'
 
-- Run application.py
-
-- If you have issues on linux, install packet libxcb-xinerama0
-
-  Ubuntu: sudo apt-get install libxcb-xinerama0
 ---
-## Vyacheslav Zhdanov, vk: https://vk.com/4dreadhead
+## Description
+This application includes crypto-ciphers
+### Symmetric:
+- Atbash cipher
+- Alberti's disk cipher
+- Scytale cipher
+- Polybius Square cipher
+- Caesar cipher
+- Gronsfeld cipher
+- Vigenere cipher
+- Cardano Grill cipher
+- Richelieu cipher
+- Playfair cipher
+- Hill cipher
+- Vernam cipher
+
+Each method has encryption and decryption functions.
+Application has a user interface created with PyQt5

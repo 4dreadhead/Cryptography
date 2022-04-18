@@ -24,7 +24,7 @@ class CardanoWindow(QMainWindow, UiCardano, WindowHelper):
         self.pushButton_copy.clicked.connect(self.clear_input)
         self.pushButton_clearOutput.clicked.connect(self.clear_output)
         self.pushButton_exit.clicked.connect(self.close)
-        self.pushButton_generate_key.clicked.connect(self.generate_grill)
+        self.pushButton_generate_key.clicked.connect(self.generate_grille)
 
         # Method area
         self.result = ""
@@ -67,9 +67,9 @@ class CardanoWindow(QMainWindow, UiCardano, WindowHelper):
         allowed_values = (0, 1) if self.trash_box.isChecked() else (1,)
         if size % 2 != 0:
             if not self.trash_box.isChecked():
-                raise InvalidKey("Wrong Cardano Grill size.")
+                raise InvalidKey("Wrong Cardano Grille size.")
             if parsed_keys[size//2][size//2] == 1:
-                raise InvalidKey(f"Wrong Cardano Grill: check cell value at {size//2, size//2}.")
+                raise InvalidKey(f"Wrong Cardano Grille: check cell value at {size//2, size//2}.")
 
         for i in range(size//2):
             for j in range(size//2):
@@ -79,7 +79,7 @@ class CardanoWindow(QMainWindow, UiCardano, WindowHelper):
                         parsed_keys[j][size-1 - i] +
                         parsed_keys[size-1 - j][i]
                 ) not in allowed_values:
-                    raise InvalidKey(f"Wrong Cardano Grill: check cell value at {i, j}.")
+                    raise InvalidKey(f"Wrong Cardano Grille: check cell value at {i, j}.")
             if size % 2 != 0:
                 if (
                         parsed_keys[i][size//2] +
@@ -87,7 +87,7 @@ class CardanoWindow(QMainWindow, UiCardano, WindowHelper):
                         parsed_keys[size-1 - i][size//2] +
                         parsed_keys[size//2][size-1 - i]
                 ) > 1:
-                    raise InvalidKey(f"Wrong Cardano Grill: check cell value at {i, size//2}.")
+                    raise InvalidKey(f"Wrong Cardano Grille: check cell value at {i, size//2}.")
 
         return parsed_keys, size
 
@@ -97,45 +97,45 @@ class CardanoWindow(QMainWindow, UiCardano, WindowHelper):
             raise ValueError
         return size
 
-    def generate_grill(self):
+    def generate_grille(self):
         try:
             size = self.parse_size()
         except ValueError:
             self.statusbar.showMessage("Некорректная размерность решетки.")
             return
 
-        grill = [[0 for _ in range(size)] for _ in range(size)]
+        grille = [[0 for _ in range(size)] for _ in range(size)]
 
         for i in range(size//2):
             for j in range(size//2):
                 box = [0 for _ in range(4)]
                 box[random.randint(0, 3)] = 1
                 if box[0] == 1:
-                    grill[i][j] = 1
+                    grille[i][j] = 1
                 elif box[1] == 1:
-                    grill[j][size-1 - i] = 1
+                    grille[j][size-1 - i] = 1
                 elif box[2] == 1:
-                    grill[size-1 - i][size-1 - j] = 1
+                    grille[size-1 - i][size-1 - j] = 1
                 elif box[3] == 1:
-                    grill[size-1 - j][i] = 1
+                    grille[size-1 - j][i] = 1
 
             if size % 2 == 1:
                 column = [0 for _ in range(size//2)]
                 column[random.randint(0, size//2 - 1)] = 1
                 if column[0] == 1:
-                    grill[i][size//2] = 1
+                    grille[i][size//2] = 1
                 elif column[1] == 1:
-                    grill[size//2][size-1 - i] = 1
+                    grille[size//2][size-1 - i] = 1
                 elif column[2] == 1:
-                    grill[size-1 - i][size//2] = 1
+                    grille[size-1 - i][size//2] = 1
                 elif column[3] == 1:
-                    grill[size//2][i] = 1
+                    grille[size//2][i] = 1
 
-        grill_output = ""
-        for row in grill:
-            grill_output += "(" + ",".join(list(map(str, row))) + ")\n"
+        grille_output = ""
+        for row in grille:
+            grille_output += "(" + ",".join(list(map(str, row))) + ")\n"
 
-        self.plainTextEdit_key.setPlainText(grill_output[:-1])
+        self.plainTextEdit_key.setPlainText(grille_output[:-1])
         self.statusbar.showMessage("Решетка сгенерирована.")
 
     def get_random_letter(self):

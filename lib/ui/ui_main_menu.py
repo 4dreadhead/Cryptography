@@ -17,6 +17,7 @@ class UiMainMenu(object):
     pushButton_Gronsfeld: QtWidgets.QPushButton
     pushButton_Vigenere: QtWidgets.QPushButton
     pushButton_Playfair: QtWidgets.QPushButton
+    pushButton_DES: QtWidgets.QPushButton
     pushButton_exit: QtWidgets.QPushButton
     label_MainMenu_gif: QtWidgets.QLabel
     centralwidget: QtWidgets.QWidget
@@ -25,9 +26,9 @@ class UiMainMenu(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.setEnabled(True)
-        MainWindow.setMinimumSize(QtCore.QSize(810, 600))
-        MainWindow.setMaximumSize(QtCore.QSize(810, 600))
-        MainWindow.setBaseSize(QtCore.QSize(810, 600))
+        MainWindow.setMinimumSize(QtCore.QSize(810, 700))
+        MainWindow.setMaximumSize(QtCore.QSize(810, 700))
+        MainWindow.setBaseSize(QtCore.QSize(810, 700))
         MainWindow.setStyleSheet("background-color: rgb(32, 28, 42);")
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
@@ -35,7 +36,7 @@ class UiMainMenu(object):
         font = UiHelper.set_font("Uroob", size=11, bold=True)
 
         self.pushButton_exit = QtWidgets.QPushButton(self.centralwidget)
-        self.pushButton_exit.setGeometry(QtCore.QRect(140, 520, 530, 45))
+        self.pushButton_exit.setGeometry(QtCore.QRect(140, 620, 530, 45))
         self.pushButton_exit.setFont(font)
         self.pushButton_exit.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.pushButton_exit.setStyleSheet(UiHelper.exit_style())
@@ -111,6 +112,13 @@ class UiMainMenu(object):
         self.pushButton_Playfair.setStyleSheet(UiHelper.default_style())
         self.pushButton_Playfair.setObjectName("pushButton_Playfair")
 
+        self.pushButton_DES = QtWidgets.QPushButton(self.centralwidget)
+        self.pushButton_DES.setGeometry(QtCore.QRect(270, 510, 270, 70))
+        self.pushButton_DES.setFont(font)
+        self.pushButton_DES.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+        self.pushButton_DES.setStyleSheet(UiHelper.default_style())
+        self.pushButton_DES.setObjectName("pushButton_DES")
+
         # In development buttons area
 
         self.pushButton_11 = QtWidgets.QPushButton(self.centralwidget)
@@ -162,3 +170,4 @@ class UiMainMenu(object):
         self.pushButton_11.setText(_translate("MainWindow", "Криптосхема Хилла"))
         self.pushButton_12.setText(_translate("MainWindow", "Шифр Вернама"))
         self.pushButton_exit.setText(_translate("MainWindow", "Выход из программы"))
+        self.pushButton_DES.setText(_translate("MainWindow", "DES"))

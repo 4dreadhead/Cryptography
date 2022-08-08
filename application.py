@@ -29,6 +29,8 @@ class MainMenuWindow(QMainWindow, UiMainMenu):
         self.pushButton_12.clicked.connect(self.in_development)
         self.pushButton_exit.clicked.connect(self.close_program)
 
+        self.pushButton_DES.clicked.connect(self.run_des)
+
     def run_atbash(self):
         self.statusbar.showMessage("Запущено: Шифр Атбаш.")
         self.mySecond = AtbashWindow()
@@ -77,6 +79,11 @@ class MainMenuWindow(QMainWindow, UiMainMenu):
     def run_playfair(self):
         self.statusbar.showMessage("Запущено: Шифр Плейфера.")
         self.mySecond = PlayfairWindow()
+        self.mySecond.show()
+
+    def run_des(self):
+        self.statusbar.showMessage("Запущено: Шифр DES.")
+        self.mySecond = DesWindow()
         self.mySecond.show()
 
     def in_development(self):

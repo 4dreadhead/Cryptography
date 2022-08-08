@@ -8,4 +8,5 @@ from lib.ui.ui_symmetric_methods.ui_richelieu import UiRichelieu
 from lib.ui.ui_symmetric_methods.ui_gronsfeld import UiGronsfeld
 from lib.ui.ui_symmetric_methods.ui_vigenere import UiVigenere
 from lib.ui.ui_symmetric_methods.ui_playfair import UiPlayfair
+from lib.ui.ui_symmetric_methods.ui_des import UiDes
 from lib.ui.ui_main_menu import UiMainMenu

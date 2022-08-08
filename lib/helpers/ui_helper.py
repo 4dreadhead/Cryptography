@@ -49,47 +49,112 @@ class UiHelper:
 
     @staticmethod
     def text_area_style():
-        style = "background-color: rgb(48, 42, 61);\ncolor: rgb(238, 238, 236);"
+        style = """
+            background-color: rgb(48, 42, 61);
+            color: rgb(238, 238, 236);
+            border-radius: 5px;
+            padding: 1px 18px 1px 3px;
+        """
         return style
 
     @staticmethod
     def default_style():
-        style = """QPushButton:hover { background-color: rgb(64, 56, 84);
-                                           color: rgb(14,149,226); }
-                       QPushButton:!hover { background-color: rgb(48, 42, 61);
-                                            color: rgb(14,149,226); }
-                       QPushButton:pressed { background-color: rgb(24, 21, 30);
-                                             color: rgb(14,149,226); }"""
+        style = """
+            QPushButton:hover {
+                background-color: rgb(64, 56, 84);
+                color: rgb(14,149,226);
+                border: 1px solid rgb(14,149,226);
+                border-radius: 3px;
+                padding: 1px 18px 1px 3px;
+            }
+            QPushButton:!hover {
+                background-color: rgb(48, 42, 61);
+                color: rgb(14,149,226);
+                padding: 1px 18px 1px 3px;
+            }
+            QPushButton:pressed {
+                background-color: rgb(24, 21, 30);
+                color: rgb(14,149,226);
+                border: 1px solid rgb(14,149,226);
+                border-radius: 3px;
+                padding: 1px 18px 1px 3px;
+            }
+        """
         return style
 
     @staticmethod
     def encrypt_style():
-        style = """QPushButton:hover { background-color: rgb(64, 56, 84);
-                                           color: rgb(28,180,230); }
-                       QPushButton:!hover { background-color: rgb(48, 42, 61);
-                                            color: rgb(28,180,230); }
-                       QPushButton:pressed { background-color: rgb(24, 21, 30);
-                                             color: rgb(28,180,230); }"""
+        style = """
+            QPushButton:hover {
+                background-color: rgb(64, 56, 84);
+                color: rgb(28,180,230);
+                border: 1px solid rgb(14,149,226);
+                border-radius: 3px;
+                padding: 1px 18px 1px 3px;
+            }
+            QPushButton:!hover {
+                background-color: rgb(48, 42, 61);
+                color: rgb(28,180,230);
+                padding: 1px 18px 1px 3px;
+            }
+            QPushButton:pressed {
+                background-color: rgb(24, 21, 30);
+                color: rgb(28,180,230);
+                border: 1px solid rgb(14,149,226);
+                border-radius: 3px;
+                padding: 1px 18px 1px 3px;
+            }
+        """
         return style
 
     @staticmethod
     def exit_style():
-        style = """QPushButton:hover { background-color: rgb(64, 56, 84);
-                                           color: rgb(255,65,100); }
-                       QPushButton:!hover { background-color: rgb(48, 42, 61);
-                                            color: rgb(255,65,100); }
-                       QPushButton:pressed { background-color: rgb(24, 21, 30);
-                                             color: rgb(255,65,100); }"""
+        style = """
+            QPushButton:hover {
+                background-color: rgb(64, 56, 84);
+                color: rgb(255,65,100);
+                border: 1px solid rgb(14,149,226);
+                border-radius: 3px;
+                padding: 1px 18px 1px 3px;
+            }
+            QPushButton:!hover {
+                background-color: rgb(48, 42, 61);
+                color: rgb(255,65,100);
+                padding: 1px 18px 1px 3px;
+            }
+            QPushButton:pressed {
+                background-color: rgb(24, 21, 30);
+                color: rgb(255,65,100);
+                border: 1px solid rgb(14,149,226);
+                border-radius: 3px;
+                padding: 1px 18px 1px 3px;
+            }
+        """
         return style
 
     @staticmethod
     def in_development_style():
-        style = """QPushButton:hover { background-color: rgb(64, 56, 84);
-                                           color: rgb(201,44,123); }
-                       QPushButton:!hover { background-color: rgb(48, 42, 61);
-                                            color: rgb(201,44,123); }
-                       QPushButton:pressed { background-color: rgb(24, 21, 30);
-                                            color: rgb(201,44,123); }"""
+        style = """
+            QPushButton:hover {
+                background-color: rgb(64, 56, 84);
+                color: rgb(201,44,123);
+                border: 1px solid rgb(14,149,226);
+                border-radius: 3px;
+                padding: 1px 18px 1px 3px;
+            }
+            QPushButton:!hover {
+                background-color: rgb(48, 42, 61);
+                color: rgb(201,44,123);
+                padding: 1px 18px 1px 3px;
+            }
+            QPushButton:pressed {
+                background-color: rgb(24, 21, 30);
+                color: rgb(201,44,123);
+                border: 1px solid rgb(14,149,226);
+                border-radius: 3px;
+                padding: 1px 18px 1px 3px;
+            }
+            """
         return style
 
     @staticmethod
@@ -106,4 +171,61 @@ class UiHelper:
                     height: 19px;
                 }
             """
+        return style
+
+    @staticmethod
+    def combo_box_style():
+        style = """
+            QComboBox QAbstractItemView {
+                color: rgb(85, 170, 255);	
+                background-color: #373e4e;
+                padding: 10px;
+                selection-background-color: rgb(48, 42, 61);
+                color: rgb(238, 238, 236);
+            }
+
+            QComboBox {
+                border: 1px solid darkgray;
+                border-radius: 3px;
+                padding: 1px 18px 1px 3px;
+                min-width: 6em;
+                color: rgb(238, 238, 236);
+            }
+            
+            QComboBox:editable {
+                background: rgb(48, 42, 61);
+                color: rgb(238, 238, 236);
+            }
+            
+            QComboBox:!editable, QComboBox::drop-down:editable {
+                background: rgb(48, 42, 61);
+                color: rgb(238, 238, 236);
+            }
+            
+            QComboBox:!editable:on, QComboBox::drop-down:editable:on {
+                background: rgb(48, 42, 61);
+                color: rgb(238, 238, 236);
+            }
+            
+            QComboBox:on {
+                background: white;
+                color: rgb(238, 238, 236);
+                padding-top: 3px;
+                padding-left: 4px;
+            }
+            
+            QComboBox::drop-down {
+                background: rgb(48, 42, 61);
+                color: rgb(238, 238, 236);
+                subcontrol-origin: padding;
+                subcontrol-position: top right;
+                width: 15px;
+                
+                border-left-width: 1px;
+                border-left-color: darkgray;
+                border-left-style: solid;
+                border-top-right-radius: 3px;
+                border-bottom-right-radius: 3px;
+            }
+        """
         return style

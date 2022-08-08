@@ -41,6 +41,8 @@ class DesWindow(QMainWindow, UiDes, WindowHelper):
             if self.file_data:
                 preprocessed_data, blocks = self.file_blocks(), self.file_size // 8
             else:
+                if len(self.plainTextEdit.toPlainText()) == 0:
+                    raise ValueError("Given empty text.")
                 preprocessed_data, blocks = self.read_bytes_from_data(data_format, self.plainTextEdit.toPlainText())
 
             processed_data = []
@@ -84,9 +86,6 @@ class DesWindow(QMainWindow, UiDes, WindowHelper):
 
         except Exception as error:
             self.textBrowser.setText(str(error))
-
-        finally:
-            self.file_data = None
 
     @staticmethod
     def read_bytes_from_data(data_format, data):
@@ -214,7 +213,7 @@ class DesWindow(QMainWindow, UiDes, WindowHelper):
         try:
             self.file_data = open(file_name, "rb")
             self.file_size = os.path.getsize(file_name)
-            self.plainTextEdit.setPlainText(f"Размер файла: {self.file_size} байт.")
+            self.textBrowser.setPlainText(f"Размер файла: {self.file_size} байт.")
         except Exception as error:
             self.statusbar.showMessage(f"Ошибка открытия файла: {str(error)}")
 
@@ -234,3 +233,10 @@ class DesWindow(QMainWindow, UiDes, WindowHelper):
         self.file_data.close()
         self.file_data = None
         self.file_size = None
+
+    # TODO
+    # - Добавить контрольный байт с размером исходного текста
+    # - Функция сохранения в файл как текста
+    # - Функция сохранения в файл как данных
+    # - Функция открытия ключа из файла
+    # - Функция сохранения ключа в файл

@@ -165,9 +165,6 @@ class DesWindow(QMainWindow, UiDes, WindowHelper):
         return (formatted_data[i:i+64] for i in range(0, len(formatted_data), 64)), len(formatted_data) // 64
 
     def format_result(self, data, data_format, action):
-        if action == "decrypt":
-            data = data[:self.size * 8]
-
         for block in data:
             self.full_result += self.from_bin_to_bytes(block)
 
@@ -365,7 +362,7 @@ class DesWindow(QMainWindow, UiDes, WindowHelper):
             if not block:
                 break
 
-            yield "".join([Byte.load_from_dec(byte).to_bin() for byte in block]).zfill(64)
+            yield "".join([Byte.load_from_dec(byte).to_bin() for byte in block]).ljust(64, "0")
 
         self.file_data.close()
         self.file_data = None

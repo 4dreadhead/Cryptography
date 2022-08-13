@@ -1,8 +1,8 @@
 import os
 import time
 
-from PyQt5.QtWidgets import QMainWindow, QFileDialog, QApplication
-from PyQt5.QtGui import QIcon
+from PyQt6.QtWidgets import QMainWindow, QFileDialog, QApplication
+from PyQt6.QtGui import QIcon
 
 from lib.ui import UiDes
 from lib.helpers import WindowHelper
@@ -116,7 +116,7 @@ class DesWindow(QMainWindow, UiDes, WindowHelper):
             self.full_result = bytearray()
 
             self.result, out_message = self.format_result(processed_data, output_format, action)
-            self.textBrowser.setText(self.result[:4096])
+            self.textBrowser.setText(self.result)
             self.statusbar.showMessage(out_message + f" Всего времени затрачено: {time.time() - start_time} сек.")
 
         except Exception as error:
@@ -296,6 +296,9 @@ class DesWindow(QMainWindow, UiDes, WindowHelper):
     def open_in(self):
         file_name, _ = QFileDialog.getOpenFileName(self.centralwidget, "Открыть файл:")
 
+        if not file_name:
+            return
+
         self.statusbar.showMessage("Считывание файла...")
         QApplication.processEvents()
 
@@ -316,6 +319,9 @@ class DesWindow(QMainWindow, UiDes, WindowHelper):
     def open_from_file(self, field_to_write, file_name=None):
         if file_name is None:
             file_name, _ = QFileDialog.getOpenFileName(self.centralwidget, "Открыть файл:")
+
+        if not file_name:
+            return
 
         try:
             with open(file_name, "r", encoding="utf-8") as file:
@@ -344,6 +350,8 @@ class DesWindow(QMainWindow, UiDes, WindowHelper):
             return
 
         file_name, _ = QFileDialog.getSaveFileName(self.centralwidget, "Сохранить в:")
+        if not file_name:
+            return
         try:
             with open(file_name, mode) as file:
                 file.write(data)

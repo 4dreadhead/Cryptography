@@ -1,4 +1,4 @@
-from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt6 import QtCore, QtGui, QtWidgets
 from lib.helpers import UiHelper
 
 
@@ -48,7 +48,7 @@ class UiCardano(object):
         self.label_info.setGeometry(QtCore.QRect(480, 279, 209, 30))
         self.label_info.setFont(font)
         self.label_info.setStyleSheet(UiHelper.text_area_style())
-        self.label_info.setAlignment(QtCore.Qt.AlignCenter)
+        self.label_info.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
         self.label_info.setObjectName("label_info")
 
         self.trash_box = QtWidgets.QCheckBox(self.centralwidget)
@@ -62,7 +62,7 @@ class UiCardano(object):
         self.label_info_trash.setGeometry(QtCore.QRect(60, 279, 120, 30))
         self.label_info_trash.setFont(font)
         self.label_info_trash.setStyleSheet(UiHelper.text_area_style())
-        self.label_info_trash.setAlignment(QtCore.Qt.AlignCenter)
+        self.label_info_trash.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
         self.label_info_trash.setObjectName("label_info_trash")
 
         font = UiHelper.set_font(size=10)
@@ -147,16 +147,16 @@ class UiCardano(object):
         self.statusbar.setStyleSheet("color: rgb(238, 238, 236);")
         Cardano.setStatusBar(self.statusbar)
 
-        self.pushButton_encrypt.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-        self.pushButton_decrypt.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-        self.pushButton_paste.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-        self.pushButton_clearInput.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-        self.pushButton_copy.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-        self.pushButton_clearOutput.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-        self.pushButton_exit.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+        self.pushButton_encrypt.setCursor(QtGui.QCursor(QtCore.Qt.CursorShape.PointingHandCursor))
+        self.pushButton_decrypt.setCursor(QtGui.QCursor(QtCore.Qt.CursorShape.PointingHandCursor))
+        self.pushButton_paste.setCursor(QtGui.QCursor(QtCore.Qt.CursorShape.PointingHandCursor))
+        self.pushButton_clearInput.setCursor(QtGui.QCursor(QtCore.Qt.CursorShape.PointingHandCursor))
+        self.pushButton_copy.setCursor(QtGui.QCursor(QtCore.Qt.CursorShape.PointingHandCursor))
+        self.pushButton_clearOutput.setCursor(QtGui.QCursor(QtCore.Qt.CursorShape.PointingHandCursor))
+        self.pushButton_exit.setCursor(QtGui.QCursor(QtCore.Qt.CursorShape.PointingHandCursor))
 
-        self.textBrowser.viewport().setProperty("cursor", QtGui.QCursor(QtCore.Qt.IBeamCursor))
-        self.plainTextEdit.viewport().setProperty("cursor", QtGui.QCursor(QtCore.Qt.IBeamCursor))
+        self.textBrowser.viewport().setProperty("cursor", QtGui.QCursor(QtCore.Qt.CursorShape.IBeamCursor))
+        self.plainTextEdit.viewport().setProperty("cursor", QtGui.QCursor(QtCore.Qt.CursorShape.IBeamCursor))
 
         self.retranslateUi(Cardano)
         QtCore.QMetaObject.connectSlotsByName(Cardano)

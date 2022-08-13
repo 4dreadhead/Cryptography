@@ -25,4 +25,4 @@ This application includes crypto-ciphers
 - Vernam cipher
 
 Each method has encryption and decryption functions.
-Application has a user interface created with PyQt5
+Application has a user interface created with PyQt6

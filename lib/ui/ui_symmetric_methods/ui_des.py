@@ -1,28 +1,11 @@
-from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt6 import QtCore, QtGui, QtWidgets
 from lib.helpers import UiHelper
 
 
 class UiDes(object):
     """
     UI class of method
-    Describe all widgets
     """
-    pushButton_exit: QtWidgets.QPushButton
-    pushButton_clearOutput: QtWidgets.QPushButton
-    pushButton_copy: QtWidgets.QPushButton
-    pushButton_clearInput: QtWidgets.QPushButton
-    pushButton_paste: QtWidgets.QPushButton
-    pushButton_decrypt: QtWidgets.QPushButton
-    pushButton_encrypt: QtWidgets.QPushButton
-    textBrowser: QtWidgets.QTextBrowser
-    plainTextEdit: QtWidgets.QPlainTextEdit
-    label_info: QtWidgets.QLabel
-    label_Des_gif: QtWidgets.QLabel
-    centralwidget: QtWidgets.QWidget
-    statusbar: QtWidgets.QStatusBar
-    plainTextEdit_key: QtWidgets.QPlainTextEdit
-    label_info_key: QtWidgets.QLabel
-
     def setupUi(self, Des):
         Des.setObjectName("Des")
         Des.resize(1280, 720)
@@ -46,42 +29,44 @@ class UiDes(object):
         self.label_info.setGeometry(QtCore.QRect(850, 30, 400, 240))
         self.label_info.setFont(font)
         self.label_info.setStyleSheet(UiHelper.text_area_style())
-        self.label_info.setAlignment(QtCore.Qt.AlignCenter)
+        self.label_info.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
         self.label_info.setObjectName("label_info")
+
+        font = UiHelper.set_font(size=10, bold=True, italic=True)
 
         self.label_info_key = QtWidgets.QLabel(self.centralwidget)
         self.label_info_key.setGeometry(QtCore.QRect(630, 200, 200, 30))
         self.label_info_key.setFont(font)
         self.label_info_key.setStyleSheet(UiHelper.text_area_style())
-        self.label_info_key.setAlignment(QtCore.Qt.AlignCenter)
+        self.label_info_key.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
         self.label_info_key.setObjectName("label_info_key")
 
         self.label_info_iv = QtWidgets.QLabel(self.centralwidget)
         self.label_info_iv.setGeometry(QtCore.QRect(630, 240, 200, 30))
         self.label_info_iv.setFont(font)
         self.label_info_iv.setStyleSheet(UiHelper.text_area_style())
-        self.label_info_iv.setAlignment(QtCore.Qt.AlignCenter)
+        self.label_info_iv.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
         self.label_info_iv.setObjectName("label_info_key")
 
         self.label_info_key_format = QtWidgets.QLabel(self.centralwidget)
         self.label_info_key_format.setGeometry(QtCore.QRect(30, 290, 230, 30))
         self.label_info_key_format.setFont(font)
         self.label_info_key_format.setStyleSheet(UiHelper.text_area_style())
-        self.label_info_key_format.setAlignment(QtCore.Qt.AlignCenter)
+        self.label_info_key_format.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
         self.label_info_key_format.setObjectName("label_info_key_format")
 
         self.label_info_in = QtWidgets.QLabel(self.centralwidget)
         self.label_info_in.setGeometry(QtCore.QRect(360, 290, 230, 30))
         self.label_info_in.setFont(font)
         self.label_info_in.setStyleSheet(UiHelper.text_area_style())
-        self.label_info_in.setAlignment(QtCore.Qt.AlignCenter)
+        self.label_info_in.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
         self.label_info_in.setObjectName("label_info_in")
 
         self.label_info_out = QtWidgets.QLabel(self.centralwidget)
         self.label_info_out.setGeometry(QtCore.QRect(690, 290, 230, 30))
         self.label_info_out.setFont(font)
         self.label_info_out.setStyleSheet(UiHelper.text_area_style())
-        self.label_info_out.setAlignment(QtCore.Qt.AlignCenter)
+        self.label_info_out.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
         self.label_info_out.setObjectName("label_info_out")
 
         self.combo_key = QtWidgets.QComboBox(self.centralwidget)
@@ -106,7 +91,7 @@ class UiDes(object):
         self.label_info_mode.setGeometry(QtCore.QRect(1020, 290, 230, 30))
         self.label_info_mode.setFont(font)
         self.label_info_mode.setStyleSheet(UiHelper.text_area_style())
-        self.label_info_mode.setAlignment(QtCore.Qt.AlignCenter)
+        self.label_info_mode.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
         self.label_info_mode.setObjectName("label_info_out")
 
         self.combo_mode = QtWidgets.QComboBox(self.centralwidget)
@@ -141,7 +126,7 @@ class UiDes(object):
         self.textBrowser.setStyleSheet(UiHelper.text_area_style())
         self.textBrowser.setObjectName("textBrowser")
 
-        font = UiHelper.set_font("Uroob", size=10, weight=75, bold=True)
+        font = UiHelper.set_font("Uroob", size=10, bold=True)
 
         self.pushButton_open_key = QtWidgets.QPushButton(self.centralwidget)
         self.pushButton_open_key.setGeometry(QtCore.QRect(30, 160, 170, 30))
@@ -239,16 +224,26 @@ class UiDes(object):
         self.statusbar.setStyleSheet("color: rgb(238, 238, 236);")
         Des.setStatusBar(self.statusbar)
 
-        self.pushButton_encrypt.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-        self.pushButton_decrypt.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-        self.pushButton_paste.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-        self.pushButton_clearInput.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-        self.pushButton_copy.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-        self.pushButton_clearOutput.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-        self.pushButton_exit.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-
-        self.textBrowser.viewport().setProperty("cursor", QtGui.QCursor(QtCore.Qt.IBeamCursor))
-        self.plainTextEdit.viewport().setProperty("cursor", QtGui.QCursor(QtCore.Qt.IBeamCursor))
+        self.pushButton_encrypt.setCursor(QtGui.QCursor(QtCore.Qt.CursorShape.PointingHandCursor))
+        self.pushButton_decrypt.setCursor(QtGui.QCursor(QtCore.Qt.CursorShape.PointingHandCursor))
+        self.pushButton_paste.setCursor(QtGui.QCursor(QtCore.Qt.CursorShape.PointingHandCursor))
+        self.pushButton_clearInput.setCursor(QtGui.QCursor(QtCore.Qt.CursorShape.PointingHandCursor))
+        self.pushButton_copy.setCursor(QtGui.QCursor(QtCore.Qt.CursorShape.PointingHandCursor))
+        self.pushButton_clearOutput.setCursor(QtGui.QCursor(QtCore.Qt.CursorShape.PointingHandCursor))
+        self.pushButton_exit.setCursor(QtGui.QCursor(QtCore.Qt.CursorShape.PointingHandCursor))
+        self.pushButton_open_in.setCursor(QtGui.QCursor(QtCore.Qt.CursorShape.PointingHandCursor))
+        self.pushButton_open_iv.setCursor(QtGui.QCursor(QtCore.Qt.CursorShape.PointingHandCursor))
+        self.pushButton_open_key.setCursor(QtGui.QCursor(QtCore.Qt.CursorShape.PointingHandCursor))
+        self.pushButton_save_in.setCursor(QtGui.QCursor(QtCore.Qt.CursorShape.PointingHandCursor))
+        self.pushButton_save_out.setCursor(QtGui.QCursor(QtCore.Qt.CursorShape.PointingHandCursor))
+        self.pushButton_save_iv.setCursor(QtGui.QCursor(QtCore.Qt.CursorShape.PointingHandCursor))
+        self.pushButton_save_key.setCursor(QtGui.QCursor(QtCore.Qt.CursorShape.PointingHandCursor))
+        self.combo_in.setCursor(QtGui.QCursor(QtCore.Qt.CursorShape.PointingHandCursor))
+        self.combo_key.setCursor(QtGui.QCursor(QtCore.Qt.CursorShape.PointingHandCursor))
+        self.combo_mode.setCursor(QtGui.QCursor(QtCore.Qt.CursorShape.PointingHandCursor))
+        self.combo_out.setCursor(QtGui.QCursor(QtCore.Qt.CursorShape.PointingHandCursor))
+        self.pushButton_write_out.setCursor(QtGui.QCursor(QtCore.Qt.CursorShape.PointingHandCursor))
+        self.textBrowser.viewport().setProperty("cursor", QtGui.QCursor(QtCore.Qt.CursorShape.IBeamCursor))
 
         self.retranslateUi(Des)
         QtCore.QMetaObject.connectSlotsByName(Des)
@@ -292,6 +287,6 @@ class UiDes(object):
                 "✓ Чтение (любое из полей ввода)\n"
                 "✓ Запись (любое из полей)\n"
                 "✓ Чтение байтов (входное сообщение)\n"
-                "✓ Запись байтов (результат шифрования)\n"
+                "✓ Запись байтов (результат шифрования)"
             )
         )

@@ -1,4 +1,4 @@
-from PyQt5.QtGui import QFont
+from PyQt6.QtGui import QFont
 
 
 class UiHelper:
@@ -53,7 +53,6 @@ class UiHelper:
             background-color: rgb(48, 42, 61);
             color: rgb(238, 238, 236);
             border-radius: 5px;
-            padding: 1px 18px 1px 3px;
         """
         return style
 
@@ -63,21 +62,20 @@ class UiHelper:
             QPushButton:hover {
                 background-color: rgb(64, 56, 84);
                 color: rgb(14,149,226);
-                border: 1px solid rgb(14,149,226);
-                border-radius: 3px;
-                padding: 1px 18px 1px 3px;
+                border: 2px solid rgb(14,149,226);
+                border-radius: 5px;
             }
-            QPushButton:!hover {
+            QPushButton {
                 background-color: rgb(48, 42, 61);
                 color: rgb(14,149,226);
-                padding: 1px 18px 1px 3px;
+                border-radius: 5px;
             }
             QPushButton:pressed {
                 background-color: rgb(24, 21, 30);
                 color: rgb(14,149,226);
-                border: 1px solid rgb(14,149,226);
-                border-radius: 3px;
-                padding: 1px 18px 1px 3px;
+                border: 2px solid rgb(14,149,226);
+                border-radius: 5px;
+                padding: 1px 18px 1px 10px;
             }
         """
         return style
@@ -88,21 +86,20 @@ class UiHelper:
             QPushButton:hover {
                 background-color: rgb(64, 56, 84);
                 color: rgb(28,180,230);
-                border: 1px solid rgb(14,149,226);
-                border-radius: 3px;
-                padding: 1px 18px 1px 3px;
+                border: 2px solid rgb(28,180,230);
+                border-radius: 5px;
             }
             QPushButton:!hover {
                 background-color: rgb(48, 42, 61);
                 color: rgb(28,180,230);
-                padding: 1px 18px 1px 3px;
+                border-radius: 5px;
             }
             QPushButton:pressed {
                 background-color: rgb(24, 21, 30);
                 color: rgb(28,180,230);
-                border: 1px solid rgb(14,149,226);
-                border-radius: 3px;
-                padding: 1px 18px 1px 3px;
+                border: 2px solid rgb(28,180,230);
+                border-radius: 5px;
+                padding: 1px 18px 1px 10px;
             }
         """
         return style
@@ -113,21 +110,20 @@ class UiHelper:
             QPushButton:hover {
                 background-color: rgb(64, 56, 84);
                 color: rgb(255,65,100);
-                border: 1px solid rgb(14,149,226);
-                border-radius: 3px;
-                padding: 1px 18px 1px 3px;
+                border: 2px solid rgb(255,65,100);
+                border-radius: 5px;
             }
-            QPushButton:!hover {
+            QPushButton {
                 background-color: rgb(48, 42, 61);
                 color: rgb(255,65,100);
-                padding: 1px 18px 1px 3px;
+                border-radius: 5px;
             }
             QPushButton:pressed {
                 background-color: rgb(24, 21, 30);
                 color: rgb(255,65,100);
-                border: 1px solid rgb(14,149,226);
-                border-radius: 3px;
-                padding: 1px 18px 1px 3px;
+                border: 2px solid rgb(255,65,100);
+                border-radius: 5px;
+                padding: 1px 18px 1px 10px;
             }
         """
         return style
@@ -138,21 +134,18 @@ class UiHelper:
             QPushButton:hover {
                 background-color: rgb(64, 56, 84);
                 color: rgb(201,44,123);
-                border: 1px solid rgb(14,149,226);
-                border-radius: 3px;
-                padding: 1px 18px 1px 3px;
             }
-            QPushButton:!hover {
+            QPushButton {
                 background-color: rgb(48, 42, 61);
                 color: rgb(201,44,123);
-                padding: 1px 18px 1px 3px;
+                border-radius: 5px;
             }
             QPushButton:pressed {
                 background-color: rgb(24, 21, 30);
                 color: rgb(201,44,123);
-                border: 1px solid rgb(14,149,226);
-                border-radius: 3px;
-                padding: 1px 18px 1px 3px;
+                border: 2px solid rgb(201,44,123);
+                border-radius: 5px;
+                padding: 1px 18px 1px 10px;
             }
             """
         return style
@@ -176,20 +169,21 @@ class UiHelper:
     @staticmethod
     def combo_box_style():
         style = """
-            QComboBox QAbstractItemView {
-                color: rgb(85, 170, 255);	
-                background-color: #373e4e;
+            QComboBox QAbstractItemView {	
+                background-color: rgb(48, 42, 61);
                 padding: 10px;
                 selection-background-color: rgb(48, 42, 61);
+                border-radius: 5px;
+                border: 1px solid darkgray;
                 color: rgb(238, 238, 236);
             }
 
             QComboBox {
                 border: 1px solid darkgray;
                 border-radius: 3px;
-                padding: 1px 18px 1px 3px;
                 min-width: 6em;
                 color: rgb(238, 238, 236);
+                padding-left: 10px;
             }
             
             QComboBox:editable {
@@ -205,10 +199,10 @@ class UiHelper:
             QComboBox:!editable:on, QComboBox::drop-down:editable:on {
                 background: rgb(48, 42, 61);
                 color: rgb(238, 238, 236);
+                padding-left: 10px;
             }
             
             QComboBox:on {
-                background: white;
                 color: rgb(238, 238, 236);
                 padding-top: 3px;
                 padding-left: 4px;
@@ -216,16 +210,17 @@ class UiHelper:
             
             QComboBox::drop-down {
                 background: rgb(48, 42, 61);
-                color: rgb(238, 238, 236);
-                subcontrol-origin: padding;
-                subcontrol-position: top right;
                 width: 15px;
                 
                 border-left-width: 1px;
                 border-left-color: darkgray;
                 border-left-style: solid;
-                border-top-right-radius: 3px;
-                border-bottom-right-radius: 3px;
+            }
+
+            QComboBox::down-arrow {
+                image: url(./lib/media/arrow-down.png);
+                width: 5px;
+                height: 5px;
             }
         """
         return style

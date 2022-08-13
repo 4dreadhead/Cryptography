@@ -1,5 +1,5 @@
 import pyperclip
-from PyQt5.QtWidgets import QPlainTextEdit, QStatusBar, QTextBrowser
+from PyQt6.QtWidgets import QPlainTextEdit, QStatusBar, QTextBrowser
 
 
 class WindowHelper:

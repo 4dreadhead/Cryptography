@@ -1,6 +1,6 @@
 import sys
-from PyQt5.QtWidgets import QMainWindow, QApplication
-from PyQt5.QtGui import QIcon
+from PyQt6.QtWidgets import QMainWindow, QApplication
+from PyQt6.QtGui import QIcon
 from lib.ui import UiMainMenu
 from lib.methods import *
 
@@ -25,7 +25,6 @@ class MainMenuWindow(QMainWindow, UiMainMenu):
         self.pushButton_Alberti.clicked.connect(self.run_alberti)
         self.pushButton_Vigenere.clicked.connect(self.run_vigenere)
         self.pushButton_Playfair.clicked.connect(self.run_playfair)
-        self.pushButton_11.clicked.connect(self.in_development)
         self.pushButton_12.clicked.connect(self.in_development)
         self.pushButton_exit.clicked.connect(self.close_program)
 
@@ -99,4 +98,4 @@ if __name__ == "__main__":
     app = QApplication(sys.argv)
     myapp = MainMenuWindow()
     myapp.show()
-    sys.exit(app.exec_())
+    sys.exit(app.exec())

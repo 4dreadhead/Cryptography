@@ -1,7 +1,7 @@
 import re
 import string as ascii_symbols
-from PyQt5.QtWidgets import QMainWindow
-from PyQt5.QtGui import QIcon
+from PyQt6.QtWidgets import QMainWindow
+from PyQt6.QtGui import QIcon
 from lib.ui import UiRichelieu
 from lib.helpers import WindowHelper
 from lib.helpers.exceptions import InvalidKey

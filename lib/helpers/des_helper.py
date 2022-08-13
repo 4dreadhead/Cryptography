@@ -70,21 +70,33 @@ class KeyGen:
 
         match key_format:
             case "BIN":
-                k = key.replace(" ", "")
-                result = "".join(
-                    [Byte.load_from_bin(byte).to_bin() for byte in [k[8*i:8*(i+1)] for i in range(len(k)//8)]]
-                )
+                result = key.replace(" ", "").replace("\n", "")
             case "HEX":
-                k = key.replace(" ", "")
-                result = "".join(
-                    [Byte.load_from_hex(byte).to_bin() for byte in [k[2*i:2*(i+1)] for i in range(len(k)//2)]]
-                )
-            case "TEXT":
-                result = "".join([Byte.load_from_dec(byte).to_bin() for byte in bytearray(key, "utf-8")])
+                result = key.replace(" ", "").replace("\n", "")
+                result = "".join([
+                    Byte.load_from_hex(
+                        result[2 * i:2 * (i + 1)]
+                    ).to_bin() for i in range(len(result) // 2)
+                ])
             case "DEC":
-                result = "".join([Byte.load_from_dec(byte).to_bin() for byte in key.split(" ")])
+                preparing_data = key.split(" ")
+                result = []
+                for byte in preparing_data:
+                    if not 0 <= int(byte) < 256:
+                        raise ValueError(f"Incorrect byte value: {byte}.")
+                    result.append(Byte.load_from_dec(byte).to_bin())
+                result = "".join(result)
+
+            case "TEXT":
+                result = "".join(
+                    [
+                        Byte.load_from_dec(byte).to_bin() for byte in bytearray(
+                            key, "utf-8"
+                        )
+                    ]
+                )
             case _:
-                raise ValueError("Unknown key format")
+                raise ValueError("Unknown data type")
 
         if len(result) != 56:
             raise ValueError(f"Wrong key size: {len(result)}. Expected: 56")

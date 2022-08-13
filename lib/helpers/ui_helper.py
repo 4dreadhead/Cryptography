@@ -154,14 +154,14 @@ class UiHelper:
     def trash_box_style():
         style = """ 
                 QCheckBox {
-                    color: white;
-                    spacing: 9px;
-                    width: 19px;
-                    height: 19px;
+                    border-radius: 5px;
+                    border: 1px solid darkgray;
+                    padding: 5px;
+                    background: rgb(48, 42, 61);
                 }
                 QCheckBox::indicator {
-                    width: 19px;
-                    height: 19px;
+                    width: 18px;
+                    height: 18px;
                 }
             """
         return style

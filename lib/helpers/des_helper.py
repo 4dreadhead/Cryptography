@@ -29,11 +29,53 @@ class Byte:
     def load_from_hex(hex_byte):
         return Byte(bin(int(hex_byte, 16))[2:].zfill(8))
 
+    @staticmethod
+    def read_bytes(data, data_format):
+        match data_format:
+            case "BIN":
+                formatted_data = data.replace(" ", "").replace("\n", "")
+            case "HEX":
+                formatted_data = data.replace(" ", "").replace("\n", "")
+                formatted_data = "".join([
+                    Byte.load_from_hex(
+                        formatted_data[2 * i:2 * (i + 1)]
+                    ).to_bin() for i in range(len(formatted_data) // 2)
+                ])
+            case "DEC":
+                preparing_data = data.split(" ")
+                formatted_data = []
+                for byte in preparing_data:
+                    if not 0 <= int(byte) < 256:
+                        raise ValueError(f"Incorrect byte value: {byte}.")
+                    formatted_data.append(Byte.load_from_dec(byte).to_bin())
+                formatted_data = "".join(formatted_data)
+
+            case "TEXT":
+                formatted_data = "".join(
+                    [
+                        Byte.load_from_dec(byte).to_bin() for byte in bytearray(
+                            data, "utf-8"
+                        )
+                    ]
+                )
+            case _:
+                raise ValueError(f"Неизвестный тип данных: {data_format}")
+        return formatted_data
+
 
 class KeyGen:
     def __init__(self, key=None, key_format=None):
-        self.read_key = self.generate_56bit_key(key, key_format)
-        self.prepared_key = self.key_pc_shuffle(self.add_control_bits(), "START")
+        self.read_key = self.read_and_generate_key(key, key_format)
+
+        match len(self.read_key):
+            case 56:
+                prepared_key = self.add_control_bits()
+            case 64:
+                prepared_key = self.read_key
+            case _:
+                raise ValueError(f"Неверный размер ключа: {len(self.read_key)} бит. Ожидалось: 56 или 64 бит.")
+
+        self.prepared_key = self.key_pc_shuffle(prepared_key, "START")
         self.round_keys = self.generate_round_keys()
 
     def __repr__(self):
@@ -64,42 +106,14 @@ class KeyGen:
         return round_keys
 
     @staticmethod
-    def generate_56bit_key(key=None, key_format=None):
+    def read_and_generate_key(key=None, key_format=None):
         if not key:
-            raise ValueError("Given empty key.")
+            raise ValueError("Не задан ключ.")
 
-        match key_format:
-            case "BIN":
-                result = key.replace(" ", "").replace("\n", "")
-            case "HEX":
-                result = key.replace(" ", "").replace("\n", "")
-                result = "".join([
-                    Byte.load_from_hex(
-                        result[2 * i:2 * (i + 1)]
-                    ).to_bin() for i in range(len(result) // 2)
-                ])
-            case "DEC":
-                preparing_data = key.split(" ")
-                result = []
-                for byte in preparing_data:
-                    if not 0 <= int(byte) < 256:
-                        raise ValueError(f"Incorrect byte value: {byte}.")
-                    result.append(Byte.load_from_dec(byte).to_bin())
-                result = "".join(result)
+        result = Byte.read_bytes(key, key_format)
 
-            case "TEXT":
-                result = "".join(
-                    [
-                        Byte.load_from_dec(byte).to_bin() for byte in bytearray(
-                            key, "utf-8"
-                        )
-                    ]
-                )
-            case _:
-                raise ValueError("Unknown data type")
-
-        if len(result) != 56:
-            raise ValueError(f"Wrong key size: {len(result)}. Expected: 56")
+        if len(result) != 56 and len(result) != 64:
+            raise ValueError(f"Неверный размер ключа: {len(result)} бит. Ожидалось: 56 или 64 бит.")
 
         return result
 

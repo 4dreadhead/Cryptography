@@ -72,6 +72,7 @@ class DesWindow(QMainWindow, UiDes, WindowHelper):
             data_format = self.combo_in.currentText()
             output_format = self.combo_out.currentText()
             key_format = self.combo_key.currentText()
+            self.size = None
 
             key = KeyGen(self.plainTextEdit_key.toPlainText(), key_format)
 
@@ -83,16 +84,16 @@ class DesWindow(QMainWindow, UiDes, WindowHelper):
                 self.size = self.file_size
             else:
                 if len(self.plainTextEdit.toPlainText()) == 0:
-                    raise ValueError("Given empty text.")
+                    raise ValueError("Нечего шифровать.")
                 preprocessed_data, blocks = self.read_bytes_from_data(data_format, self.plainTextEdit.toPlainText())
 
             processed_data = []
             counter = 0
 
-            first_iteration = True
+            control_block = self.with_control_bits_box.isChecked()
 
             for incoming_block in preprocessed_data:
-                if first_iteration and action == "encrypt":
+                if control_block and action == "encrypt":
                     processed_data.append(
                         self.process_block(
                             bin(self.size).lstrip('0b').zfill(64),
@@ -102,14 +103,14 @@ class DesWindow(QMainWindow, UiDes, WindowHelper):
                             blocks
                         )
                     )
-                    first_iteration = False
+                    control_block = False
 
                 processed_data.append(self.process_block(incoming_block, action, key, counter, blocks))
                 counter += 1
 
-                if first_iteration and action == "decrypt":
+                if control_block and action == "decrypt":
                     self.size = int(processed_data.pop(), 2)
-                    first_iteration = False
+                    control_block = False
 
             self.statusbar.showMessage("Форматирование выходных данных...")
             QApplication.processEvents()
@@ -120,42 +121,14 @@ class DesWindow(QMainWindow, UiDes, WindowHelper):
             self.statusbar.showMessage(out_message + f" Всего времени затрачено: {time.time() - start_time} сек.")
 
         except Exception as error:
-            self.textBrowser.setText(str(error))
+            self.statusbar.showMessage(str(error))
 
     # ----------------------------------------------------------------------------------------------------------
     #                               Форматирование входных и выходных данных
     # ----------------------------------------------------------------------------------------------------------
 
     def read_bytes_from_data(self, data_format, data):
-        match data_format:
-            case "BIN":
-                formatted_data = data.replace(" ", "").replace("\n", "")
-            case "HEX":
-                formatted_data = data.replace(" ", "").replace("\n", "")
-                formatted_data = "".join([
-                    Byte.load_from_hex(
-                        formatted_data[2*i:2*(i+1)]
-                    ).to_bin() for i in range(len(formatted_data) // 2)
-                ])
-            case "DEC":
-                preparing_data = data.split(" ")
-                formatted_data = []
-                for byte in preparing_data:
-                    if not 0 <= int(byte) < 256:
-                        raise ValueError(f"Incorrect byte value: {byte}.")
-                    formatted_data.append(Byte.load_from_dec(byte).to_bin())
-                formatted_data = "".join(formatted_data)
-
-            case "TEXT":
-                formatted_data = "".join(
-                    [
-                        Byte.load_from_dec(byte).to_bin() for byte in bytearray(
-                            data, "utf-8"
-                        )
-                    ]
-                )
-            case _:
-                raise ValueError("Unknown data type")
+        formatted_data = Byte.read_bytes(data, data_format)
 
         self.size = len(formatted_data) // 8
 
@@ -164,34 +137,44 @@ class DesWindow(QMainWindow, UiDes, WindowHelper):
 
         return (formatted_data[i:i+64] for i in range(0, len(formatted_data), 64)), len(formatted_data) // 64
 
+    @staticmethod
+    def read_iv_from_bytes(iv, iv_format):
+        if not iv:
+            raise ValueError("Не задан вектор инициализации (IV).")
+
+        result = Byte.read_bytes(iv, iv_format)
+
+        if len(result) != 64:
+            raise ValueError(f"Длина вектора инициализации (IV) не равна 64 бит (текущая длина: {len(result)}).")
+
+        return result
+
     def format_result(self, data, data_format, action):
         for block in data:
             self.full_result += self.from_bin_to_bytes(block)
 
-        if action == "decrypt":
+        if action == "decrypt" and self.size:
             self.full_result = self.full_result[:self.size]
-
-        showed_bytes = self.full_result
 
         match data_format:
             case "BIN":
-                result = " ".join([Byte.load_from_dec(byte).to_bin() for byte in showed_bytes])
+                result = " ".join([Byte.load_from_dec(byte).to_bin() for byte in self.full_result])
                 message = "Результат выведен в двоичном формате."
             case "HEX":
-                result = " ".join([Byte.load_from_dec(byte).to_hex() for byte in showed_bytes])
+                result = " ".join([Byte.load_from_dec(byte).to_hex() for byte in self.full_result])
                 message = "Результат выведен в шеснадцатиричном формате."
             case "DEC":
-                result = " ".join([str(Byte.load_from_dec(byte).to_dec()) for byte in showed_bytes])
+                result = " ".join([str(Byte.load_from_dec(byte).to_dec()) for byte in self.full_result])
                 message = "Результат выведен в десятеричном формате."
             case "TEXT":
                 try:
-                    result = showed_bytes.decode("utf-8")
+                    result = self.full_result.decode("utf-8")
                     message = "Результат выведен в UTF-8."
                 except UnicodeDecodeError:
-                    result = " ".join([Byte.load_from_dec(byte).to_hex() for byte in showed_bytes])
+                    result = " ".join([Byte.load_from_dec(byte).to_hex() for byte in self.full_result])
                     message = "Ошибка декодирования в utf-8. Результат выведен в шеснадцатиричном формате."
             case _:
-                raise ValueError("Unknown output format.")
+                raise ValueError("Неверный формат выходных данных.")
         return result, message
 
     @staticmethod
@@ -209,7 +192,7 @@ class DesWindow(QMainWindow, UiDes, WindowHelper):
             case "TEXT":
                 message = "Результат выведен в UTF-8."
             case _:
-                raise ValueError("Unknown output format.")
+                raise ValueError("Неверный формат выходных данных.")
         self.statusbar.showMessage(message)
 
     # ----------------------------------------------------------------------------------------------------------
@@ -224,7 +207,7 @@ class DesWindow(QMainWindow, UiDes, WindowHelper):
         elif action == "decrypt":
             rounds = range(16, 0, -1)
         else:
-            raise ValueError(f"Unknown action: {action}. Expected: 'encrypt' or 'decrypt'")
+            raise ValueError(f"Неизвестное действие: {action}. Ожидалось: 'encrypt' или 'decrypt'")
 
         if action == "decrypt":
             block = block[32:64] + block[:32]
@@ -307,7 +290,7 @@ class DesWindow(QMainWindow, UiDes, WindowHelper):
             return
 
         self.plainTextEdit.setPlainText("")
-        self.statusbar.showMessage("Не удалось открыть файл как текст, будет произведено побайтовое считывание.")
+        self.statusbar.showMessage(f"Файл {file_name} успешно прочитан. Будет произведено побайтовое кодирование.")
 
         try:
             self.file_data = open(file_name, "rb")

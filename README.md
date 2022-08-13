@@ -3,7 +3,7 @@
 
 ---
 ### To run application
-- Install python3
+- Install python3.10 +
 - Install 'requirements.txt' ( pip3 install -r "your_path_to_folder/requirements.txt" )
 - Run file 'application.py'
 
@@ -21,8 +21,8 @@ This application includes crypto-ciphers
 - Cardano Grill cipher
 - Richelieu cipher
 - Playfair cipher
-- Hill cipher
-- Vernam cipher
+- DES cipher
+- GOST cipher
 
 Each method has encryption and decryption functions.
 Application has a user interface created with PyQt6

@@ -9,27 +9,6 @@ from lib.helpers import WindowHelper
 from lib.helpers.des_helper import Byte, KeyGen
 from lib.helpers.des_const import P_TABLE, IP_TABLES, S_TABLES, E_TABLE
 
-# ----------------------------------------------------------------------------------------------------------
-#                                                 TODO
-# ----------------------------------------------------------------------------------------------------------
-# ✓ Реализовать метод
-
-# ✓ Добавить описание
-
-# ✓ Добавить выбор формата входных / выходных данных
-
-# ✓ Реализовать все виджеты в окне метода
-
-# ✓ Добавить работу с файлами
-#       Теперь доступно открытие/сохранение любого из полей окна
-#       Так же реализована побайтовая запись результата в файл
-
-# - Добавить новые режимы шифрования
-
-# ✓ Оптимизировать скорость работы алгоритма
-#       Ранее при работе с большими файлами требовалось больше времени, иногда скорость доходила до ~50 байт/сек
-#       Сейчас скорость обработки не зависит от размера файла и состовляет ~24 кб/сек
-
 
 class DesWindow(QMainWindow, UiDes, WindowHelper):
     """
@@ -58,7 +37,7 @@ class DesWindow(QMainWindow, UiDes, WindowHelper):
 
         self.file_data = None
         self.file_size = None
-        self.result = None
+        self.result = ""
         self.full_result = None
         self.size = None
 
@@ -69,59 +48,69 @@ class DesWindow(QMainWindow, UiDes, WindowHelper):
     def let_des_algorithm(self, action="encrypt"):
         try:
             start_time = time.time()
-            data_format = self.combo_in.currentText()
-            output_format = self.combo_out.currentText()
-            key_format = self.combo_key.currentText()
-            self.size = None
+            processed_data, preprocessed_data, blocks, control_block, key, iv, output_format, cipher_mode =\
+                self.prepare_to_process()
+            previous_block = iv
 
-            key = KeyGen(self.plainTextEdit_key.toPlainText(), key_format)
-
-            self.statusbar.showMessage("Считывание входных данных...")
-            QApplication.processEvents()
-
-            if self.file_data:
-                preprocessed_data, blocks = self.file_blocks(), self.file_size // 8
-                self.size = self.file_size
-            else:
-                if len(self.plainTextEdit.toPlainText()) == 0:
-                    raise ValueError("Нечего шифровать.")
-                preprocessed_data, blocks = self.read_bytes_from_data(data_format, self.plainTextEdit.toPlainText())
-
-            processed_data = []
-            counter = 0
-
-            control_block = self.with_control_bits_box.isChecked()
-
-            for incoming_block in preprocessed_data:
+            for counter, incoming_block in enumerate(preprocessed_data):
                 if control_block and action == "encrypt":
-                    processed_data.append(
-                        self.process_block(
-                            bin(self.size).lstrip('0b').zfill(64),
-                            action,
-                            key,
-                            counter,
-                            blocks
-                        )
-                    )
+                    result, previous_block = self.process_block(format(self.size, "b").zfill(64), previous_block,
+                                                                action, key, counter, blocks, cipher_mode)
+                    processed_data.append(result)
                     control_block = False
 
-                processed_data.append(self.process_block(incoming_block, action, key, counter, blocks))
-                counter += 1
+                result, previous_block = self.process_block(incoming_block, previous_block,
+                                                            action, key, counter, blocks, cipher_mode)
+                processed_data.append(result)
 
                 if control_block and action == "decrypt":
                     self.size = int(processed_data.pop(), 2)
                     control_block = False
 
-            self.statusbar.showMessage("Форматирование выходных данных...")
-            QApplication.processEvents()
-            self.full_result = bytearray()
-
-            self.result, out_message = self.format_result(processed_data, output_format, action)
-            self.textBrowser.setText(self.result)
-            self.statusbar.showMessage(out_message + f" Всего времени затрачено: {time.time() - start_time} сек.")
+            self.show_result(processed_data, output_format, action, start_time)
 
         except Exception as error:
-            self.statusbar.showMessage(str(error))
+            self.statusbar.showMessage("Произошла ошибка: str(error). Проверьте входные данные")
+
+    # ----------------------------------------------------------------------------------------------------------
+    #                                  Подготовка входных / выходных данных
+    # ----------------------------------------------------------------------------------------------------------
+
+    def prepare_to_process(self):
+        self.statusbar.showMessage("Считывание входных данных...")
+        QApplication.processEvents()
+
+        data_format = self.combo_in.currentText()
+        output_format = self.combo_out.currentText()
+        key_format = self.combo_key.currentText()
+        iv_format = self.combo_iv.currentText()
+        cipher_mode = self.combo_mode.currentText()
+
+        key = KeyGen(self.plainTextEdit_key.toPlainText(), key_format)
+        iv = self.read_iv_from_bytes(self.plainTextEdit_iv.toPlainText(), iv_format, cipher_mode)
+
+        self.size = None
+        if self.file_data:
+            preprocessed_data, blocks = self.file_blocks(), self.file_size // 8
+            self.size = self.file_size
+        else:
+            if len(self.plainTextEdit.toPlainText()) == 0:
+                raise ValueError("Нечего шифровать.")
+            preprocessed_data, blocks = self.read_bytes_from_data(data_format, self.plainTextEdit.toPlainText())
+
+        processed_data = []
+        control_block = self.with_control_bits_box.isChecked()
+
+        return processed_data, preprocessed_data, blocks, control_block, key, iv, output_format, cipher_mode
+
+    def show_result(self, processed_data, output_format, action, start_time):
+        self.statusbar.showMessage("Форматирование выходных данных...")
+        QApplication.processEvents()
+        self.full_result = bytearray()
+
+        self.result, out_message = self.format_result(processed_data, output_format, action)
+        self.textBrowser.setText(self.result)
+        self.statusbar.showMessage(out_message + f" Всего времени затрачено: {time.time() - start_time} сек.")
 
     # ----------------------------------------------------------------------------------------------------------
     #                               Форматирование входных и выходных данных
@@ -138,16 +127,22 @@ class DesWindow(QMainWindow, UiDes, WindowHelper):
         return (formatted_data[i:i+64] for i in range(0, len(formatted_data), 64)), len(formatted_data) // 64
 
     @staticmethod
-    def read_iv_from_bytes(iv, iv_format):
-        if not iv:
-            raise ValueError("Не задан вектор инициализации (IV).")
+    def read_iv_from_bytes(iv, iv_format, cipher_format):
+        match cipher_format:
+            case "ECB":
+                return None
+            case "CBC" | "CFB" | "OFB":
+                if not iv:
+                    raise ValueError("Не задан вектор инициализации (IV).")
 
-        result = Byte.read_bytes(iv, iv_format)
+                result = Byte.read_bytes(iv, iv_format)
 
-        if len(result) != 64:
-            raise ValueError(f"Длина вектора инициализации (IV) не равна 64 бит (текущая длина: {len(result)}).")
+                if len(result) != 64:
+                    raise ValueError(f"Неверная длина вектора инициализации (IV): {len(result)} бит. Ожидалось: 64.")
 
-        return result
+                return result
+            case _:
+                raise ValueError(f"Неизвестный режим шифрования: {cipher_format}")
 
     def format_result(self, data, data_format, action):
         for block in data:
@@ -199,26 +194,72 @@ class DesWindow(QMainWindow, UiDes, WindowHelper):
     #                                           Методы логики шифра
     # ----------------------------------------------------------------------------------------------------------
 
-    def process_block(self, incoming_block, action, key, counter, blocks):
+    def process_block(self, incoming_block, previous_block, action, key, counter, blocks, cipher_mode):
+        result_used_by_mode = None
+
+        match (cipher_mode, action):
+            case ("ECB", _):
+                pass
+
+            case ("CBC", "encrypt"):
+                incoming_block = self.xor(incoming_block, previous_block, 64)
+
+            case ("CBC", "decrypt"):
+                result_used_by_mode = incoming_block
+
+            case ("CFB", "encrypt"):
+                action = "encrypt"
+                incoming_block, previous_block = previous_block, incoming_block
+
+            case ("CFB", "decrypt"):
+                action = "encrypt"
+                incoming_block, previous_block = previous_block, incoming_block
+                result_used_by_mode = previous_block
+
+            case ("OFB", _):
+                action = "encrypt"
+                incoming_block, previous_block = previous_block, incoming_block
+            case _:
+                raise ValueError(f"Необработанная комбинация: {cipher_mode}, {action}")
+
         block = self.message_shuffle(incoming_block, "START")
 
-        if action == "encrypt":
-            rounds = range(1, 17)
-        elif action == "decrypt":
-            rounds = range(16, 0, -1)
-        else:
-            raise ValueError(f"Неизвестное действие: {action}. Ожидалось: 'encrypt' или 'decrypt'")
+        match action:
+            case "encrypt":
+                for round_ in range(1, 17):
+                    block = self.one_round(block, key.round_keys[round_], action)
+                block = block[32:64] + block[:32]
 
-        if action == "decrypt":
-            block = block[32:64] + block[:32]
+            case "decrypt":
+                block = block[32:64] + block[:32]
+                for round_ in range(16, 0, -1):
+                    block = self.one_round(block, key.round_keys[round_], action)
 
-        for round_ in rounds:
-            block = self.one_round(block, key.round_keys[round_], action)
-
-        if action == "encrypt":
-            block = block[32:64] + block[:32]
+            case _:
+                raise ValueError(f"Необработанная комбинация режима и действия: {cipher_mode}, {action}")
 
         result = self.message_shuffle(block, "END")
+
+        match (cipher_mode, action):
+            case ("ECB", _):
+                pass
+
+            case ("CBC", "encrypt"):
+                result_used_by_mode = result
+
+            case ("CBC", "decrypt"):
+                result = self.xor(result, previous_block, 64)
+
+            case ("CFB", _):
+                result = self.xor(result, previous_block, 64)
+                result_used_by_mode = result_used_by_mode if result_used_by_mode else result
+
+            case ("OFB", _):
+                result_used_by_mode = result
+                result = self.xor(result, previous_block, 64)
+
+            case _:
+                raise ValueError(f"Необработанная комбинация: {cipher_mode}, {action}")
 
         if counter % 256 == 0:
             self.statusbar.showMessage(
@@ -226,7 +267,7 @@ class DesWindow(QMainWindow, UiDes, WindowHelper):
             )
             QApplication.processEvents()
 
-        return result
+        return result, result_used_by_mode
 
     @staticmethod
     def message_shuffle(bit_message, action):
@@ -259,7 +300,7 @@ class DesWindow(QMainWindow, UiDes, WindowHelper):
     def process_6bit_group(_6bit_group, s_table):
         row = int(_6bit_group[0] + _6bit_group[-1], 2)
         column = int(_6bit_group[1:-1], 2)
-        return bin(s_table[row][column])[2:].zfill(4)
+        return format(s_table[row][column], "b").zfill(4)
 
     def one_round(self, block, round_key, action):
         first_block = block[:32]

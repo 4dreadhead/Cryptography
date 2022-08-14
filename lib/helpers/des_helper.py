@@ -5,8 +5,8 @@ from .des_const import PC_TABLES, ROUND_SHUFFLE_TABLE
 class Byte:
     def __init__(self, incoming_byte):
         self.decimal = int(incoming_byte, 2)
-        self.hex = hex(self.decimal)[2:].zfill(2)
-        self.binary = bin(self.decimal)[2:].zfill(8)
+        self.hex = format(self.decimal, "x").zfill(2)
+        self.binary = format(self.decimal, "b").zfill(8)
 
     def to_bin(self):
         return self.binary
@@ -23,11 +23,11 @@ class Byte:
 
     @staticmethod
     def load_from_dec(decimal_byte):
-        return Byte(bin(int(decimal_byte))[2:].zfill(8))
+        return Byte(format(int(decimal_byte), "b").zfill(8))
 
     @staticmethod
     def load_from_hex(hex_byte):
-        return Byte(bin(int(hex_byte, 16))[2:].zfill(8))
+        return Byte(format(int(hex_byte, 16), "b").zfill(8))
 
     @staticmethod
     def read_bytes(data, data_format):

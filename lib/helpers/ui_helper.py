@@ -9,12 +9,12 @@ class UiHelper:
     def set_font(family=None, size=12, weight=None, bold=False, italic=False):
         """
         This function sets the font with specified parameters
-        :param family: str: font family
-        :param size: int: font size
-        :param weight: int: font weight
-        :param bold: bool: is bold
-        :param italic: bool: is italic
-        :return: QFont: font
+        :param family:  [str] font family
+        :param size:    [int] font size
+        :param weight:  [int] font weight
+        :param bold:    [bool] is bold
+        :param italic:  [bool] is italic
+        :return:        [QFont] font
         """
         font = QFont()
         if family:
@@ -30,7 +30,7 @@ class UiHelper:
     def text_browser_html():
         """
         This function returns html code for setting style of QtWidgets.QTextBrowser
-        :return: str: html style
+        :return: style: [str] html style
         """
         style = "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"" +\
                 "http://www.w3.org/TR/REC-html40/strict.dtd\">\n" +\

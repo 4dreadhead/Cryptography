@@ -9,3 +9,4 @@ from lib.methods.symmetric_methods.gronsfeld import GronsfeldWindow
 from lib.methods.symmetric_methods.vigenere import VigenereWindow
 from lib.methods.symmetric_methods.playfair import PlayfairWindow
 from lib.methods.symmetric_methods.des import DesWindow
+from lib.methods.symmetric_methods.gost import GostWindow

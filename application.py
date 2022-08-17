@@ -1,6 +1,8 @@
 import sys
+
 from PyQt6.QtWidgets import QMainWindow, QApplication
 from PyQt6.QtGui import QIcon
+
 from lib.ui import UiMainMenu
 from lib.methods import *
 
@@ -25,7 +27,7 @@ class MainMenuWindow(QMainWindow, UiMainMenu):
         self.pushButton_Alberti.clicked.connect(self.run_alberti)
         self.pushButton_Vigenere.clicked.connect(self.run_vigenere)
         self.pushButton_Playfair.clicked.connect(self.run_playfair)
-        self.pushButton_12.clicked.connect(self.in_development)
+        self.pushButton_GOST.clicked.connect(self.run_gost)
         self.pushButton_exit.clicked.connect(self.close_program)
 
         self.pushButton_DES.clicked.connect(self.run_des)
@@ -83,6 +85,11 @@ class MainMenuWindow(QMainWindow, UiMainMenu):
     def run_des(self):
         self.statusbar.showMessage("Запущено: Шифр DES.")
         self.mySecond = DesWindow()
+        self.mySecond.show()
+
+    def run_gost(self):
+        self.statusbar.showMessage("Запущено: Шифр GOST.")
+        self.mySecond = GostWindow()
         self.mySecond.show()
 
     def in_development(self):

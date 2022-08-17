@@ -1,16 +1,14 @@
-import os
 import time
 
-from PyQt6.QtWidgets import QMainWindow, QFileDialog, QApplication
+from PyQt6.QtWidgets import QMainWindow, QApplication
 from PyQt6.QtGui import QIcon
 
 from lib.ui import UiDes
-from lib.helpers import WindowHelper
-from lib.helpers.des_helper import Byte, KeyGen
+from lib.helpers import WindowHelper, FileHelper, DesKeyGen, CustomByte, BlockCiphersFormatHelper
 from lib.helpers.des_const import P_TABLE, IP_TABLES, S_TABLES, E_TABLE
 
 
-class DesWindow(QMainWindow, UiDes, WindowHelper):
+class DesWindow(QMainWindow, UiDes, WindowHelper, FileHelper, BlockCiphersFormatHelper):
     """
     Window class with method logic
     """
@@ -35,22 +33,17 @@ class DesWindow(QMainWindow, UiDes, WindowHelper):
         self.pushButton_open_iv.clicked.connect(lambda: self.open_from_file(self.plainTextEdit_iv))
         self.pushButton_open_key.clicked.connect(lambda: self.open_from_file(self.plainTextEdit_key))
 
-        self.file_data = None
-        self.file_size = None
         self.result = ""
         self.full_result = None
         self.size = None
-
-    # ----------------------------------------------------------------------------------------------------------
-    #                            Основной поток функции шифрования / расшифрования
-    # ----------------------------------------------------------------------------------------------------------
+        self.file_size = None
+        self.file_data = None
 
     def let_des_algorithm(self, action="encrypt"):
         try:
             start_time = time.time()
-            processed_data, preprocessed_data, blocks, control_block, key, iv, output_format, cipher_mode =\
-                self.prepare_to_process()
-            previous_block = iv
+            processed_data, preprocessed_data, blocks, control_block, key, previous_block, output_format, cipher_mode =\
+                self.prepare_to_process(keygen=DesKeyGen)
 
             for counter, incoming_block in enumerate(preprocessed_data):
                 if control_block and action == "encrypt":
@@ -70,129 +63,7 @@ class DesWindow(QMainWindow, UiDes, WindowHelper):
             self.show_result(processed_data, output_format, action, start_time)
 
         except Exception as error:
-            self.statusbar.showMessage("Произошла ошибка: str(error). Проверьте входные данные")
-
-    # ----------------------------------------------------------------------------------------------------------
-    #                                  Подготовка входных / выходных данных
-    # ----------------------------------------------------------------------------------------------------------
-
-    def prepare_to_process(self):
-        self.statusbar.showMessage("Считывание входных данных...")
-        QApplication.processEvents()
-
-        data_format = self.combo_in.currentText()
-        output_format = self.combo_out.currentText()
-        key_format = self.combo_key.currentText()
-        iv_format = self.combo_iv.currentText()
-        cipher_mode = self.combo_mode.currentText()
-
-        key = KeyGen(self.plainTextEdit_key.toPlainText(), key_format)
-        iv = self.read_iv_from_bytes(self.plainTextEdit_iv.toPlainText(), iv_format, cipher_mode)
-
-        self.size = None
-        if self.file_data:
-            preprocessed_data, blocks = self.file_blocks(), self.file_size // 8
-            self.size = self.file_size
-        else:
-            if len(self.plainTextEdit.toPlainText()) == 0:
-                raise ValueError("Нечего шифровать.")
-            preprocessed_data, blocks = self.read_bytes_from_data(data_format, self.plainTextEdit.toPlainText())
-
-        processed_data = []
-        control_block = self.with_control_bits_box.isChecked()
-
-        return processed_data, preprocessed_data, blocks, control_block, key, iv, output_format, cipher_mode
-
-    def show_result(self, processed_data, output_format, action, start_time):
-        self.statusbar.showMessage("Форматирование выходных данных...")
-        QApplication.processEvents()
-        self.full_result = bytearray()
-
-        self.result, out_message = self.format_result(processed_data, output_format, action)
-        self.textBrowser.setText(self.result)
-        self.statusbar.showMessage(out_message + f" Всего времени затрачено: {time.time() - start_time} сек.")
-
-    # ----------------------------------------------------------------------------------------------------------
-    #                               Форматирование входных и выходных данных
-    # ----------------------------------------------------------------------------------------------------------
-
-    def read_bytes_from_data(self, data_format, data):
-        formatted_data = Byte.read_bytes(data, data_format)
-
-        self.size = len(formatted_data) // 8
-
-        if len(formatted_data) % 64 != 0:
-            formatted_data += "0" * (64 - len(formatted_data) % 64)
-
-        return (formatted_data[i:i+64] for i in range(0, len(formatted_data), 64)), len(formatted_data) // 64
-
-    @staticmethod
-    def read_iv_from_bytes(iv, iv_format, cipher_format):
-        match cipher_format:
-            case "ECB":
-                return None
-            case "CBC" | "CFB" | "OFB":
-                if not iv:
-                    raise ValueError("Не задан вектор инициализации (IV).")
-
-                result = Byte.read_bytes(iv, iv_format)
-
-                if len(result) != 64:
-                    raise ValueError(f"Неверная длина вектора инициализации (IV): {len(result)} бит. Ожидалось: 64.")
-
-                return result
-            case _:
-                raise ValueError(f"Неизвестный режим шифрования: {cipher_format}")
-
-    def format_result(self, data, data_format, action):
-        for block in data:
-            self.full_result += self.from_bin_to_bytes(block)
-
-        if action == "decrypt" and self.size:
-            self.full_result = self.full_result[:self.size]
-
-        match data_format:
-            case "BIN":
-                result = " ".join([Byte.load_from_dec(byte).to_bin() for byte in self.full_result])
-                message = "Результат выведен в двоичном формате."
-            case "HEX":
-                result = " ".join([Byte.load_from_dec(byte).to_hex() for byte in self.full_result])
-                message = "Результат выведен в шеснадцатиричном формате."
-            case "DEC":
-                result = " ".join([str(Byte.load_from_dec(byte).to_dec()) for byte in self.full_result])
-                message = "Результат выведен в десятеричном формате."
-            case "TEXT":
-                try:
-                    result = self.full_result.decode("utf-8")
-                    message = "Результат выведен в UTF-8."
-                except UnicodeDecodeError:
-                    result = " ".join([Byte.load_from_dec(byte).to_hex() for byte in self.full_result])
-                    message = "Ошибка декодирования в utf-8. Результат выведен в шеснадцатиричном формате."
-            case _:
-                raise ValueError("Неверный формат выходных данных.")
-        return result, message
-
-    @staticmethod
-    def from_bin_to_bytes(block):
-        return bytearray([int(block[i:i+8], 2) for i in range(0, len(block), 8)])
-
-    def out_message(self, data_format):
-        match data_format:
-            case "BIN":
-                message = "Результат выведен в двоичном формате."
-            case "HEX":
-                message = "Результат выведен в шеснадцатиричном формате."
-            case "DEC":
-                message = "Результат выведен в десятеричном формате."
-            case "TEXT":
-                message = "Результат выведен в UTF-8."
-            case _:
-                raise ValueError("Неверный формат выходных данных.")
-        self.statusbar.showMessage(message)
-
-    # ----------------------------------------------------------------------------------------------------------
-    #                                           Методы логики шифра
-    # ----------------------------------------------------------------------------------------------------------
+            self.statusbar.showMessage(f"Произошла ошибка: {str(error)}. Проверьте входные данные")
 
     def process_block(self, incoming_block, previous_block, action, key, counter, blocks, cipher_mode):
         result_used_by_mode = None
@@ -236,7 +107,7 @@ class DesWindow(QMainWindow, UiDes, WindowHelper):
                     block = self.one_round(block, key.round_keys[round_], action)
 
             case _:
-                raise ValueError(f"Необработанная комбинация режима и действия: {cipher_mode}, {action}")
+                raise ValueError(f"Неизвестное действие: {cipher_mode}, {action}")
 
         result = self.message_shuffle(block, "END")
 
@@ -306,96 +177,12 @@ class DesWindow(QMainWindow, UiDes, WindowHelper):
         first_block = block[:32]
         second_block = block[32:64]
 
-        if action == "encrypt":
-            processed_block = self.process_message_block(second_block, round_key)
-            return "".join([second_block, self.xor(first_block, processed_block, 32)])
-        else:
-            processed_block = self.process_message_block(first_block, round_key)
-            return "".join([self.xor(processed_block, second_block, 32), first_block])
-
-    # ----------------------------------------------------------------------------------------------------------
-    #                                          Работа с файлами
-    # ----------------------------------------------------------------------------------------------------------
-
-    def open_in(self):
-        file_name, _ = QFileDialog.getOpenFileName(self.centralwidget, "Открыть файл:")
-
-        if not file_name:
-            return
-
-        self.statusbar.showMessage("Считывание файла...")
-        QApplication.processEvents()
-
-        result = self.open_from_file(self.plainTextEdit, file_name)
-        if result:
-            return
-
-        self.plainTextEdit.setPlainText("")
-        self.statusbar.showMessage(f"Файл {file_name} успешно прочитан. Будет произведено побайтовое кодирование.")
-
-        try:
-            self.file_data = open(file_name, "rb")
-            self.file_size = os.path.getsize(file_name)
-            self.textBrowser.setPlainText(f"Размер файла: {self.file_size} байт.")
-        except Exception as error:
-            self.statusbar.showMessage(f"Ошибка открытия файла: {str(error)}")
-
-    def open_from_file(self, field_to_write, file_name=None):
-        if file_name is None:
-            file_name, _ = QFileDialog.getOpenFileName(self.centralwidget, "Открыть файл:")
-
-        if not file_name:
-            return
-
-        try:
-            with open(file_name, "r", encoding="utf-8") as file:
-                data = file.read()
-                field_to_write.setPlainText(data)
-                self.statusbar.showMessage(f"Файл {file_name} успешно прочитан.")
-            return True
-
-        except Exception as error:
-            self.statusbar.showMessage(f"Ошибка открытия / чтения файла: {str(error)}")
-            return False
-
-    def save_as_text(self, data):
-        self.save_in_file("w", data)
-
-    def save_as_data(self, data):
-        self.save_in_file("wb", data)
-
-    def save_in_file(self, mode, data):
-        if not data:
-            self.statusbar.showMessage("Нечего сохранять.")
-            return
-
-        if mode not in ['w', 'wb']:
-            self.statusbar.showMessage("Неверная настройка функции открытия файла. Режим может быть 'w' или 'wb'.")
-            return
-
-        file_name, _ = QFileDialog.getSaveFileName(self.centralwidget, "Сохранить в:")
-        if not file_name:
-            return
-        try:
-            with open(file_name, mode) as file:
-                file.write(data)
-                self.statusbar.showMessage(f"Данные успешно сохранены в {file_name}")
-        except Exception as error:
-            self.statusbar.showMessage(f"Ошибка записи в файл: {str(error)}")
-
-    def file_blocks(self):
-        while True:
-            try:
-                block = self.file_data.read(8)
-            except Exception as error:
-                self.statusbar.showMessage(f"Ошибка чтения файла: {str(error)}.")
-                block = None
-
-            if not block:
-                break
-
-            yield "".join([Byte.load_from_dec(byte).to_bin() for byte in block]).ljust(64, "0")
-
-        self.file_data.close()
-        self.file_data = None
-        self.file_size = None
+        match action:
+            case "encrypt":
+                processed_block = self.process_message_block(second_block, round_key)
+                return "".join([second_block, self.xor(first_block, processed_block, 32)])
+            case "decrypt":
+                processed_block = self.process_message_block(first_block, round_key)
+                return "".join([self.xor(processed_block, second_block, 32), first_block])
+            case _:
+                raise ValueError(f"Неизвестное действие: {action}")

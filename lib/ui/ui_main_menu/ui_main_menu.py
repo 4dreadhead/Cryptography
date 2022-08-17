@@ -18,6 +18,7 @@ class UiMainMenu(object):
     pushButton_Vigenere: QtWidgets.QPushButton
     pushButton_Playfair: QtWidgets.QPushButton
     pushButton_DES: QtWidgets.QPushButton
+    pushButton_GOST: QtWidgets.QPushButton
     pushButton_exit: QtWidgets.QPushButton
     label_MainMenu_gif: QtWidgets.QLabel
     centralwidget: QtWidgets.QWidget
@@ -33,7 +34,7 @@ class UiMainMenu(object):
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
 
-        font = UiHelper.set_font("Uroob", size=11, bold=True)
+        font = UiHelper.set_font("Droid Sans Mono", size=11, bold=True)
 
         self.pushButton_exit = QtWidgets.QPushButton(self.centralwidget)
         self.pushButton_exit.setGeometry(QtCore.QRect(150, 520, 530, 45))
@@ -119,15 +120,12 @@ class UiMainMenu(object):
         self.pushButton_DES.setStyleSheet(UiHelper.default_style())
         self.pushButton_DES.setObjectName("pushButton_DES")
 
-        # In development buttons area
-
-        self.pushButton_12 = QtWidgets.QPushButton(self.centralwidget)
-        self.pushButton_12.setGeometry(QtCore.QRect(550, 410, 265, 65))
-        self.pushButton_12.setFont(font)
-        self.pushButton_12.setCursor(QtGui.QCursor(QtCore.Qt.CursorShape.PointingHandCursor))
-        self.pushButton_12.setStyleSheet(UiHelper.in_development_style())
-        self.pushButton_12.setObjectName("pushButton_12")
-        # End
+        self.pushButton_GOST = QtWidgets.QPushButton(self.centralwidget)
+        self.pushButton_GOST.setGeometry(QtCore.QRect(550, 410, 265, 65))
+        self.pushButton_GOST.setFont(font)
+        self.pushButton_GOST.setCursor(QtGui.QCursor(QtCore.Qt.CursorShape.PointingHandCursor))
+        self.pushButton_GOST.setStyleSheet(UiHelper.default_style())
+        self.pushButton_GOST.setObjectName("pushButton_GOST")
 
         self.label_MainMenu_gif = QtWidgets.QLabel(self.centralwidget)
         self.label_MainMenu_gif.setGeometry(QtCore.QRect(-10, 10, 831, 181))
@@ -161,5 +159,5 @@ class UiMainMenu(object):
         self.pushButton_Richelieu.setText(_translate("MainWindow", "Шифр Ришелье"))
         self.pushButton_Playfair.setText(_translate("MainWindow", "Шифр Плейфера"))
         self.pushButton_DES.setText(_translate("MainWindow", "Шифр DES"))
-        self.pushButton_12.setText(_translate("MainWindow", "Шифр ГОСТ"))
+        self.pushButton_GOST.setText(_translate("MainWindow", "Шифр ГОСТ"))
         self.pushButton_exit.setText(_translate("MainWindow", "Выход из программы"))

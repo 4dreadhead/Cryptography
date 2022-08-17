@@ -2,25 +2,25 @@ from PyQt6 import QtCore, QtGui, QtWidgets
 from lib.helpers import UiHelper
 
 
-class UiDes(object):
+class UiGost(object):
     """
     UI class of method
     """
-    def setupUi(self, Des):
-        Des.setObjectName("Des")
-        Des.resize(1280, 720)
-        Des.setMinimumSize(QtCore.QSize(1280, 720))
-        Des.setMaximumSize(QtCore.QSize(1280, 720))
-        Des.setStyleSheet("background-color: rgb(32, 28, 42);")
+    def setupUi(self, Gost):
+        Gost.setObjectName("Gost")
+        Gost.resize(1280, 720)
+        Gost.setMinimumSize(QtCore.QSize(1280, 720))
+        Gost.setMaximumSize(QtCore.QSize(1280, 720))
+        Gost.setStyleSheet("background-color: rgb(32, 28, 42);")
 
-        self.centralwidget = QtWidgets.QWidget(Des)
+        self.centralwidget = QtWidgets.QWidget(Gost)
         self.centralwidget.setObjectName("centralwidget")
 
-        self.label_Des_gif = QtWidgets.QLabel(self.centralwidget)
-        self.label_Des_gif.setGeometry(QtCore.QRect(30, 30, 800, 120))
-        self.label_Des_gif.setObjectName("label_des_gif")
-        gif = QtGui.QMovie("lib/media/des.gif")
-        self.label_Des_gif.setMovie(gif)
+        self.label_Gost_gif = QtWidgets.QLabel(self.centralwidget)
+        self.label_Gost_gif.setGeometry(QtCore.QRect(30, 30, 800, 120))
+        self.label_Gost_gif.setObjectName("label_gost_gif")
+        gif = QtGui.QMovie("lib/media/gost.gif")
+        self.label_Gost_gif.setMovie(gif)
         gif.start()
 
         font = UiHelper.set_font(size=9)
@@ -244,12 +244,12 @@ class UiDes(object):
         self.pushButton_exit.setObjectName("pushButton_exit")
         self.pushButton_exit.setStyleSheet(UiHelper.exit_style())
 
-        Des.setCentralWidget(self.centralwidget)
-        self.statusbar = QtWidgets.QStatusBar(Des)
+        Gost.setCentralWidget(self.centralwidget)
+        self.statusbar = QtWidgets.QStatusBar(Gost)
         self.statusbar.setObjectName("statusbar")
         self.statusbar.setFont(font)
         self.statusbar.setStyleSheet("color: rgb(238, 238, 236);")
-        Des.setStatusBar(self.statusbar)
+        Gost.setStatusBar(self.statusbar)
 
         self.pushButton_encrypt.setCursor(QtGui.QCursor(QtCore.Qt.CursorShape.PointingHandCursor))
         self.pushButton_decrypt.setCursor(QtGui.QCursor(QtCore.Qt.CursorShape.PointingHandCursor))
@@ -273,41 +273,41 @@ class UiDes(object):
         self.pushButton_write_out.setCursor(QtGui.QCursor(QtCore.Qt.CursorShape.PointingHandCursor))
         self.textBrowser.viewport().setProperty("cursor", QtGui.QCursor(QtCore.Qt.CursorShape.IBeamCursor))
 
-        self.retranslateUi(Des)
-        QtCore.QMetaObject.connectSlotsByName(Des)
+        self.retranslateUi(Gost)
+        QtCore.QMetaObject.connectSlotsByName(Gost)
 
-    def retranslateUi(self, Des):
+    def retranslateUi(self, Gost):
         _translate = QtCore.QCoreApplication.translate
-        Des.setWindowTitle(_translate("Des", "DES"))
+        Gost.setWindowTitle(_translate("Gost", "DES"))
 
-        self.pushButton_encrypt.setText(_translate("Des", "Зашифровать"))
-        self.pushButton_decrypt.setText(_translate("Des", "Расшифровать"))
-        self.pushButton_paste.setText(_translate("Des", "Вставить"))
-        self.pushButton_clearInput.setText(_translate("Des", "Копировать"))
-        self.pushButton_copy.setText(_translate("Des", "Очистить"))
-        self.pushButton_clearOutput.setText(_translate("Des", "Очистить"))
-        self.pushButton_exit.setText(_translate("Des", "Закрыть окно"))
-        self.pushButton_save_in.setText(_translate("Des", "Сохранить"))
-        self.pushButton_open_in.setText(_translate("Des", "Открыть"))
-        self.pushButton_save_out.setText(_translate("Des", "Сохранить"))
-        self.pushButton_write_out.setText(_translate("Des", "Записать"))
-        self.pushButton_save_iv.setText(_translate("Des", "Сохранить IV"))
-        self.pushButton_open_iv.setText(_translate("Des", "Открыть IV"))
-        self.pushButton_save_key.setText(_translate("Des", "Сохранить ключ"))
-        self.pushButton_open_key.setText(_translate("Des", "Открыть ключ"))
+        self.pushButton_encrypt.setText(_translate("Gost", "Зашифровать"))
+        self.pushButton_decrypt.setText(_translate("Gost", "Расшифровать"))
+        self.pushButton_paste.setText(_translate("Gost", "Вставить"))
+        self.pushButton_clearInput.setText(_translate("Gost", "Копировать"))
+        self.pushButton_copy.setText(_translate("Gost", "Очистить"))
+        self.pushButton_clearOutput.setText(_translate("Gost", "Очистить"))
+        self.pushButton_exit.setText(_translate("Gost", "Закрыть окно"))
+        self.pushButton_save_in.setText(_translate("Gost", "Сохранить"))
+        self.pushButton_open_in.setText(_translate("Gost", "Открыть"))
+        self.pushButton_save_out.setText(_translate("Gost", "Сохранить"))
+        self.pushButton_write_out.setText(_translate("Gost", "Записать"))
+        self.pushButton_save_iv.setText(_translate("Gost", "Сохранить IV"))
+        self.pushButton_open_iv.setText(_translate("Gost", "Открыть IV"))
+        self.pushButton_save_key.setText(_translate("Gost", "Сохранить ключ"))
+        self.pushButton_open_key.setText(_translate("Gost", "Открыть ключ"))
 
-        self.textBrowser.setHtml(_translate("Des", UiHelper.text_browser_html()))
-        self.label_info_key.setText(_translate("Des", "⟵ Введите ключ"))
-        self.label_info_key_format.setText(_translate("Des", "Формат ключа"))
-        self.label_info_in.setText(_translate("Des", "Входной формат данных"))
-        self.label_info_out.setText(_translate("Des", "Выходной формат данных"))
-        self.label_info_iv.setText(_translate("Des", "⟵ IV (опционально)"))
-        self.label_info_mode.setText(_translate("Des", "Режим"))
-        self.label_info_control_bits.setText(_translate("Des", "Контрольный блок ⟶"))
-        self.label_info_combo_iv.setText((_translate("Des", "Формат IV")))
+        self.textBrowser.setHtml(_translate("Gost", UiHelper.text_browser_html()))
+        self.label_info_key.setText(_translate("Gost", "⟵ Введите ключ"))
+        self.label_info_key_format.setText(_translate("Gost", "Формат ключа"))
+        self.label_info_in.setText(_translate("Gost", "Входной формат данных"))
+        self.label_info_out.setText(_translate("Gost", "Выходной формат данных"))
+        self.label_info_iv.setText(_translate("Gost", "⟵ IV (опционально)"))
+        self.label_info_mode.setText(_translate("Gost", "Режим"))
+        self.label_info_control_bits.setText(_translate("Gost", "Контрольный блок ⟶"))
+        self.label_info_combo_iv.setText((_translate("Gost", "Формат IV")))
         self.label_info.setText(
             _translate(
-                "Des",
+                "Gost",
                 "Доступный формат входных/выходных данных:\n\n"
                 "✓ Текстовый (utf-8)\n"
                 "✓ Десятеричный\n"

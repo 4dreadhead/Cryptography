@@ -43,7 +43,8 @@ class UiCardano(object):
         self.label_Cardano_gif.setMovie(gif)
         gif.start()
 
-        font = UiHelper.set_font(size=9)
+        font = UiHelper.set_font(size=10, bold=True, italic=True)
+
         self.label_info = QtWidgets.QLabel(self.centralwidget)
         self.label_info.setGeometry(QtCore.QRect(480, 279, 209, 30))
         self.label_info.setFont(font)
@@ -91,7 +92,7 @@ class UiCardano(object):
         self.textBrowser.setStyleSheet(UiHelper.text_area_style())
         self.textBrowser.setObjectName("textBrowser")
 
-        font = UiHelper.set_font("Uroob", size=10, weight=75, bold=True)
+        font = UiHelper.set_font("Droid Sans Mono", size=10,  bold=True)
 
         self.pushButton_generate_key = QtWidgets.QPushButton(self.centralwidget)
         self.pushButton_generate_key.setGeometry(QtCore.QRect(201, 278, 260, 30))

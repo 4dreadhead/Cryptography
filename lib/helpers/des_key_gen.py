@@ -1,70 +1,18 @@
-import random
 from .des_const import PC_TABLES, ROUND_SHUFFLE_TABLE
+from .custom_byte import CustomByte
 
 
-class Byte:
-    def __init__(self, incoming_byte):
-        self.decimal = int(incoming_byte, 2)
-        self.hex = format(self.decimal, "x").zfill(2)
-        self.binary = format(self.decimal, "b").zfill(8)
-
-    def to_bin(self):
-        return self.binary
-
-    def to_hex(self):
-        return self.hex
-
-    def to_dec(self):
-        return self.decimal
-
-    @staticmethod
-    def load_from_bin(binary_byte):
-        return Byte(binary_byte)
-
-    @staticmethod
-    def load_from_dec(decimal_byte):
-        return Byte(format(int(decimal_byte), "b").zfill(8))
-
-    @staticmethod
-    def load_from_hex(hex_byte):
-        return Byte(format(int(hex_byte, 16), "b").zfill(8))
-
-    @staticmethod
-    def read_bytes(data, data_format):
-        match data_format:
-            case "BIN":
-                formatted_data = data.replace(" ", "").replace("\n", "")
-            case "HEX":
-                formatted_data = data.replace(" ", "").replace("\n", "")
-                formatted_data = "".join([
-                    Byte.load_from_hex(
-                        formatted_data[2 * i:2 * (i + 1)]
-                    ).to_bin() for i in range(len(formatted_data) // 2)
-                ])
-            case "DEC":
-                preparing_data = data.split(" ")
-                formatted_data = []
-                for byte in preparing_data:
-                    if not 0 <= int(byte) < 256:
-                        raise ValueError(f"Incorrect byte value: {byte}.")
-                    formatted_data.append(Byte.load_from_dec(byte).to_bin())
-                formatted_data = "".join(formatted_data)
-
-            case "TEXT":
-                formatted_data = "".join(
-                    [
-                        Byte.load_from_dec(byte).to_bin() for byte in bytearray(
-                            data, "utf-8"
-                        )
-                    ]
-                )
-            case _:
-                raise ValueError(f"Неизвестный тип данных: {data_format}")
-        return formatted_data
-
-
-class KeyGen:
+class DesKeyGen:
+    """
+    Key generator for DES algorithm
+    """
     def __init__(self, key=None, key_format=None):
+        """
+        Initialization
+        :param key:         [str] incoming key from inputs
+        :param key_format:  [str] key format (TEXT or HEX or BIN or DEC)
+        result:             [dict[int, str]] generated round keys
+        """
         self.read_key = self.read_and_generate_key(key, key_format)
 
         match len(self.read_key):
@@ -82,6 +30,10 @@ class KeyGen:
         return self.round_keys
 
     def add_control_bits(self):
+        """
+        Add control bits to incoming 56bit key
+        :return: key_64bit: [str] key with control bits
+        """
         key_64bit = ""
         control_bits = []
         key_7bit_blocks = [self.read_key[7 * i:7 * (i + 1)] for i in range(8)]
@@ -95,6 +47,10 @@ class KeyGen:
         return key_64bit
 
     def generate_round_keys(self):
+        """
+        Generate keys for each DES round
+        :return: round_keys: [dict[int, str]] generated round keys
+        """
         round_key = self.prepared_key
         round_keys = {}
 
@@ -107,10 +63,16 @@ class KeyGen:
 
     @staticmethod
     def read_and_generate_key(key=None, key_format=None):
+        """
+        Read data from incoming key with passed format
+        :param key:         [str] incoming key
+        :param key_format:  [str] key format (TEXT or HEX or BIN or DEC)
+        :return: result:    [str] formatted key as binary string
+        """
         if not key:
             raise ValueError("Не задан ключ.")
 
-        result = Byte.read_bytes(key, key_format)
+        result = CustomByte.read_bytes(key, key_format)
 
         if len(result) != 56 and len(result) != 64:
             raise ValueError(f"Неверный размер ключа: {len(result)} бит. Ожидалось: 56 или 64 бит.")
@@ -119,10 +81,22 @@ class KeyGen:
 
     @staticmethod
     def key_pc_shuffle(key_64bit, action):
+        """
+        PC-shuffle of key
+        :param key_64bit:   [str] prepared 64bit key
+        :param action:      [str] START or END
+        :return:            [str] shuffled key
+        """
         return "".join([key_64bit[i - 1] for i in PC_TABLES[action]])
 
     @staticmethod
     def key_round_shuffle(key_56bit, round_):
+        """
+        Prepare key for each round
+        :param key_56bit: [str] incoming 56bit key
+        :param round_:    [int] number of current round
+        :return:          [str] prepared key for round
+        """
         first_block, second_block = key_56bit[:28], key_56bit[28:]
         result_blocks = []
 

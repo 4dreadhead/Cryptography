@@ -63,7 +63,7 @@ class UiScytale(object):
         self.textBrowser.setStyleSheet(UiHelper.text_area_style())
         self.textBrowser.setObjectName("textBrowser")
 
-        font = UiHelper.set_font("Uroob", size=10, weight=75, bold=True)
+        font = UiHelper.set_font("Droid Sans Mono", size=10,  bold=True)
 
         self.pushButton_encrypt = QtWidgets.QPushButton(self.centralwidget)
         self.pushButton_encrypt.setGeometry(QtCore.QRect(30, 380, 201, 31))

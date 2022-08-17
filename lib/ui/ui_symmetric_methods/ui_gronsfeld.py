@@ -49,6 +49,8 @@ class UiGronsfeld(object):
         self.label_info.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
         self.label_info.setObjectName("label_info")
 
+        font = UiHelper.set_font(size=10, bold=True, italic=True)
+
         self.label_info_key = QtWidgets.QLabel(self.centralwidget)
         self.label_info_key.setGeometry(QtCore.QRect(201, 278, 260, 31))
         self.label_info_key.setFont(font)
@@ -76,7 +78,7 @@ class UiGronsfeld(object):
         self.textBrowser.setStyleSheet(UiHelper.text_area_style())
         self.textBrowser.setObjectName("textBrowser")
 
-        font = UiHelper.set_font("Uroob", size=10, weight=75, bold=True)
+        font = UiHelper.set_font("Droid Sans Mono", size=10,  bold=True)
 
         self.pushButton_encrypt = QtWidgets.QPushButton(self.centralwidget)
         self.pushButton_encrypt.setGeometry(QtCore.QRect(30, 430, 201, 31))

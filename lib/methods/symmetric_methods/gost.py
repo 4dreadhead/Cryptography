@@ -5,6 +5,7 @@ from PyQt6.QtGui import QIcon
 
 from lib.ui import UiGost
 from lib.helpers import WindowHelper, FileHelper, BlockCiphersFormatHelper, GostKeyGen
+from lib.helpers.gost_const import S_TABLES, MOD_CONST_2_DEGREE_32
 
 
 class GostWindow(QMainWindow, UiGost, WindowHelper, FileHelper, BlockCiphersFormatHelper):
@@ -46,10 +47,52 @@ class GostWindow(QMainWindow, UiGost, WindowHelper, FileHelper, BlockCiphersForm
                 self.prepare_to_process(keygen=GostKeyGen)
 
             for counter, incoming_block in enumerate(preprocessed_data):
-                pass
+                if control_block and action == "encrypt":
+                    result = self.process_block(format(self.size, "b").zfill(64), key.round_keys, action)
+                    processed_data.append(result)
+                    control_block = False
+
+                result = self.process_block(incoming_block, key.round_keys, action)
+                processed_data.append(result)
+
+                if control_block and action == "decrypt":
+                    self.size = int(processed_data.pop(), 2)
+                    control_block = False
+
+                if counter % 256 == 0:
+                    self.statusbar.showMessage(
+                        f"Прогресс: {round(counter / blocks * 100)}% ({counter}/{blocks} блоков обработано)"
+                    )
+                    QApplication.processEvents()
 
             self.show_result(processed_data, output_format, action, start_time)
 
         except Exception as error:
-            self.statusbar.showMessage(f"Произошла ошибка: {str(error)}. Проверьте входные данные")
+            self.statusbar.showMessage(f"Произошла ошибка: {str(error)}. Проверьте входные данные.")
 
+    def process_block(self, block, key, action):
+        for round_ in range(32):
+            block = self.one_round(block, key[action][round_])
+
+        return block[32:] + block[:32]
+
+    def one_round(self, block, key):
+        block_left = block[:32]
+        block_right = block[32:]
+
+        amount_mod = format((int(block_right, 2) + int(key, 2)) % MOD_CONST_2_DEGREE_32, "b").ljust(32, "0")
+        _4_bit_blocks = [int(amount_mod[i:i + 4], 2) for i in range(0, 32, 4)]
+        s_shuffled_blocks = "".join([self.s_shuffle(i, part) for i, part in enumerate(_4_bit_blocks)])
+
+        block_processed = s_shuffled_blocks[11:] + s_shuffled_blocks[:11]
+
+        return block_right + self.xor(block_left, block_processed, 32)
+
+    @staticmethod
+    def s_shuffle(index, _4_bit_block):
+        return format(S_TABLES[index][_4_bit_block], "b").ljust(4, "0")
+
+    @staticmethod
+    def xor(x, y, length):
+        x, y = int(x, 2), int(y, 2)
+        return bin(x ^ y)[2:].zfill(length)

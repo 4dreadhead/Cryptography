@@ -99,10 +99,8 @@ class BlockCiphersFormatHelper:
 
         self.size = len(formatted_data) // 8
 
-        formatted_data = formatted_data.ljust(block_size, "0")
-
-        return (formatted_data[i:i+block_size] for i in range(0, len(formatted_data), block_size)), \
-               len(formatted_data) // block_size
+        return (formatted_data[i:i + block_size].ljust(block_size, "0")
+                for i in range(0, len(formatted_data), block_size)), len(formatted_data) // block_size
 
     @staticmethod
     def read_iv_from_bytes(iv, iv_format, cipher_mode, iv_size=64):
@@ -174,7 +172,7 @@ class BlockCiphersFormatHelper:
         :param block: [str] incoming block
         :return:      [bytearray] converted block
         """
-        return bytearray([int(block[i:i+8], 2) for i in range(0, len(block), 8)])
+        return bytearray([int(block[i:i + 8], 2) for i in range(0, len(block), 8)])
 
     def out_message(self, data_format):
         match data_format:

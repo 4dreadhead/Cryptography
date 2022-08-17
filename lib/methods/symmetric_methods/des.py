@@ -63,7 +63,7 @@ class DesWindow(QMainWindow, UiDes, WindowHelper, FileHelper, BlockCiphersFormat
             self.show_result(processed_data, output_format, action, start_time)
 
         except Exception as error:
-            self.statusbar.showMessage(f"Произошла ошибка: {str(error)}. Проверьте входные данные")
+            self.statusbar.showMessage(f"Произошла ошибка: '{str(error)}'. Проверьте входные данные.")
 
     def process_block(self, incoming_block, previous_block, action, key, counter, blocks, cipher_mode):
         result_used_by_mode = None

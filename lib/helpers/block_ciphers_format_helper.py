@@ -24,11 +24,12 @@ class BlockCiphersFormatHelper:
     result: str
     full_result: bytearray
 
-    def prepare_to_process(self, keygen, with_iv=True):
+    def prepare_to_process(self, keygen, with_iv=True, iv_size=64):
         """
         Read all input data and prepare it to cipher process
         :param keygen:          [class <'${Cipher}KeyGen'>] KeyGen class for method
         :param with_iv:         [bool] say to method read iv if exists
+        :param iv_size:         [str] size of IV (length of binary string)
         :return: [tuple]:
             processed_data:     [list] empty list
             preprocessed_data:  [generator] flow of input message(or ciphertext)
@@ -49,9 +50,10 @@ class BlockCiphersFormatHelper:
         if with_iv:
             iv_format = self.combo_iv.currentText()
 
-        key = keygen(self.plainTextEdit_key.toPlainText(), key_format)
+        key = keygen(self.plainTextEdit_key.toPlainText(), key_format, self.plainTextEdit_key)
         if with_iv:
-            iv = self.read_iv_from_bytes(self.plainTextEdit_iv.toPlainText(), iv_format, cipher_mode)
+            iv = self.read_iv_from_bytes(self.plainTextEdit_iv.toPlainText(), iv_format,
+                                         cipher_mode, self.plainTextEdit_iv, keygen, iv_size=iv_size)
         else:
             iv = None
 
@@ -100,15 +102,17 @@ class BlockCiphersFormatHelper:
         self.size = len(formatted_data) // 8
 
         return (formatted_data[i:i + block_size].ljust(block_size, "0")
-                for i in range(0, len(formatted_data), block_size)), len(formatted_data) // block_size
+                for i in range(0, len(formatted_data), block_size)), len(formatted_data) // block_size + 1
 
     @staticmethod
-    def read_iv_from_bytes(iv, iv_format, cipher_mode, iv_size=64):
+    def read_iv_from_bytes(iv, iv_format, cipher_mode, iv_field, keygen, iv_size=64):
         """
         Format initialization vector (IV) from inputs with passed format
         :param iv:          [str] incoming IV from inputs
         :param iv_format:   [str] format of incoming IV (TEXT or HEX or BIN or DEC)
         :param cipher_mode: [str] mode of the cipher
+        :param iv_field:    [QtWidgets.QPlainTextEdit] IV input field
+        :param keygen:      [class <'${Cipher}KeyGen'>] KeyGen class for method
         :param iv_size:     [str] size of IV (length of binary string)
         :return: result:    [str] formatted IV as binary string
         """
@@ -117,7 +121,7 @@ class BlockCiphersFormatHelper:
                 return None
             case "CBC" | "CFB" | "OFB":
                 if not iv:
-                    raise ValueError("Не задан вектор инициализации (IV).")
+                    iv = keygen.generate_random_key(iv_format, iv_field, size=iv_size//8)
 
                 result = CustomByte.read_bytes(iv, iv_format)
 

@@ -79,7 +79,6 @@ class DesWindow(QMainWindow, UiDes, WindowHelper, FileHelper, BlockCiphersFormat
                 result_used_by_mode = incoming_block
 
             case ("CFB", "encrypt"):
-                action = "encrypt"
                 incoming_block, previous_block = previous_block, incoming_block
 
             case ("CFB", "decrypt"):
@@ -107,7 +106,7 @@ class DesWindow(QMainWindow, UiDes, WindowHelper, FileHelper, BlockCiphersFormat
                     block = self.one_round(block, key.round_keys[round_], action)
 
             case _:
-                raise ValueError(f"Неизвестное действие: {cipher_mode}, {action}")
+                raise ValueError(f"Неизвестное действие: {action}.")
 
         result = self.message_shuffle(block, "END")
 

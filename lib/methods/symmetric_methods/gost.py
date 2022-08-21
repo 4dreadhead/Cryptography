@@ -43,16 +43,18 @@ class GostWindow(QMainWindow, UiGost, WindowHelper, FileHelper, BlockCiphersForm
         try:
             start_time = time.time()
 
-            processed_data, preprocessed_data, blocks, control_block, key, _, output_format, cipher_mode =\
+            processed_data, preprocessed_data, blocks, control_block, key, previous_block, output_format, cipher_mode =\
                 self.prepare_to_process(keygen=GostKeyGen)
 
             for counter, incoming_block in enumerate(preprocessed_data):
                 if control_block and action == "encrypt":
-                    result = self.process_block(format(self.size, "b").zfill(64), key.round_keys, action)
+                    result, previous_block = self.process_block(format(self.size, "b").zfill(64),
+                                                                key.round_keys, action, previous_block, cipher_mode)
                     processed_data.append(result)
                     control_block = False
 
-                result = self.process_block(incoming_block, key.round_keys, action)
+                result, previous_block = self.process_block(incoming_block,
+                                                            key.round_keys, action, previous_block, cipher_mode)
                 processed_data.append(result)
 
                 if control_block and action == "decrypt":
@@ -68,19 +70,43 @@ class GostWindow(QMainWindow, UiGost, WindowHelper, FileHelper, BlockCiphersForm
             self.show_result(processed_data, output_format, action, start_time)
 
         except Exception as error:
-            self.statusbar.showMessage(f"Произошла ошибка: {str(error)}. Проверьте входные данные.")
+            self.statusbar.showMessage(f"Произошла ошибка: '{str(error)}'. Проверьте входные данные.")
 
-    def process_block(self, block, key, action):
+    def process_block(self, block, key, action, previous_block, cipher_mode):
+        result_used_by_mode = None
+        match cipher_mode, action:
+            case ("ECB", _):
+                result_used_by_mode = None
+            case ("CFB", "encrypt"):
+                block, previous_block = previous_block, block
+            case ("CFB", "decrypt"):
+                action = "encrypt"
+                block, previous_block = previous_block, block
+                result_used_by_mode = previous_block
+            case _:
+                raise ValueError(f"Неизвестная комбинация: {cipher_mode}, #{action}.")
+
         for round_ in range(32):
             block = self.one_round(block, key[action][round_])
 
-        return block[32:] + block[:32]
+        result = block[32:] + block[:32]
+
+        match cipher_mode:
+            case "ECB":
+                pass
+            case "CFB":
+                result = self.xor(block, previous_block, 64)
+                result_used_by_mode = result_used_by_mode if result_used_by_mode else result
+            case _:
+                raise ValueError(f"Неизвестный режим шифрования: {cipher_mode}.")
+
+        return result, result_used_by_mode
 
     def one_round(self, block, key):
         block_left = block[:32]
         block_right = block[32:]
 
-        amount_mod = format((int(block_right, 2) + int(key, 2)) % MOD_CONST_2_DEGREE_32, "b").ljust(32, "0")
+        amount_mod = format((int(block_right, 2) + int(key, 2)) % MOD_CONST_2_DEGREE_32, "b").zfill(32)
         _4_bit_blocks = [int(amount_mod[i:i + 4], 2) for i in range(0, 32, 4)]
         s_shuffled_blocks = "".join([self.s_shuffle(i, part) for i, part in enumerate(_4_bit_blocks)])
 
@@ -90,7 +116,7 @@ class GostWindow(QMainWindow, UiGost, WindowHelper, FileHelper, BlockCiphersForm
 
     @staticmethod
     def s_shuffle(index, _4_bit_block):
-        return format(S_TABLES[index][_4_bit_block], "b").ljust(4, "0")
+        return format(S_TABLES[index][_4_bit_block], "b").zfill(4)
 
     @staticmethod
     def xor(x, y, length):

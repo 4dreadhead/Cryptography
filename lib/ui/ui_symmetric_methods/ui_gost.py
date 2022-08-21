@@ -108,7 +108,7 @@ class UiGost(object):
         self.label_info_mode.setObjectName("label_info_mode")
 
         self.combo_mode = QtWidgets.QComboBox(self.centralwidget)
-        self.combo_mode.addItems(["ECB", "CBC", "CFB", "OFB"])
+        self.combo_mode.addItems(["ECB", "CFB"])
         self.combo_mode.setFont(font)
         self.combo_mode.setStyleSheet(UiHelper.combo_box_style())
         self.combo_mode.setGeometry(QtCore.QRect(1030, 320, 220, 30))

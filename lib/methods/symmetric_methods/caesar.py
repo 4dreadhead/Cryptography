@@ -11,18 +11,8 @@ class CaesarWindow(QMainWindow, UiCaesar, WindowHelper):
     """
     def __init__(self):
         super().__init__()
-        # Window initialization area
-        self.setupUi(self)
-        self.setWindowIcon(QIcon('lib/media/icon.png'))
-        self.pushButton_encrypt.clicked.connect(self.encrypt)
-        self.pushButton_decrypt.clicked.connect(self.decrypt)
-        self.pushButton_paste.clicked.connect(self.paste_from_buffer)
-        self.pushButton_clearInput.clicked.connect(self.copy_to_buffer)
-        self.pushButton_copy.clicked.connect(self.clear_input)
-        self.pushButton_clearOutput.clicked.connect(self.clear_output)
-        self.pushButton_exit.clicked.connect(self.close)
+        self.setupUi()
 
-        # Method area
         self.result = ""
         a = ord('а')
 
@@ -31,25 +21,15 @@ class CaesarWindow(QMainWindow, UiCaesar, WindowHelper):
         self.latin_low = ascii_symbols.printable[10:36]
         self.latin_high = ascii_symbols.printable[36:62]
 
-    def scan_string(self, string):
-        for letter in string:
-            if letter in self.rus:
-                return self.rus_table, self.rus
-            elif letter in self.eng:
-                return self.eng_table, self.eng
-            else:
-                continue
-        return "empty", None
-
     def encrypt(self):
         key = self.extract_key()
         if not key:
             self.statusbar.showMessage("Некорректное значение ключа")
             return
 
-        string = self.plainTextEdit.toPlainText()
+        string = self.text_input.toPlainText()
         self.result = string
-        self.textBrowser.setText("")
+        self.text_output.setText("")
 
         mixed_alphabets = self.mix_alphabets(key)
         for i in range(4):
@@ -59,7 +39,7 @@ class CaesarWindow(QMainWindow, UiCaesar, WindowHelper):
 
             self.result = self.replace_symbols(self.result, origin, destination)
 
-        self.textBrowser.setText(self.result)
+        self.text_output.setText(self.result)
         self.statusbar.showMessage("Текст зашифрован")
 
     def decrypt(self):
@@ -68,9 +48,9 @@ class CaesarWindow(QMainWindow, UiCaesar, WindowHelper):
             self.statusbar.showMessage("Некорректное значение ключа")
             return
 
-        string = self.plainTextEdit.toPlainText()
+        string = self.text_input.toPlainText()
         self.result = string
-        self.textBrowser.setText("")
+        self.text_output.setText("")
 
         mixed_alphabets = self.mix_alphabets(key)
         for i in range(4):
@@ -80,12 +60,12 @@ class CaesarWindow(QMainWindow, UiCaesar, WindowHelper):
 
             self.result = self.replace_symbols(self.result, origin, destination)
 
-        self.textBrowser.setText(self.result)
+        self.text_output.setText(self.result)
         self.statusbar.showMessage("Текст зашифрован")
 
     def extract_key(self):
         try:
-            return int(self.plainTextEdit_key.toPlainText())
+            return int(self.additional_input_key.toPlainText())
         except ValueError:
             return None
 

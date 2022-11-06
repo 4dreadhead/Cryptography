@@ -57,6 +57,12 @@ class UiHelper:
         return style
 
     @staticmethod
+    def gif_style():
+        style = ""
+
+        return style
+
+    @staticmethod
     def default_style():
         style = """
             QPushButton:hover {
